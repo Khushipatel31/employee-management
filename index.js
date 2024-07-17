@@ -2,11 +2,18 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser=require('cookie-parser')
 const dotenv = require("dotenv");
+const cloudinary=require("cloudinary");
 const { errorHandler } = require("./middleware/errorHandling.js");
 const adminRoutes=require('./routes/adminRoutes.js');
 const userRoutes=require('./routes/userRoutes.js');
 const commonController=require('./controllers/commonController.js')
 dotenv.config();
+
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret:process.env.CLOUDINARY_API_SECRET
+  })
 
 const port = process.env.PORT || 3001;
 const app = express();

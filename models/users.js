@@ -7,7 +7,7 @@ const userSchema = new mongoose.Schema(
   {
     fullname: { type: String, trim: true },
     email: { type: String, trim: true, unique: true },
-    password: {type:String,select: false,},
+    password: { type: String, select: false, },
     gender: { type: String, enum: ["female", "male", "other"] },
     is_active: { type: Number, default: 1 },
     role: { type: String, default: "user" },
@@ -23,12 +23,23 @@ const userSchema = new mongoose.Schema(
     education: String,
     contact: Number,
     dob: Date,
-    photo: String,
+    profile: [
+      {
+        public_id: {
+          type: String,
+          require: true,
+        },
+        url: {
+          type: String,
+          require: true,
+        }
+      }
+    ],
     address: String,
     state: String,
     city: String,
     pin: Number,
-    joinDate:Date
+    joinDate: Date
   },
   { timestamps: true }
 );
