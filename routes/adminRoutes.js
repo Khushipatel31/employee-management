@@ -60,7 +60,7 @@ router
   .get(
     isAuthenticatedUser,
     authorizeRoles("admin"),
-    adminController.editProject
+    // adminController.editProject
   );
 
 module.exports = router;
