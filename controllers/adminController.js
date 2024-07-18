@@ -6,6 +6,7 @@ const designationModel = require("../models/designations");
 const { sendEmail } = require("../utils/sendMail");
 const { randomBytes } = require("crypto");
 const projectModel = require("../models/projects");
+const userProjectModel = require("../models/user_projects");
 
 const addDesignation = catchAsyncErrors(async (req, res, next) => {
     const { name } = req.body;
@@ -108,6 +109,23 @@ const addProject = catchAsyncErrors(async (req, res, next) => {
       })
 });
 
+const getAllProjects=catchAsyncErrors(async(req,res,next)=>{
+    const projects=await projectModel.find({});
+    res.status(200).json({
+        success:true,
+        data:projects
+    })
+})
+
+const getProject=catchAsyncErrors(async(req,res,next)=>{
+    const {id}=req.params;
+    const employees=await userProjectModel.find({project:id}).populate("user");
+    res.status(200).json({
+        success:true,
+        data:employees
+    })
+})
+
 const editProject=catchAsyncErrors(async(req,res,next)=>{
     const { name, description, startDate, duration,projectId } = req.body;
     const endDate = await projectModel.getEndDate(startDate, duration);
@@ -129,5 +147,7 @@ module.exports = {
     deleteEmployee,
     getAllEmployee,
     addProject,
-    editProject
+    editProject,
+    getAllProjects,
+    getProject
 };
