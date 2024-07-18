@@ -1,9 +1,53 @@
 import { Injectable } from '@angular/core';
+import { HttpServices } from './http.service';
+import { catchError, map, Observable, of } from 'rxjs';
+
+interface login {
+  email: String;
+  password: String;
+}
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AuthService {
+  constructor(private http: HttpServices) {}
 
-  constructor() { }
+  login(data: login): Observable<any> {
+    console.log(data)
+    return this.http.postMethod('/login', data).pipe(
+      map((data: any) => {
+        if (data.success) {
+          this.setToken(data.token);
+          this.setRole(data.user.role);
+        }
+        return data;
+      })
+    );
+  }
+
+  verify():Observable<boolean>{
+    return this.http.getMethod('/'+this.getRole()+'/verify').pipe(
+      map((data:any)=>{
+          return true;
+      }),
+      catchError((err)=>{
+        return of(false);
+      })
+    )
+  }
+
+  getRole() {
+    return localStorage.getItem('role');
+  }
+  getToken() {
+    return localStorage.getItem('token');
+  }
+
+  setToken(token: string) {
+    localStorage.setItem('token', token);
+  }
+  setRole(role: string) {
+    localStorage.setItem('role', role);
+  }
 }
