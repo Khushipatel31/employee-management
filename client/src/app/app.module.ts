@@ -10,6 +10,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
+import {MatDialogModule} from '@angular/material/dialog';
 import { AuthInterceptor } from './guards/auth.interceptor';
 @NgModule({
   declarations: [AppComponent,LoginComponent],
@@ -21,7 +22,8 @@ import { AuthInterceptor } from './guards/auth.interceptor';
     FormsModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatDialogModule
   ],
   bootstrap: [AppComponent],
   providers: [

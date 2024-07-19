@@ -1,0 +1,10 @@
+<mat-form-field class="w-full">
+    <mat-label>Designation</mat-label>
+    <input type="designation" matInput formControlName="designation" placeholder="Ex. pat@example.com" />
+    @if (designationForm.get('designation')?.errors &&
+    !designationForm.get('designation')?.hasError('required')) {
+    <mat-error>Please enter a valid designation address</mat-error>
+    } @if (designationForm.get('designation')?.hasError('required')) {
+    <mat-error>designation is <strong>required</strong></mat-error>
+    }
+</mat-form-field>
