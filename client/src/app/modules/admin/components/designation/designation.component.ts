@@ -1,13 +1,32 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { DesignationComponent as designationDialog } from '../formsDialog/designation/designation.component';
 import { MatDialog } from '@angular/material/dialog';
+import { AdminServices } from '../../../../services/admin.service';
+import { ColDef } from 'ag-grid-community';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
-  // styleUrl: './designation.component.css'
+  styleUrl: './designation.component.css'
 })
-export class DesignationComponent {
-  constructor(private dialog: MatDialog) {}
+export class DesignationComponent implements OnInit {
+  designations: [] = [];
+  pagination = true;
+  paginationPageSize = 20;
+  paginationPageSizeSelector = [20, 50, 100];
+  colDefs: ColDef[] = [
+    { field: 'index', flex: 1,filter:true },
+    { field: 'name', flex: 1 },
+  ];
+  constructor(private dialog: MatDialog, private admin: AdminServices,private router:Router) {}
+
+  ngOnInit(): void {
+    this.admin.getDesignation().subscribe((data) => {
+      if (data.success) {
+        this.designations = data.data;
+      }
+    });
+  }
 
   createDesignation() {
     this.dialog.open(designationDialog, {
@@ -16,7 +35,7 @@ export class DesignationComponent {
       data: {
         designation: '',
         edit: false,
-        id:'',
+        id: '',
       },
     });
   }
