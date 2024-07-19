@@ -9,12 +9,12 @@ const projectModel = require("../models/projects");
 const userProjectModel = require("../models/user_projects");
 
 const addDesignation = catchAsyncErrors(async (req, res, next) => {
-    const { name } = req.body;
-    if (!name) {
+    const { designation } = req.body;
+    if (!designation) {
         return next(new CustomHttpError(400, "Please write designation"));
     }
-    const designation = new designationModel({ name });
-    await designation.save();
+    const des = new designationModel({ name:designation });
+    await des.save();
     res.status(200).json({
         success: true,
     });

@@ -12,6 +12,8 @@ import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { ReactiveFormsModule } from '@angular/forms';
+import { NotifyComponent } from '../../components/notify/notify.component';
 
 @NgModule({
   declarations: [
@@ -23,8 +25,15 @@ import { MatInputModule } from '@angular/material/input';
     HeaderComponent,
     NavbarComponent,
     DesignationComponent,
-    DesignationForm
+    DesignationForm,
+    NotifyComponent
   ],
-  imports: [CommonModule, AdminRoutingModule,MatFormFieldModule,MatInputModule],
+  imports: [
+    CommonModule,
+    AdminRoutingModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+  ],
 })
 export class AdminModule {}
