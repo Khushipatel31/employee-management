@@ -25,8 +25,14 @@ const routes: Routes = [
     component: DashboardComponent,
     children:[
       {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full'
+      },
+      {
         path:'dashboard',
-        component:HomeComponent
+        component:HomeComponent,
+
       },
       {
         path:'designation',
