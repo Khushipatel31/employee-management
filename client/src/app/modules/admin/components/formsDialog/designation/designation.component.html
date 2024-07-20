@@ -4,24 +4,23 @@
     </div>
     <div class="flex w-full gap-5 flex-col">
 
-    <form [formGroup]="designationForm" (ngSubmit)="onFormSubmit()">
-        <mat-form-field class="w-full">
-            <mat-label>Designation</mat-label>
-            <input type="designation" matInput formControlName="designation" placeholder="Designation" />
-            @if (designationForm.get('designation')?.errors &&
-            !designationForm.get('designation')?.hasError('required')) {
-            <mat-error>Please enter a valid designation address</mat-error>
-            } @if (designationForm.get('designation')?.hasError('required')) {
-            <mat-error>designation is <strong>required</strong></mat-error>
-            }
-        </mat-form-field>
-        <button 
-        [disabled]="loading"
-         mat-flat-button
-        class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
-        {{ loading ? 'Submitting...' : 'Submit' }}
-    </button>
-    </form>
-</div>
+        <form [formGroup]="designationForm" (ngSubmit)="onFormSubmit()">
+            <mat-form-field class="w-full">
+                <mat-label>Designation</mat-label>
+                <input
+                type="designation" matInput formControlName="designation" placeholder="Designation" />
+                @if (designationForm.get('designation')?.errors &&
+                !designationForm.get('designation')?.hasError('required')) {
+                <mat-error>Please enter a valid designation address</mat-error>
+                } @if (designationForm.get('designation')?.hasError('required')) {
+                <mat-error>designation is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+            <button [disabled]="loading" mat-flat-button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
+                {{ loading ? 'Submitting...' : 'Submit' }}
+            </button>
+        </form>
+    </div>
 
 </div>

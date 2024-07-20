@@ -12,6 +12,9 @@ import {MatFormFieldModule} from '@angular/material/form-field';
 import {MatInputModule} from '@angular/material/input';
 import {MatDialogModule} from '@angular/material/dialog';
 import { AuthInterceptor } from './guards/auth.interceptor';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material/core';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS,MatMomentDateModule } from '@angular/material-moment-adapter';
 @NgModule({
   declarations: [AppComponent,LoginComponent],
   imports: [
@@ -23,11 +26,15 @@ import { AuthInterceptor } from './guards/auth.interceptor';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
-    MatDialogModule
+    MatDialogModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatMomentDateModule
   ],
   bootstrap: [AppComponent],
   providers: [
     AuthService,
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
     provideAnimationsAsync()
   ],

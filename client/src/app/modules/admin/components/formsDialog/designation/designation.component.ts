@@ -15,6 +15,7 @@ export class DesignationComponent {
   designationForm!: FormGroup;
   error: string = '';
   loading:Boolean=false;
+  valid:Boolean=false;
 
   readonly dialogRef = inject(MatDialogRef<DesignationComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
@@ -31,11 +32,10 @@ export class DesignationComponent {
   }
 
   onFormSubmit(){
-    console.log(this.designationForm.value)
     if(this.designationForm.invalid){
       this.error='Enter designation properly';
+      return;
     }
-        
 
     this.loading=true;
     this.admin.addDesignation(this.designationForm.value).subscribe((data)=>{

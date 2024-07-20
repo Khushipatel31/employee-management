@@ -13,6 +13,10 @@ export class AdminServices {
     return this.http.postMethod('/admin/designation',data);
   }
 
+  addProject(data:string){
+    return this.http.postMethod('/admin/project',data);
+  }
+
   getDesignation(){
     return this.http.getMethod('/admin/designation').pipe(
       map((data:any)=>{

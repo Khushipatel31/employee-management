@@ -1,0 +1,50 @@
+<div class="py-16 px-8">
+    <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">
+        PROJECT
+    </div>
+    <div class="flex w-full gap-5 flex-col">
+        <form [formGroup]="projectForm" (ngSubmit)="onFormSubmit()">
+            <mat-form-field class="w-full">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="name" placeholder="name" />
+                @if (projectForm.get('name')?.errors &&
+                !projectForm.get('name')?.hasError('required')) {
+                <mat-error>Please enter a valid name address</mat-error>
+                } @if (projectForm.get('name')?.hasError('required')) {
+                <mat-error>name is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Description</mat-label>
+                <input type="text" matInput formControlName="description" placeholder="description" />
+                @if (projectForm.get('description')?.errors &&
+                !projectForm.get('description')?.hasError('required')) {
+                <mat-error>Please enter a valid description</mat-error>
+                } @if (projectForm.get('description')?.hasError('required')) {
+                <mat-error>description is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Select a date</mat-label>
+                <input matInput [matDatepicker]="picker" formControlName="startDate">
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Duration</mat-label>
+                <input type="number" matInput formControlName="duration" placeholder="duration" />
+                @if (projectForm.get('duration')?.errors &&
+                !projectForm.get('duration')?.hasError('required')) {
+                <mat-error>Please enter a valid duration</mat-error>
+                } @if (projectForm.get('duration')?.hasError('required')) {
+                <mat-error>duration is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+            <button [disabled]="loading" mat-flat-button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
+                {{ loading ? 'Submitting...' : 'Submit' }}
+            </button>
+        </form>
+    </div>
+
+</div>
