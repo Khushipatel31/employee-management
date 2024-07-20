@@ -44,7 +44,7 @@ const deleteEmployee = catchAsyncErrors(async (req, res, next) => {
 });
 
 const getAllEmployee = catchAsyncErrors(async (req, res, next) => {
-    const employees = await userModel.find({}).populate("designation");
+    const employees = await userModel.find({role:'user'}).populate("designation");
     res.status(200).json({
         success: true,
         data: employees,

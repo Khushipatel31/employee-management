@@ -3,7 +3,6 @@ import { DesignationComponent as designationDialog } from '../formsDialog/design
 import { MatDialog } from '@angular/material/dialog';
 import { AdminServices } from '../../../../services/admin.service';
 import { ColDef } from 'ag-grid-community';
-import { Router } from '@angular/router';
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
@@ -21,7 +20,6 @@ export class DesignationComponent implements OnInit {
   constructor(
     private dialog: MatDialog,
     private admin: AdminServices,
-    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -36,9 +34,7 @@ export class DesignationComponent implements OnInit {
       width: '600px',
       height: '600 px',
       data: {
-        designation: '',
         edit: false,
-        id: '',
       },
     });
   }

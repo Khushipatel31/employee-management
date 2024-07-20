@@ -19,7 +19,7 @@ export class ProjectComponent {
 
   readonly dialogRef = inject(MatDialogRef<ProjectComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
-  
+
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
@@ -38,8 +38,8 @@ export class ProjectComponent {
       this.error = 'Enter project details properly';
       return;
     }
-    if(!this.data.edit){
-    this.loading = true;
+    if (!this.data.edit) {
+      this.loading = true;
       const formValue = this.projectForm.value;
       const formattedDate = formValue.startDate.format('YYYY-MM-DD');
       const formValues = {
@@ -56,22 +56,22 @@ export class ProjectComponent {
           this.admin.fetchProjects();
         }
       });
-    }else{
+    } else {
       const formValue = this.projectForm.value;
-      console.log(this.data.id)
+      console.log(this.data.id);
       let formValues = {
         ...formValue,
-        projectId:this.data.id,
+        projectId: this.data.id,
       };
-      if(typeof(formValue.startDate)=='object'){
+      if (typeof formValue.startDate == 'object') {
         const formattedDate = formValue.startDate.format('YYYY-MM-DD');
         formValues = {
           ...formValue,
-        projectId:this.data.id,
-          startDate:formattedDate,
+          projectId: this.data.id,
+          startDate: formattedDate,
         };
       }
-      this.admin.editProject(formValues)
+      this.admin.editProject(formValues);
     }
     this.loading = false;
     this.dialogRef.close(true);
@@ -79,6 +79,5 @@ export class ProjectComponent {
       duration: 5 * 1000,
       data: 'Project edited Successfully!!',
     });
-   
   }
 }

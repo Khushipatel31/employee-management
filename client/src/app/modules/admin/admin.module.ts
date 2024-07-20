@@ -8,6 +8,7 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { DesignationComponent as DesignationForm } from './components/formsDialog/designation/designation.component';
 import { ProjectComponent as ProjectForm } from './components/formsDialog/project/project.component';
+import { EmployeeComponent as EmployeeForm } from './components/formsDialog/employee/employee.component';
 import { HeaderComponent } from './components/header/header.component';
 import { NavbarComponent } from './components/navbar/navbar.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -19,7 +20,8 @@ import {AgGridAngular} from 'ag-grid-angular'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from "@angular/material-moment-adapter";
 import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
-
+import { EmployeeActionComponent } from './components/actionButtons/employee-action/employee-action.component';
+import {MatSelectModule} from '@angular/material/select';
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -33,7 +35,9 @@ import { ProjectActionComponent } from './components/actionButtons/project-actio
     DesignationForm,
     NotifyComponent,
     ProjectForm,
-    ProjectActionComponent
+    ProjectActionComponent,
+    EmployeeForm,
+    EmployeeActionComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +48,8 @@ import { ProjectActionComponent } from './components/actionButtons/project-actio
     AgGridAngular,
     MatDatepickerModule,
     MatNativeDateModule,
-    MatMomentDateModule
+    MatMomentDateModule,
+    MatSelectModule
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } }

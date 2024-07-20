@@ -1,0 +1,15 @@
+.ag-theme-quartz,
+.ag-theme-quartz-dark {
+    --ag-foreground-color: #000000;
+    --ag-header-height: 50px;
+    --ag-background-color: #fff;
+    --ag-grid-size: 7px;
+    --ag-header-foreground-color: #fff;
+    --ag-header-background-color: #002D62;
+    --ag-odd-row-background-color: rgb(0, 0, 0, 0.03);
+    --ag-header-column-resize-handle-color: rgb(90, 133, 202);
+    --ag-font-size: 17px;
+    --ag-icon-font-color-filter: #ffffff;
+}
+
+
