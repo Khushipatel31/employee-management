@@ -7,7 +7,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
-  styleUrl: './designation.component.css'
+  styleUrl: './designation.component.css',
 })
 export class DesignationComponent implements OnInit {
   designations: [] = [];
@@ -15,16 +15,19 @@ export class DesignationComponent implements OnInit {
   paginationPageSize = 20;
   paginationPageSizeSelector = [20, 50, 100];
   colDefs: ColDef[] = [
-    { field: 'index', flex: 1,filter:true },
+    { field: 'index', flex: 1, filter: true },
     { field: 'name', flex: 1 },
   ];
-  constructor(private dialog: MatDialog, private admin: AdminServices,private router:Router) {}
+  constructor(
+    private dialog: MatDialog,
+    private admin: AdminServices,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.admin.getDesignation().subscribe((data) => {
-      if (data.success) {
-        this.designations = data.data;
-      }
+    this.admin.fetchDesignation();
+    this.admin.designationSubject.subscribe((data: any) => {
+      this.designations = data;
     });
   }
 

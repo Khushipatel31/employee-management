@@ -45,7 +45,7 @@ export class DesignationComponent {
           duration: 5 * 1000,
           data: 'Designation added Successfully!!',
         });
-        this.router.navigate(['admin','designation']);
+        this.admin.fetchDesignation();
       }
     });
 
