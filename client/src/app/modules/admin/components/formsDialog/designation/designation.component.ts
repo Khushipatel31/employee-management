@@ -36,7 +36,6 @@ export class DesignationComponent {
       this.error='Enter designation properly';
       return;
     }
-
     this.loading=true;
     this.admin.addDesignation(this.designationForm.value).subscribe((data)=>{
       if(data.success){
@@ -48,6 +47,5 @@ export class DesignationComponent {
         this.admin.fetchDesignation();
       }
     });
-
   }
 }

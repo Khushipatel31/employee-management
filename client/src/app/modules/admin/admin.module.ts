@@ -18,6 +18,7 @@ import {MatDatepickerModule} from '@angular/material/datepicker';
 import {AgGridAngular} from 'ag-grid-angular'
 import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from "@angular/material-moment-adapter";
+import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
 
 @NgModule({
   declarations: [
@@ -31,7 +32,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from "@angular/m
     DesignationComponent,
     DesignationForm,
     NotifyComponent,
-    ProjectForm
+    ProjectForm,
+    ProjectActionComponent
   ],
   imports: [
     CommonModule,

@@ -129,6 +129,7 @@ const getProject=catchAsyncErrors(async(req,res,next)=>{
 const editProject=catchAsyncErrors(async(req,res,next)=>{
     const { name, description, startDate, duration,projectId } = req.body;
     const endDate = await projectModel.getEndDate(startDate, duration);
+    console.log(projectId)
     const project = await projectModel.findOneAndUpdate({_id:projectId},{name,description,startDate,duration,endDate},{new:true});
     if(!project){
         return next(new CustomHttpError(400, "Project does not exist"));

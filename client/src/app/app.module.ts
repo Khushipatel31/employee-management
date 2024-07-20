@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { AppComponent } from './app.component';
 import { AuthService } from './services/auth.service';
 import { BrowserModule } from '@angular/platform-browser';
@@ -36,7 +36,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS,MatMomentDateModule } from '@angular/ma
     AuthService,
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    provideAnimationsAsync()
+    provideAnimationsAsync(),
+    DatePipe
   ],
 })
 export class AppModule { }

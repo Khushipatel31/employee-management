@@ -19,16 +19,10 @@ export class ProjectComponent {
 
   readonly dialogRef = inject(MatDialogRef<ProjectComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
-  //   {
-  //     "name": "p4",
-  //     "description": "this is p4",
-  //     "startDate": "2024-11-17T14:14:19.672+00:00",
-  //     "duration": "1"
-  // }
+  
   constructor(
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
-    private router: Router,
     private admin: AdminServices
   ) {
     this.projectForm = this.formBuilder.group({
@@ -44,25 +38,47 @@ export class ProjectComponent {
       this.error = 'Enter project details properly';
       return;
     }
-    console.log(this.projectForm.value)
-    const formValue = this.projectForm.value;
-    const formattedDate = formValue.startDate.format('YYYY-MM-DD');
-
-    const formValues = {
-      ...formValue,
-      startDate: formattedDate,
-    };
-    console.log(formValues)
+    if(!this.data.edit){
     this.loading = true;
-    this.admin.addProject(formValues).subscribe((data) => {
-      if (data.success) {
-        this.dialogRef.close(true);
-        this._snackBar.openFromComponent(NotifyComponent, {
-          duration: 5 * 1000,
-          data: 'Project added Successfully!!',
-        });
-        this.router.navigate(['admin', 'project']);
+      const formValue = this.projectForm.value;
+      const formattedDate = formValue.startDate.format('YYYY-MM-DD');
+      const formValues = {
+        ...formValue,
+        startDate: formattedDate,
+      };
+      this.admin.addProject(formValues).subscribe((data) => {
+        if (data.success) {
+          this.dialogRef.close(true);
+          this._snackBar.openFromComponent(NotifyComponent, {
+            duration: 5 * 1000,
+            data: 'Project added Successfully!!',
+          });
+          this.admin.fetchProjects();
+        }
+      });
+    }else{
+      const formValue = this.projectForm.value;
+      console.log(this.data.id)
+      let formValues = {
+        ...formValue,
+        projectId:this.data.id,
+      };
+      if(typeof(formValue.startDate)=='object'){
+        const formattedDate = formValue.startDate.format('YYYY-MM-DD');
+        formValues = {
+          ...formValue,
+        projectId:this.data.id,
+          startDate:formattedDate,
+        };
       }
+      this.admin.editProject(formValues)
+    }
+    this.loading = false;
+    this.dialogRef.close(true);
+    this._snackBar.openFromComponent(NotifyComponent, {
+      duration: 5 * 1000,
+      data: 'Project edited Successfully!!',
     });
+   
   }
 }
