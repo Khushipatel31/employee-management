@@ -25,6 +25,7 @@ import { DesignationActionComponent } from './components/actionButtons/designati
 import {MatSelectModule} from '@angular/material/select';
 import { ProjectDeleteComponent } from './components/deleteDialog/project-delete/project-delete.component';
 import { EmployeeDeleteComponent } from './components/deleteDialog/employee-delete/employee-delete.component';
+import { AdminLogoutComponent } from '../../components/dialogs/admin-logout/admin-logout.component';
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -43,7 +44,8 @@ import { EmployeeDeleteComponent } from './components/deleteDialog/employee-dele
     EmployeeActionComponent,
     ProjectDeleteComponent,
     EmployeeDeleteComponent,
-    DesignationActionComponent
+    DesignationActionComponent,
+    AdminLogoutComponent
   ],
   imports: [
     CommonModule,
