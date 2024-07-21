@@ -21,6 +21,7 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from "@angular/material-moment-adapter";
 import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
 import { EmployeeActionComponent } from './components/actionButtons/employee-action/employee-action.component';
+import { DesignationActionComponent } from './components/actionButtons/designation-action/designation-action.component';
 import {MatSelectModule} from '@angular/material/select';
 import { ProjectDeleteComponent } from './components/deleteDialog/project-delete/project-delete.component';
 import { EmployeeDeleteComponent } from './components/deleteDialog/employee-delete/employee-delete.component';
@@ -41,7 +42,8 @@ import { EmployeeDeleteComponent } from './components/deleteDialog/employee-dele
     EmployeeForm,
     EmployeeActionComponent,
     ProjectDeleteComponent,
-    EmployeeDeleteComponent
+    EmployeeDeleteComponent,
+    DesignationActionComponent
   ],
   imports: [
     CommonModule,

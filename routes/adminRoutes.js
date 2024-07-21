@@ -20,6 +20,10 @@ router
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.getDesignations
+  ).put(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    adminController.updateDesignation
   );
 
 router

@@ -28,6 +28,21 @@ const getDesignations = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+const updateDesignation = catchAsyncErrors(async (req, res, next) => {
+    const { designationId,designation } = req.body;
+    const des = await designationModel.findOneAndUpdate(
+        { _id: designationId },
+        { name:designation },
+        { new: true }
+    );
+    if (!des) {
+        return next(new CustomHttpError(400, "Employee does not exist"));
+    }
+    res.status(200).json({
+        success: true,
+    });
+});
+
 const deleteEmployee = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
     const user = await userModel.findByIdAndUpdate(
@@ -166,5 +181,6 @@ module.exports = {
     editProject,
     getAllProjects,
     getProject,
-    deleteProject
+    deleteProject,
+    updateDesignation
 };
