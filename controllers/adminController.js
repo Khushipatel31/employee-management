@@ -110,7 +110,7 @@ const addProject = catchAsyncErrors(async (req, res, next) => {
 });
 
 const getAllProjects=catchAsyncErrors(async(req,res,next)=>{
-    const projects=await projectModel.find({});
+    const projects=await projectModel.find({is_active:1});
     res.status(200).json({
         success:true,
         data:projects
@@ -140,6 +140,21 @@ const editProject=catchAsyncErrors(async(req,res,next)=>{
       })
 })
 
+const deleteProject = catchAsyncErrors(async (req, res, next) => {
+    const { projectId } = req.body;
+    const project = await projectModel.findByIdAndUpdate(
+        projectId,
+        { is_active: 0 },
+        { new: true }
+    );
+    if (!project) {
+        return next(new CustomHttpError(400, "Project does not exist"));
+    }
+    res.status(200).json({
+        success: true,
+    });
+});
+
 module.exports = {
     addDesignation,
     getDesignations,
@@ -150,5 +165,6 @@ module.exports = {
     addProject,
     editProject,
     getAllProjects,
-    getProject
+    getProject,
+    deleteProject
 };

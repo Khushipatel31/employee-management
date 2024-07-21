@@ -61,8 +61,13 @@ router
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.getAllProjects
+  )
+  .delete(
+    isAuthenticatedUser,
+    authorizeRoles("admin"),
+    adminController.deleteProject
   );
 
-router.get("/project/:id",adminController.getProject)
+router.get("/project/:id", adminController.getProject);
 
 module.exports = router;

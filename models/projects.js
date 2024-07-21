@@ -5,7 +5,7 @@ const projectSchema = new mongoose.Schema(
 		description: String,
 		startDate: Date,
 		endDate: Date,
-		duration: { type: Number, default: -1 },
+		duration: { type: Number, default: 0 },
 		is_active: { type: Number, default: 1 },
 	},
 	{ timestamps: true }
