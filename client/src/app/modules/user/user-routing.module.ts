@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
 import { DashboardComponent } from './components/dashboard/dashboard.component';
 import { HomeComponent } from './components/home/home.component';
-import { DesignationComponent } from './components/designation/designation.component';
 import { EmployeeComponent } from './components/employee/employee.component';
+import { MyProjectComponent } from './components/my-project/my-project.component';
 import { ProjectComponent } from './components/project/project.component';
+import { ProfileComponent } from './components/profile/profile.component';
 
 const routes: Routes = [
   {
@@ -21,16 +23,20 @@ const routes: Routes = [
         component: HomeComponent,
       },
       {
-        path: 'designation',
-        component: DesignationComponent,
-      },
-      {
         path: 'employee',
         component: EmployeeComponent,
       },
       {
+        path: 'myProject',
+        component: MyProjectComponent,
+      },
+      {
         path: 'project',
         component: ProjectComponent,
+      },
+      {
+        path: 'profile',
+        component: ProfileComponent,
       },
     ],
   },
@@ -40,4 +46,4 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class AdminRoutingModule {}
+export class UserRoutingModule {}

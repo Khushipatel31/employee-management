@@ -31,22 +31,22 @@ const AuthGuard = (role: String) => {
           return of(createUrlTreeFromSnapshot(route, ['/login']));
         })
       );
+    } else if (role == 'user') {
+      return http.getMethod('/user/verify').pipe(
+        map((data) => {
+          if (data.success) {
+            // userService.updateUserName(data.data.name);
+            return true;
+          }
+          return createUrlTreeFromSnapshot(route, ['/login']);
+        }),
+        catchError((error) => {
+          return of(createUrlTreeFromSnapshot(route, ['/login']));
+        })
+      );
     } else {
       return createUrlTreeFromSnapshot(route, ['/login']);
     }
-    // } else if (role == 'user') {
-    //   return http.getMethod('/user/verify').pipe(
-    //     map((data) => {
-    //       if (data.success) {
-    //         userService.updateUserName(data.data.name);
-    //         return true;}
-    //       return createUrlTreeFromSnapshot(route, ['/login']);
-    //     }),
-    //     catchError((error) => {
-    //       return of(createUrlTreeFromSnapshot(route, ['/login']));
-    //     })
-    //   );
-    // }
   };
 };
 export default AuthGuard;
