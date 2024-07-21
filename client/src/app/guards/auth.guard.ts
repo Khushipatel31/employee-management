@@ -9,19 +9,16 @@ import {
 import { HttpServices } from '../services/http.service';
 import { catchError, map, Observable } from 'rxjs';
 import { of } from 'rxjs';
-import { AdminServices } from '../services/admin.service';
-// import { UserService } from '../services/user.services';
+import { UserService } from '../services/user.service';
 
 const AuthGuard = (role: String) => {
   return (route: ActivatedRouteSnapshot, state: RouterStateSnapshot) => {
     const http = inject(HttpServices);
-    const adminService = inject(AdminServices);
-    // const userService=inject(UserService)
+    const userService = inject(UserService);
     if (role == 'admin') {
       return http.getMethod('/admin/verify').pipe(
         map((data: any) => {
           if (data.success) {
-            // adminService.updateName(data.data.name)
             return true;
           }
           return createUrlTreeFromSnapshot(route, ['/login']);
@@ -35,7 +32,8 @@ const AuthGuard = (role: String) => {
       return http.getMethod('/user/verify').pipe(
         map((data) => {
           if (data.success) {
-            // userService.updateUserName(data.data.name);
+            console.log(data);
+            userService.subjectUsername(data.data?.fullname);
             return true;
           }
           return createUrlTreeFromSnapshot(route, ['/login']);

@@ -12,35 +12,43 @@ export class LoginComponent {
   loginForm!: FormGroup;
   error: string = '';
 
-  constructor(private formBuilder:FormBuilder,private auth:AuthService,private router:Router){
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router
+  ) {
     this.loginForm = this.formBuilder.group({
-      email: ['', [Validators.required,Validators.email]],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
-    if(this.auth.getRole() && this.auth.getToken()){
+    if (this.auth.getRole() && this.auth.getToken()) {
       this.auth.verify().subscribe((isAuthenticated) => {
         if (isAuthenticated) {
-          this.router.navigate([this.auth.getRole()])
+          this.router.navigate([this.auth.getRole()]);
         } else {
           this.router.navigate(['']);
         }
       });
-  }
+    }
   }
 
-  onFormSubmit(){
-    if(this.loginForm.invalid) {
+  onFormSubmit() {
+    if (this.loginForm.invalid) {
       this.error = 'Please correct the errors in the form.';
       return;
     }
-    this.auth.login(this.loginForm.value).subscribe((data)=>{
-      if(data.success){
-        console.log(this.auth.getRole())
-        this.router.navigate([this.auth.getRole()]);
+    this.auth.login(this.loginForm.value).subscribe(
+      (data) => {
+        if (data.success) {
+          console.log(data);
+          console.log(this.auth.getRole());
+          this.router.navigate([this.auth.getRole()]);
+        }
+      },
+      (error) => {
+        console.log(error);
+        this.error = error.error.message;
       }
-    },(error)=>{
-      this.error = error.error.message;
-    })
-
+    );
   }
 }

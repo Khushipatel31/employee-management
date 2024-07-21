@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpServices } from './http.service';
 import { catchError, map, Observable, of } from 'rxjs';
+import { UserService } from './user.service';
 
 interface login {
   email: String;
@@ -11,13 +12,14 @@ interface login {
   providedIn: 'root',
 })
 export class AuthService {
-  constructor(private http: HttpServices) {}
+  constructor(private http: HttpServices, private userService: UserService) {}
 
   login(data: login): Observable<any> {
-    console.log(data)
+    console.log(data);
     return this.http.postMethod('/login', data).pipe(
       map((data: any) => {
         if (data.success) {
+          this.userService.subjectUsername(data.data?.fullname);
           this.setToken(data.token);
           this.setRole(data.user.role);
         }
@@ -26,15 +28,15 @@ export class AuthService {
     );
   }
 
-  verify():Observable<boolean>{
-    return this.http.getMethod('/'+this.getRole()+'/verify').pipe(
-      map((data:any)=>{
-          return true;
+  verify(): Observable<boolean> {
+    return this.http.getMethod('/' + this.getRole() + '/verify').pipe(
+      map((data: any) => {
+        return true;
       }),
-      catchError((err)=>{
+      catchError((err) => {
         return of(false);
       })
-    )
+    );
   }
 
   getRole() {
