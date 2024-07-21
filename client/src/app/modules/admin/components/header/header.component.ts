@@ -12,9 +12,6 @@ export class HeaderComponent {
   constructor(private admin:AdminServices,private router:Router){
   }
   ngOnInit(): void {
-      // this.admin.nameSubject.subscribe((data)=>{
-      //   this.username=data;
-      // })
   }
   logout() {
     localStorage.removeItem('role');

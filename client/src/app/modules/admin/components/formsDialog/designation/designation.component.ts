@@ -11,11 +11,10 @@ import { NotifyComponent } from '../../../../../components/notify/notify.compone
   // styleUrl: './designation.component.css'
 })
 export class DesignationComponent {
-
   designationForm!: FormGroup;
   error: string = '';
-  loading:Boolean=false;
-  valid:Boolean=false;
+  loading: Boolean = false;
+  valid: Boolean = false;
 
   readonly dialogRef = inject(MatDialogRef<DesignationComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
@@ -24,28 +23,44 @@ export class DesignationComponent {
     private formBuilder: FormBuilder,
     private _snackBar: MatSnackBar,
     private router: Router,
-    private admin:AdminServices
+    private admin: AdminServices
   ) {
-    this.designationForm=this.formBuilder.group({
-      designation:[this.data?.title||'',Validators.required]
-    })
+    this.designationForm = this.formBuilder.group({
+      designation: [this.data?.name || '', Validators.required],
+    });
   }
 
-  onFormSubmit(){
-    if(this.designationForm.invalid){
-      this.error='Enter designation properly';
+  onFormSubmit() {
+    if (this.designationForm.invalid) {
+      this.error = 'Enter designation properly';
       return;
     }
-    this.loading=true;
-    this.admin.addDesignation(this.designationForm.value).subscribe((data)=>{
-      if(data.success){
-        this.dialogRef.close(true);
-        this._snackBar.openFromComponent(NotifyComponent, {
-          duration: 5 * 1000,
-          data: 'Designation added Successfully!!',
+
+    if (!this.data.edit) {
+      this.loading = true;
+      this.admin
+        .addDesignation(this.designationForm.value)
+        .subscribe((data) => {
+          if (data.success) {
+            this.dialogRef.close(true);
+            this._snackBar.openFromComponent(NotifyComponent, {
+              duration: 5 * 1000,
+              data: 'Designation added Successfully!!',
+            });
+            this.admin.fetchDesignation();
+          }
         });
-        this.admin.fetchDesignation();
-      }
-    });
+    } else {
+      this.admin.editDesignation({
+        designationId: this.data.id,
+        designation: this.designationForm.value.designation
+      });
+      this.loading = false;
+      this.dialogRef.close(true);
+      this._snackBar.openFromComponent(NotifyComponent, {
+        duration: 5 * 1000,
+        data: 'Designation edited Successfully!!',
+      });
+    }
   }
 }

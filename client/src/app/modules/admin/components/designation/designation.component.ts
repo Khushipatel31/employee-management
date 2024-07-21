@@ -3,6 +3,7 @@ import { DesignationComponent as designationDialog } from '../formsDialog/design
 import { MatDialog } from '@angular/material/dialog';
 import { AdminServices } from '../../../../services/admin.service';
 import { ColDef } from 'ag-grid-community';
+import { DesignationActionComponent } from '../actionButtons/designation-action/designation-action.component';
 @Component({
   selector: 'app-designation',
   templateUrl: './designation.component.html',
@@ -16,6 +17,10 @@ export class DesignationComponent implements OnInit {
   colDefs: ColDef[] = [
     { field: 'index', flex: 1, filter: true },
     { field: 'name', flex: 1 },
+    {
+      field: 'action',
+      cellRenderer: DesignationActionComponent,
+    }
   ];
   constructor(
     private dialog: MatDialog,
@@ -35,6 +40,7 @@ export class DesignationComponent implements OnInit {
       height: '600 px',
       data: {
         edit: false,
+        name:'',
       },
     });
   }

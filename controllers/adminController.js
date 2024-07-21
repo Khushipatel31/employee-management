@@ -13,7 +13,7 @@ const addDesignation = catchAsyncErrors(async (req, res, next) => {
     if (!designation) {
         return next(new CustomHttpError(400, "Please write designation"));
     }
-    const des = new designationModel({ name:designation });
+    const des = new designationModel({ name: designation });
     await des.save();
     res.status(200).json({
         success: true,
@@ -29,14 +29,16 @@ const getDesignations = catchAsyncErrors(async (req, res, next) => {
 });
 
 const updateDesignation = catchAsyncErrors(async (req, res, next) => {
-    const { designationId,designation } = req.body;
-    const des = await designationModel.findOneAndUpdate(
-        { _id: designationId },
-        { name:designation },
+    const { designationId, designation } = req.body;
+    console.log(designationId,designation)
+    console.log( new mongoose.Types.ObjectId(designationId))
+    const des = await designationModel.findByIdAndUpdate(
+        new mongoose.Types.ObjectId(designationId),
+        { name: designation },
         { new: true }
     );
     if (!des) {
-        return next(new CustomHttpError(400, "Employee does not exist"));
+        return next(new CustomHttpError(400, "Designation does not exist"));
     }
     res.status(200).json({
         success: true,
@@ -59,7 +61,7 @@ const deleteEmployee = catchAsyncErrors(async (req, res, next) => {
 });
 
 const getAllEmployee = catchAsyncErrors(async (req, res, next) => {
-    const employees = await userModel.find({role:'user',is_active:1}).populate("designation");
+    const employees = await userModel.find({ role: 'user', is_active: 1 }).populate("designation");
     res.status(200).json({
         success: true,
         data: employees,
@@ -117,42 +119,42 @@ const addProject = catchAsyncErrors(async (req, res, next) => {
     const { name, description, startDate, duration } = req.body;
     const endDate = await projectModel.getEndDate(startDate, duration);
     const project = await projectModel.create({ name, description, startDate, duration, endDate });
-      await project.save();
-      res.status(200).json({
-        success:true,
-        data:project
-      })
+    await project.save();
+    res.status(200).json({
+        success: true,
+        data: project
+    })
 });
 
-const getAllProjects=catchAsyncErrors(async(req,res,next)=>{
-    const projects=await projectModel.find({is_active:1});
+const getAllProjects = catchAsyncErrors(async (req, res, next) => {
+    const projects = await projectModel.find({ is_active: 1 });
     res.status(200).json({
-        success:true,
-        data:projects
+        success: true,
+        data: projects
     })
 })
 
-const getProject=catchAsyncErrors(async(req,res,next)=>{
-    const {id}=req.params;
-    const employees=await userProjectModel.find({project:id}).populate("user");
+const getProject = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    const employees = await userProjectModel.find({ project: id }).populate("user");
     res.status(200).json({
-        success:true,
-        data:employees
+        success: true,
+        data: employees
     })
 })
 
-const editProject=catchAsyncErrors(async(req,res,next)=>{
-    const { name, description, startDate, duration,projectId } = req.body;
+const editProject = catchAsyncErrors(async (req, res, next) => {
+    const { name, description, startDate, duration, projectId } = req.body;
     const endDate = await projectModel.getEndDate(startDate, duration);
     console.log(projectId)
-    const project = await projectModel.findOneAndUpdate({_id:projectId},{name,description,startDate,duration,endDate},{new:true});
-    if(!project){
+    const project = await projectModel.findOneAndUpdate({ _id: projectId }, { name, description, startDate, duration, endDate }, { new: true });
+    if (!project) {
         return next(new CustomHttpError(400, "Project does not exist"));
     }
     res.status(200).json({
-        success:true,
-        data:project
-      })
+        success: true,
+        data: project
+    })
 })
 
 const deleteProject = catchAsyncErrors(async (req, res, next) => {
