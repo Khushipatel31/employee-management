@@ -22,6 +22,8 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS, MatMomentDateModule } from "@angular/m
 import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
 import { EmployeeActionComponent } from './components/actionButtons/employee-action/employee-action.component';
 import {MatSelectModule} from '@angular/material/select';
+import { ProjectDeleteComponent } from './components/deleteDialog/project-delete/project-delete.component';
+import { EmployeeDeleteComponent } from './components/deleteDialog/employee-delete/employee-delete.component';
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -37,7 +39,9 @@ import {MatSelectModule} from '@angular/material/select';
     ProjectForm,
     ProjectActionComponent,
     EmployeeForm,
-    EmployeeActionComponent
+    EmployeeActionComponent,
+    ProjectDeleteComponent,
+    EmployeeDeleteComponent
   ],
   imports: [
     CommonModule,

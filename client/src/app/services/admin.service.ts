@@ -71,6 +71,10 @@ export class AdminServices {
     })
   }
 
+  deleteProject(id:string) {
+    return this.http.deleteMethod(`/admin/project/${id}`);
+  }
+
   addEmployee(data:any){
     return this.http.postMethod('/admin/employee',data);
   }
@@ -94,6 +98,10 @@ export class AdminServices {
     this.http.putMethod('/admin/employee',data).subscribe((data)=>{
       this.fetchEmployees();
     })
+  }
+
+  deleteEmployee(id:string) {
+    return this.http.deleteMethod(`/admin/employee/${id}`);
   }
 
 }

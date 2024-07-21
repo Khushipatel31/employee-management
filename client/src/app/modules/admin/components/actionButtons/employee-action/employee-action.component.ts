@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ICellRendererParams } from 'ag-grid-community';
 import { EmployeeComponent } from '../../formsDialog/employee/employee.component';
+import { EmployeeDeleteComponent } from '../../deleteDialog/employee-delete/employee-delete.component';
 
 @Component({
   selector: 'app-employee-action',
@@ -34,10 +35,10 @@ export class EmployeeActionComponent {
     });
   }
 
-  // delete() {
-  //   this.dialog.open(DeleteDialogComponent, {
-  //     width: '500px',
-  //     data: this.params.data._id,
-  //   });
-  // }
+  delete() {
+    this.dialog.open(EmployeeDeleteComponent, {
+      width: '500px',
+      data: this.params.data._id,
+    });
+  }
 }

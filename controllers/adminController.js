@@ -29,9 +29,9 @@ const getDesignations = catchAsyncErrors(async (req, res, next) => {
 });
 
 const deleteEmployee = catchAsyncErrors(async (req, res, next) => {
-    const { userId } = req.body;
+    const { id } = req.params;
     const user = await userModel.findByIdAndUpdate(
-        userId,
+        id,
         { is_active: 0 },
         { new: true }
     );
@@ -44,7 +44,7 @@ const deleteEmployee = catchAsyncErrors(async (req, res, next) => {
 });
 
 const getAllEmployee = catchAsyncErrors(async (req, res, next) => {
-    const employees = await userModel.find({role:'user'}).populate("designation");
+    const employees = await userModel.find({role:'user',is_active:1}).populate("designation");
     res.status(200).json({
         success: true,
         data: employees,
@@ -141,9 +141,9 @@ const editProject=catchAsyncErrors(async(req,res,next)=>{
 })
 
 const deleteProject = catchAsyncErrors(async (req, res, next) => {
-    const { projectId } = req.body;
+    const { id } = req.params;
     const project = await projectModel.findByIdAndUpdate(
-        projectId,
+        id,
         { is_active: 0 },
         { new: true }
     );

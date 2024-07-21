@@ -34,17 +34,19 @@ router
     authorizeRoles("admin"),
     adminController.updateEmployee
   )
-  .delete(
-    isAuthenticatedUser,
-    authorizeRoles("admin"),
-    adminController.deleteEmployee
-  )
+
   .get(
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.getAllEmployee
   );
 
+router.delete(
+  "/employee/:id",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  adminController.deleteEmployee
+);
 router
   .route("/project")
   .post(
@@ -61,13 +63,14 @@ router
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.getAllProjects
-  )
+  );
+
+router
+  .route("/project/:id")
+  .get(isAuthenticatedUser, authorizeRoles("admin"), adminController.getProject)
   .delete(
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.deleteProject
   );
-
-router.get("/project/:id", adminController.getProject);
-
 module.exports = router;

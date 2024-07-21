@@ -18,8 +18,8 @@ export class HttpServices {
     return this.http.post<any>(URL + url, data);
   }
 
-  deleteMethod(url:string,id:any){
-    return this.http.delete(URL+url,id);
+  deleteMethod(url:string){
+    return this.http.delete(URL+url);
   }
 
   getMethod(url: string) {

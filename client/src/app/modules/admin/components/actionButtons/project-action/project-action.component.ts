@@ -3,6 +3,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { ICellRendererParams } from 'ag-grid-community';
 import { ProjectComponent } from '../../formsDialog/project/project.component';
 import { duration } from 'moment';
+import { ProjectDeleteComponent } from '../../deleteDialog/project-delete/project-delete.component';
 
 @Component({
   selector: 'app-project-action',
@@ -35,11 +36,11 @@ export class ProjectActionComponent {
     });
   }
 
-  // delete() {
-  //   this.dialog.open(DeleteDialogComponent, {
-  //     width: '500px',
-  //     data: this.params.data._id,
-  //   });
-  // }
+  delete() {
+    this.dialog.open(ProjectDeleteComponent, {
+      width: '500px',
+      data: this.params.data._id,
+    });
+  }
 
 }
