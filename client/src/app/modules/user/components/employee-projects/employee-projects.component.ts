@@ -11,6 +11,7 @@ import { DatePipe } from '@angular/common';
 })
 export class EmployeeProjectsComponent implements OnInit {
   projects: [] = [];
+  error: string = '';
   pagination = true;
   paginationPageSize = 20;
   paginationPageSizeSelector = [20, 50, 100];
@@ -49,9 +50,10 @@ export class EmployeeProjectsComponent implements OnInit {
       (data) => {
         console.log(data);
         this.projects = data.data;
+        this.error = '';
       },
       (err) => {
-        console.log(err.error.error.message);
+        this.error = err.error.error.message;
       }
     );
   }

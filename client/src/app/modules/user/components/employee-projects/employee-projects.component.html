@@ -1,3 +1,7 @@
+<div ng-If="error.length>0" class="text-center w-full text-red-600 font-medium text-xl">
+    {{error}}
+</div>
+
 <div class="flex items-center justify-center py-10 px-5">
     <ag-grid-angular class="self-center items-center w-[95%] ag-theme-quartz" [pagination]="pagination"
         [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"

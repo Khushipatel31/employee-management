@@ -4,7 +4,8 @@ const userProjectModel = require("../models/user_projects");
 const userModel = require("../models/users");
 const cloudinary = require("cloudinary");
 const fs = require("fs");
-const path = require("path")
+const path = require("path");
+const { CustomHttpError } = require("../utils/customError");
 
 const getProjects = catchAsyncError(async (req, res, next) => {
   const projects = await projectModel.find({});
@@ -51,6 +52,10 @@ const getMyProjects = catchAsyncError(async (req, res, next) => {
 })
 
 const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
+  const user = await userModel.findById(req.params.empId);
+  if (!user) {
+    return next(new CustomHttpError(400, "This user does not exist"));
+  }
   const assignedProjects = await userProjectModel.find({ user: req.params.empId }).populate("project").lean();
   const projects = [];
   assignedProjects.forEach((ele) => {
