@@ -9,6 +9,9 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { UserRoutingModule } from './user-routing.module';
 import { HomeComponent } from './components/home/home.component';
 import { ProjectComponent } from './components/project/project.component';
+import { AgGridAngular } from 'ag-grid-angular';
+import { JoinProjectComponent } from './components/dialogs/join-project/join-project.component';
+import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,9 @@ import { ProjectComponent } from './components/project/project.component';
     EmployeeComponent,
     HomeComponent,
     ProjectComponent,
+    ProjectActionComponent,
+    JoinProjectComponent,
   ],
-  imports: [CommonModule, UserRoutingModule],
+  imports: [CommonModule, UserRoutingModule, AgGridAngular],
 })
 export class UserModule {}

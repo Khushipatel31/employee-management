@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ICellRendererParams } from 'ag-grid-community';
-import { DesignationComponent } from '../../formsDialog/designation/designation.component';
+import { JoinProjectComponent } from '../../dialogs/join-project/join-project.component';
 
 @Component({
-  selector: 'app-designation-action',
-  templateUrl: './designation-action.component.html',
-  styleUrl: './designation-action.component.css',
+  selector: 'app-project-action',
+  templateUrl: './project-action.component.html',
+  styleUrl: './project-action.component.css',
 })
-export class DesignationActionComponent {
+export class ProjectActionComponent {
   params: any;
   constructor(private dialog: MatDialog) {}
   agInit(params: ICellRendererParams): void {
@@ -18,13 +18,11 @@ export class DesignationActionComponent {
     this.params = params;
     return true;
   }
-
-  edit() {
-    this.dialog.open(DesignationComponent, {
+  join() {
+    this.dialog.open(JoinProjectComponent, {
       width: '600px',
       height: '600 px',
       data: {
-        name: this.params.data.name,
         id: this.params.data._id,
         edit: true,
       },
