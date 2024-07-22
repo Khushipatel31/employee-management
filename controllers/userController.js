@@ -29,9 +29,8 @@ const getProjects = catchAsyncError(async (req, res, next) => {
   });
 });
 
-
 const getMyProjects = catchAsyncError(async (req, res, next) => {
-  const assignedProjects = await userProjectModel.find({ user: req.params.empId }).populate("project").lean();
+  const assignedProjects = await userProjectModel.find({ user: req.user.id }).populate("project").lean();
   const myProjects = [];
   assignedProjects.forEach((ele) => {
     const project = {
@@ -47,6 +46,26 @@ const getMyProjects = catchAsyncError(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: myProjects
+  })
+})
+
+const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
+  const assignedProjects = await userProjectModel.find({ user: req.params.empId }).populate("project").lean();
+  const projects = [];
+  assignedProjects.forEach((ele) => {
+    const project = {
+      ...ele.project,
+    }
+    if (ele.project.endDate < new Date()) {
+      project.status = "Completed";
+    } else {
+      project.status = "Ongoing"
+    };
+    projects.push(project);
+  })
+  res.status(200).json({
+    success: true,
+    data: projects
   })
 })
 
@@ -121,4 +140,5 @@ module.exports = {
   getMyProjects,
   getEmployees,
   completeProfile,
+  getEmployeeProjects
 };
