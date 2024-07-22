@@ -4,8 +4,8 @@ const { CustomHttpError } = require("../utils/customError");
 const jwt = require("jsonwebtoken");
 
 exports.isAuthenticatedUser = catchAsyncErrors(async (req, res, next) => {
-  // const token = req.cookies.token;
-  const token=req.headers.token;
+  const token = req.cookies.token;
+  // const token=req.headers.token;
   if (!token) {
     return next(new CustomHttpError(401, "Please login to access resources"));
   }

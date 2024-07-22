@@ -9,5 +9,5 @@ router.get("/projects", isAuthenticatedUser, userController.getProjects)
 router.post("/assignProject", isAuthenticatedUser, userController.assignProject)
 router.get("/getProjects/:empId", isAuthenticatedUser, userController.getMyProjects)
 router.put("/completeProfile", isAuthenticatedUser, upload.single('profileImage'), userController.completeProfile)
-
+router.get("/employees", isAuthenticatedUser, userController.getEmployees)
 module.exports = router

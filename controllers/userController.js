@@ -51,6 +51,16 @@ const getMyProjects = catchAsyncError(async (req, res, next) => {
 })
 
 
+const getEmployees = catchAsyncError(async (req, res, next) => {
+  const employees = await userModel.find({
+    role: 'user', is_active: 1, _id: { $ne: req.user.id }
+  }).populate("designation");
+  res.status(200).json({
+    success: true,
+    data: employees,
+  });
+})
+
 const assignProject = catchAsyncError(async (req, res, next) => {
   const { project } = req.body;
   const assignedProject = new userProjectModel({ project, user: req.user._id });
@@ -67,6 +77,7 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
     width: 150,
     crop: "scale",
   });
+
 
   const updatedEmployee = await userModel.findOneAndUpdate(
     { _id: req.user._id },
@@ -108,5 +119,6 @@ module.exports = {
   assignProject,
   getProjects,
   getMyProjects,
-  completeProfile
+  getEmployees,
+  completeProfile,
 };
