@@ -2,9 +2,9 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const projectModel = require("../models/projects");
 const userProjectModel = require("../models/user_projects");
 const userModel = require("../models/users");
-const cloudinary=require("cloudinary");
-const fs=require("fs");
-const path=require("path")
+const cloudinary = require("cloudinary");
+const fs = require("fs");
+const path = require("path")
 
 const getProjects = catchAsyncError(async (req, res, next) => {
   const projects = await projectModel.find({});
@@ -31,16 +31,25 @@ const getProjects = catchAsyncError(async (req, res, next) => {
 
 
 const getMyProjects = catchAsyncError(async (req, res, next) => {
-  const assignedProjects = await userProjectModel.find({ user: req.user._id }).populate("project");
+  const assignedProjects = await userProjectModel.find({ user: req.params.empId }).populate("project").lean();
   const myProjects = [];
   assignedProjects.forEach((ele) => {
-    myProjects.push(ele.project);
+    const project = {
+      ...ele.project,
+    }
+    if (ele.project.endDate < new Date()) {
+      project.status = "Completed";
+    } else {
+      project.status = "Ongoing"
+    };
+    myProjects.push(project);
   })
   res.status(200).json({
     success: true,
     data: myProjects
   })
 })
+
 
 const assignProject = catchAsyncError(async (req, res, next) => {
   const { project } = req.body;
@@ -51,7 +60,7 @@ const assignProject = catchAsyncError(async (req, res, next) => {
   });
 });
 
-const completeProfile=catchAsyncError(async(req,res,next)=>{
+const completeProfile = catchAsyncError(async (req, res, next) => {
   const { fullname, gender, courses, education, contact, dob, address, state, city, pin } = req.body;
   const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
     folder: "employeeProfile",
@@ -60,7 +69,7 @@ const completeProfile=catchAsyncError(async(req,res,next)=>{
   });
 
   const updatedEmployee = await userModel.findOneAndUpdate(
-    {_id:req.user._id},
+    { _id: req.user._id },
     {
       fullname,
       gender,

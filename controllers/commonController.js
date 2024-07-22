@@ -19,4 +19,4 @@ const loginUser = catchAsyncError(async (req, res, next) => {
     sendToken(user, 200, res);
 });
 
-module.exports={loginUser}
+module.exports = { loginUser }
