@@ -7,6 +7,7 @@ import { EmployeeComponent } from './components/employee/employee.component';
 import { MyProjectComponent } from './components/my-project/my-project.component';
 import { ProjectComponent } from './components/project/project.component';
 import { ProfileComponent } from './components/profile/profile.component';
+import { EmployeeProjectsComponent } from './components/employee-projects/employee-projects.component';
 
 const routes: Routes = [
   {
@@ -25,6 +26,10 @@ const routes: Routes = [
       {
         path: 'employee',
         component: EmployeeComponent,
+      },
+      {
+        path: 'employee/:id',
+        component: EmployeeProjectsComponent,
       },
       {
         path: 'myProject',

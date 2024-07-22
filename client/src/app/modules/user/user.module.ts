@@ -12,6 +12,8 @@ import { ProjectComponent } from './components/project/project.component';
 import { AgGridAngular } from 'ag-grid-angular';
 import { JoinProjectComponent } from './components/dialogs/join-project/join-project.component';
 import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
+import { EmployeeActionComponent } from './components/actionButtons/employee-action/employee-action.component';
+import { EmployeeProjectsComponent } from './components/employee-projects/employee-projects.component';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,8 @@ import { ProjectActionComponent } from './components/actionButtons/project-actio
     ProjectComponent,
     ProjectActionComponent,
     JoinProjectComponent,
+    EmployeeActionComponent,
+    EmployeeProjectsComponent,
   ],
   imports: [CommonModule, UserRoutingModule, AgGridAngular],
 })

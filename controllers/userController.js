@@ -41,6 +41,7 @@ const getMyProjects = catchAsyncError(async (req, res, next) => {
     } else {
       project.status = "Ongoing"
     };
+    project.joinedOn = ele.createdAt;
     myProjects.push(project);
   })
   res.status(200).json({
@@ -61,6 +62,7 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
     } else {
       project.status = "Ongoing"
     };
+    project.joinedOn = ele.createdAt;
     projects.push(project);
   })
   res.status(200).json({
