@@ -63,6 +63,7 @@ export class UserService {
 
   updateProfile(data: any) {
     console.log(data);
+    return this.http.putMethod('/user/completeProfile', data);
   }
 
   fetchProjects() {

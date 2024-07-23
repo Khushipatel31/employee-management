@@ -97,13 +97,19 @@ const assignProject = catchAsyncError(async (req, res, next) => {
 });
 
 const completeProfile = catchAsyncError(async (req, res, next) => {
-  const { fullname, gender, courses, education, contact, dob, address, state, city, pin } = req.body;
-  const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
-    folder: "employeeProfile",
-    width: 150,
-    crop: "scale",
-  });
+  const { fullname, gender, courses, education, contact, dob, address, state, city, pin, profile } = req.body;
 
+  if (req.file) {
+    const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
+      folder: "employeeProfile",
+      width: 150,
+      crop: "scale",
+    });
+    profile = {
+      public_id: myCloud.public_id,
+      url: myCloud.secure_url,
+    }
+  }
 
   const updatedEmployee = await userModel.findOneAndUpdate(
     { _id: req.user._id },
@@ -118,21 +124,21 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
       state,
       city,
       pin,
-      profile: {
-        public_id: myCloud.public_id,
-        url: myCloud.secure_url,
-      }
+      profile
     },
     { new: true }
   );
 
-  fs.unlink(path.join(__dirname, '../public/uploads/', req.file.filename), (err) => {
-    if (err) {
-      console.error('Failed to delete file:', err);
-    } else {
-      console.log('File deleted successfully');
-    }
-  });
+  if (req.file) {
+    fs.unlink(path.join(__dirname, '../public/uploads/', req.file.filename), (err) => {
+      if (err) {
+        console.error('Failed to delete file:', err);
+      } else {
+        console.log('File deleted successfully');
+      }
+    });
+  }
+
 
   res.status(200).json({
     success: true,

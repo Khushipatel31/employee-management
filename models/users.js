@@ -23,18 +23,17 @@ const userSchema = new mongoose.Schema(
     education: String,
     contact: Number,
     dob: Date,
-    profile: [
-      {
-        public_id: {
-          type: String,
-          require: true,
-        },
-        url: {
-          type: String,
-          require: true,
-        }
+    profile:
+    {
+      public_id: {
+        type: String,
+        require: true,
+      },
+      url: {
+        type: String,
+        require: true,
       }
-    ],
+    },
     address: String,
     state: String,
     city: String,

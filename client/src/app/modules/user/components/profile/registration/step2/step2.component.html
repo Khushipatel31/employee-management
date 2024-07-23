@@ -1,0 +1,49 @@
+<div class="w-full flex justify-center items-center">
+    <div class="flex w-3/5 gap-5 flex-col py-10 justify-center">
+        <form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
+            <mat-form-field class="w-full">
+                <mat-label>Join Date</mat-label>
+                <input readonly matInput [matDatepicker]="picker" formControlName="dob">
+                <mat-datepicker #picker></mat-datepicker>
+                <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
+
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>Education</mat-label>
+                <input type="text" matInput formControlName="education" placeholder="Education" />
+                <mat-error *ngIf="formData.get('education')?.hasError('required')">
+                    Education is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+            <mat-label>Courses</mat-label>
+            <div formArrayName="courses">
+                <div *ngFor="let course of courses.controls; let i=index">
+                    <mat-form-field class="w-full ">
+                        <mat-label>Course {{i + 1}}</mat-label>
+                        <div class="flex flex-row">
+                            <input type="text" matInput [formControlName]="i" placeholder="Course {{i + 1}}" />
+                            <button mat-icon-button color="warn" (click)="removeCourse(i)">
+                                Remove
+                            </button>
+                        </div>
+                    </mat-form-field>
+                </div>
+                <button mat-button type="button" (click)="addCourse()">Add Course</button>
+            </div>
+            <!-- <div class="w-full overflow-hidden rounded-xl aspect-square"> -->
+            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="" />
+            <!-- </div> -->
+            <div class="w-full">
+                <mat-label>Profile Image</mat-label>
+                <input type="file" (change)="onFileChange($event)" />
+            </div>
+            <mat-form-field class="w-full">
+                <mat-label>Contact</mat-label>
+                <input type="number" matInput formControlName="contact" placeholder="contact" />
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </div>
+</div>

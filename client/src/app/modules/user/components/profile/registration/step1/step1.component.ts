@@ -26,13 +26,17 @@ export class Step1Component implements OnInit {
   }
 
   onFormSubmit() {
+    console.log('hi');
     console.log(this.formData.value);
     this.userService.profileSubject.subscribe((data) => {
       const updatedProfile = {
         ...data,
         ...this.formData.value,
       };
-      this.userService.updateProfile(updatedProfile);
+
+      this.userService.updateProfile(updatedProfile).subscribe((data) => {
+        console.log(data);
+      });
     });
   }
 }

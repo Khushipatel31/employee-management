@@ -1,1 +1,31 @@
-<p>step3 works!</p>
+<div class="w-full flex justify-center items-center">
+    <div class="flex w-3/5 gap-5 flex-col py-10 justify-center">
+        <form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
+            <mat-form-field class="w-full">
+                <mat-label>Name</mat-label>
+                <input type="text" matInput formControlName="address" placeholder="address" />
+                @if (formData.get('address')?.errors &&
+                !formData.get('address')?.hasError('required')) {
+                <mat-error>Please enter a valid address address</mat-error>
+                } @if (formData.get('address')?.hasError('required')) {
+                <mat-error>address is <strong>required</strong></mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>City</mat-label>
+                <input type="text" matInput formControlName="city" placeholder="city" />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>State</mat-label>
+                <input type="text" matInput formControlName="state" placeholder="city" />
+            </mat-form-field>
+            <mat-form-field class="w-full">
+                <mat-label>PIN</mat-label>
+                <input type="number" matInput formControlName="pin" placeholder="pin" />
+            </mat-form-field>
+            <div>
+                <button mat-button matStepperNext>Next</button>
+            </div>
+        </form>
+    </div>
+</div>
