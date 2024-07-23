@@ -24,8 +24,9 @@ exports.authorizeRoles = (...roles) => {
 };
 
 exports.verify = (async (req, res) => {
+  const user = await userModel.findById(req.user.id).populate("designation");
   res.json({
     success: true,
-    data: req.user
+    data: user
   })
 })

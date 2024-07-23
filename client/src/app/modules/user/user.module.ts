@@ -14,7 +14,15 @@ import { JoinProjectComponent } from './components/dialogs/join-project/join-pro
 import { ProjectActionComponent } from './components/actionButtons/project-action/project-action.component';
 import { EmployeeActionComponent } from './components/actionButtons/employee-action/employee-action.component';
 import { EmployeeProjectsComponent } from './components/employee-projects/employee-projects.component';
-
+import { Step1Component } from './components/profile/registration/step1/step1.component';
+import { Step2Component } from './components/profile/registration/step2/step2.component';
+import { Step3Component } from './components/profile/registration/step3/step3.component';
+import { MatStepperModule } from '@angular/material/stepper';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -29,7 +37,23 @@ import { EmployeeProjectsComponent } from './components/employee-projects/employ
     JoinProjectComponent,
     EmployeeActionComponent,
     EmployeeProjectsComponent,
+    Step1Component,
+    Step2Component,
+    Step3Component,
   ],
-  imports: [CommonModule, UserRoutingModule, AgGridAngular],
+  imports: [
+    CommonModule,
+    UserRoutingModule,
+    AgGridAngular,
+    MatStepperModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDatepickerModule,
+  ],
+  providers: [
+    { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
+  ],
 })
 export class UserModule {}

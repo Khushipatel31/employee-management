@@ -1,0 +1,28 @@
+<form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
+    <mat-form-field class="w-full">
+        <mat-label>Name</mat-label>
+        <input type="text" matInput formControlName="fullname" placeholder="fullname" />
+        @if (formData.get('fullname')?.errors &&
+        !formData.get('fullname')?.hasError('required')) {
+        <mat-error>Please enter a valid fullname address</mat-error>
+        } @if (formData.get('fullname')?.hasError('required')) {
+        <mat-error>fullname is <strong>required</strong></mat-error>
+        }
+    </mat-form-field>
+    <mat-form-field class="w-full">
+        <mat-label>Email</mat-label>
+        <input readonly type="text" matInput formControlName="email" placeholder="email" />
+    </mat-form-field>
+    <mat-form-field class="w-full">
+        <mat-label>Join Date</mat-label>
+        <input readonly matInput [matDatepicker]="picker" formControlName="joinDate">
+        <mat-datepicker #picker></mat-datepicker>
+    </mat-form-field>
+    <mat-form-field class="w-full">
+        <mat-label>Designation</mat-label>
+        <input readonly matInput formControlName="designation" placeholder="designation" />
+    </mat-form-field>
+    <div>
+        <button mat-button matStepperNext>Next</button>
+    </div>
+</form>

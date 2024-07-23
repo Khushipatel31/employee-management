@@ -2,6 +2,35 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { HttpServices } from './http.service';
 
+export interface IDesignation {
+  _id: string;
+  name: string;
+  is_active: number;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+}
+
+export interface Employee {
+  _id: string;
+  fullname: string;
+  email: string;
+  is_active: number;
+  role: string;
+  profileCompleted: number;
+  designation: IDesignation;
+  projects: string[];
+  courses: string[];
+  joinDate: Date;
+  createdAt: Date;
+  updatedAt: Date;
+  __v: number;
+  profile: {
+    public_id?: string;
+    url?: string;
+  }[];
+}
+
 @Injectable({
   providedIn: 'root',
 })
@@ -9,13 +38,31 @@ export class UserService {
   projects: any;
   usernameSubject: BehaviorSubject<any> = new BehaviorSubject<any>('');
   projectSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  profileSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  profileData: Employee | null = null;
+
   constructor(private http: HttpServices) {}
+
   subjectUsername(name: any): void {
     this.usernameSubject.next(name);
   }
 
   subjectProject(newProjects: any): void {
     this.projectSubject.next(newProjects);
+  }
+
+  subjectProfile(data: Employee) {
+    this.profileSubject.next(data);
+  }
+
+  fetchProfileDetail() {
+    this.http.getMethod('/user/verify').subscribe((data) => {
+      this.subjectProfile(data.data);
+    });
+  }
+
+  updateProfile(data: any) {
+    console.log(data);
   }
 
   fetchProjects() {
