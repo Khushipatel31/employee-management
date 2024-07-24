@@ -33,15 +33,13 @@ export class ProjectComponent implements OnInit {
       cellRenderer: ProjectActionComponent,
     },
   ];
-  constructor(
-    private dialog: MatDialog,
-    private userService: UserService,
-    private datePipe: DatePipe
-  ) {}
+  constructor(private userService: UserService, private datePipe: DatePipe) {}
 
   ngOnInit(): void {
     this.userService.fetchProjects();
     this.userService.projectSubject.subscribe((data: any) => {
+      console.log(data);
+      console.log(this.projects);
       this.projects = data;
     });
   }

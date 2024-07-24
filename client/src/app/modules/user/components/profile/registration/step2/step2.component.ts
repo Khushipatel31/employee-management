@@ -10,7 +10,7 @@ import { take } from 'rxjs';
 })
 export class Step2Component implements OnInit {
   formData!: FormGroup;
-  selectedFile: File | null = null;
+  selectedFile!: Blob;
   profileImageUrl!: string;
   newData: any = null;
   constructor(
@@ -29,7 +29,7 @@ export class Step2Component implements OnInit {
       if (data?.courses) {
         data.courses.forEach((course: string) => this.addCourse(course));
       }
-      if (data?.profile && data.profile.length > 0) {
+      if (data?.profile) {
         this.profileImageUrl = data.profile.url;
       }
     });
@@ -109,11 +109,21 @@ export class Step2Component implements OnInit {
       courses: this.formData.value.courses,
       dob: formattedDate,
     };
+    const profileData = new FormData();
+    profileData.append('address', updatedProfile.address);
+    profileData.append('city', updatedProfile.city);
+    profileData.append('contact', updatedProfile.contact);
+    profileData.append('courses', JSON.stringify(updatedProfile.courses));
+    profileData.append('education', updatedProfile.education);
+    profileData.append('fullname', updatedProfile.fullname);
+    profileData.append('pin', updatedProfile.pin);
+    profileData.append('dob', updatedProfile.dob);
+    profileData.append('state', updatedProfile.state);
     if (this.selectedFile) {
-      updatedProfile.append('profileImage', this.selectedFile);
+      profileData.append('profileImage', this.selectedFile);
     }
-    console.log(updatedProfile);
-    this.userService.updateProfile(updatedProfile).subscribe((data) => {
+    console.log(profileData.get('courses'));
+    this.userService.updateProfile(profileData).subscribe((data) => {
       console.log(data);
     });
   }

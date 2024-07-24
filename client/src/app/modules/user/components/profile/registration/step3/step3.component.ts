@@ -25,13 +25,16 @@ export class Step3Component {
     });
   }
   onFormSubmit() {
-    console.log(this.formData.value);
     this.userService.profileSubject.subscribe((data) => {
+      const coursesString = JSON.stringify(data.courses);
       const updatedProfile = {
         ...data,
         ...this.formData.value,
+        courses: coursesString,
       };
-      this.userService.updateProfile(updatedProfile);
+      this.userService.updateProfile(updatedProfile).subscribe((data) => {
+        console.log(data);
+      });
     });
   }
 }

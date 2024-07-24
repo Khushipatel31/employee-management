@@ -97,8 +97,8 @@ const assignProject = catchAsyncError(async (req, res, next) => {
 });
 
 const completeProfile = catchAsyncError(async (req, res, next) => {
-  const { fullname, gender, courses, education, contact, dob, address, state, city, pin, profile } = req.body;
-
+  let { fullname, gender, education, contact, dob, address, state, city, pin, profile } = req.body;
+  const courses = JSON.parse(req.body.courses);
   if (req.file) {
     const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "employeeProfile",
@@ -111,8 +111,8 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
     }
   }
 
-  const updatedEmployee = await userModel.findOneAndUpdate(
-    { _id: req.user._id },
+  const updatedEmployee = await userModel.findByIdAndUpdate(
+    req.user.id,
     {
       fullname,
       gender,

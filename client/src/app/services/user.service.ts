@@ -38,6 +38,7 @@ export class UserService {
   projects: any;
   usernameSubject: BehaviorSubject<any> = new BehaviorSubject<any>('');
   projectSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  myProjectSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   profileSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   profileData: Employee | null = null;
 
@@ -55,6 +56,10 @@ export class UserService {
     this.profileSubject.next(data);
   }
 
+  subjectMyProject(newProjects: any) {
+    this.myProjectSubject.next(newProjects);
+  }
+
   fetchProfileDetail() {
     this.http.getMethod('/user/verify').subscribe((data) => {
       this.subjectProfile(data.data);
@@ -62,7 +67,6 @@ export class UserService {
   }
 
   updateProfile(data: any) {
-    console.log(data);
     return this.http.putMethod('/user/completeProfile', data);
   }
 
@@ -79,6 +83,22 @@ export class UserService {
       )
       .subscribe((data) => {
         this.subjectProject(data);
+      });
+  }
+
+  fetchMyProjects() {
+    this.http
+      .getMethod('/user/myProjects')
+      .pipe(
+        map((data: any) => {
+          data.data.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+          });
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectMyProject(data);
       });
   }
 
