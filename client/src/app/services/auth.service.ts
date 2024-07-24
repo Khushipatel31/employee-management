@@ -15,7 +15,6 @@ export class AuthService {
   constructor(private http: HttpServices, private userService: UserService) {}
 
   login(data: login): Observable<any> {
-    console.log(data);
     return this.http.postMethod('/login', data).pipe(
       map((data: any) => {
         if (data.success) {

@@ -43,12 +43,18 @@ export class UserService {
   profileSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   profileData: Employee | null = null;
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  profileViewSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http: HttpServices) {}
 
   subjectUsername(name: any): void {
     this.usernameSubject.next(name);
   }
+
+  subjectProfileView(data: any): void {
+    this.profileViewSubject.next(data);
+  }
+
   subjectCount(counts: any): void {
     this.countSubject.next(counts);
   }
@@ -67,6 +73,7 @@ export class UserService {
 
   fetchProfileDetail() {
     this.http.getMethod('/user/verify').subscribe((data) => {
+      this.subjectProfileView(data.data);
       this.subjectProfile(data.data);
     });
   }

@@ -14,7 +14,11 @@ import { UserService } from '../../../../services/user.service';
 })
 export class ProfileComponent implements OnInit {
   constructor(private userService: UserService) {}
+  isCompleted: Number = 0;
   ngOnInit(): void {
     this.userService.fetchProfileDetail();
+    this.userService.profileSubject.subscribe((data) => {
+      this.isCompleted = data.profileCompleted;
+    });
   }
 }

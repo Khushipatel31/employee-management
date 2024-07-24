@@ -1,5 +1,7 @@
 <div class="bg-my-blue  h-[10vh]  flex justify-between items-center px-7 ">
-    <div class="text-2xl text-white">
+    <div class="text-2xl flex items-center gap-5 text-white">
+        <img [src]="profileData?.profile?.url || '../../../../assets/image.png'" alt="Profile Picture"
+            class="w-10 h-10 rounded-full border border-white" (click)="openProfileModal()" />
         {{username}}
     </div>
     <button (click)="logout()"

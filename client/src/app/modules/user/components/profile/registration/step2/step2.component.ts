@@ -57,43 +57,11 @@ export class Step2Component implements OnInit {
       reader.readAsDataURL(this.selectedFile);
     }
   }
-  // onFormSubmit() {
-  //   const formValue = this.formData.value;
-  //   let formValues = {
-  //     ...formValue,
-  //   };
-
-  //   let formattedDate = null;
-  //   if (typeof formValue.dob === 'object') {
-  //     formattedDate = formValue.dob.format('YYYY-MM-DD');
-  //   } else {
-  //     formattedDate = formValue.dob;
-  //   }
-
-  //   this.userService.profileSubject.pipe(take(1)).subscribe((data) => {
-  //     let updatedProfile = {
-  //       ...data,
-  //       ...formValues,
-  //       dob: formattedDate,
-  //     };
-
-  //     const registerData = new FormData();
-  //     registerData.append('contact', updatedProfile.contact);
-  //     registerData.append('courses', JSON.stringify(updatedProfile.courses));
-  //     registerData.append('dob', updatedProfile.dob);
-  //     registerData.append('education', updatedProfile.education);
-
-  //     if (this.selectedFile) {
-  //       registerData.append('profileImage', this.profileImageUrl);
-  //     }
-
-  //     this.userService.updateProfile(updatedProfile).subscribe((response) => {
-  //       console.log(response);
-  //     });
-  //   });
-  // }
 
   onFormSubmit() {
+    if (this.formData.invalid) {
+      return;
+    }
     const formValue = this.formData.value;
     let formattedDate = null;
     if (typeof formValue.dob == 'object') {
@@ -121,6 +89,7 @@ export class Step2Component implements OnInit {
     profileData.append('pin', updatedProfile.pin);
     profileData.append('dob', updatedProfile.dob);
     profileData.append('state', updatedProfile.state);
+    profileData.append('profileCompleted', '1');
     if (this.selectedFile) {
       profileData.append('profileImage', this.selectedFile);
     }
@@ -129,48 +98,4 @@ export class Step2Component implements OnInit {
       console.log(data);
     });
   }
-
-  // onFormSubmit() {
-  //   const formValue = this.formData.value;
-  //   let formattedDate = null;
-  //   if (typeof formValue.dob == 'object' && formValue.dob.format) {
-  //     formattedDate = formValue.dob.format('YYYY-MM-DD');
-  //   } else {
-  //     formattedDate = formValue.dob;
-  //   }
-
-  //   this.userService.profileSubject.subscribe((data) => {
-  //     this.newData = data;
-  //     const updatedProfile = {
-  //       ...this.newData,
-  //       ...formValue,
-  //       dob: formattedDate,
-  //     };
-
-  //     const registerData = new FormData();
-  //     registerData.append('a', 'b');
-  //     if (updatedProfile.contact) {
-  //       registerData.append('contact', updatedProfile.contact);
-  //     }
-  //     if (updatedProfile.courses) {
-  //       registerData.append('courses', JSON.stringify(updatedProfile.courses));
-  //     }
-  //     if (updatedProfile.dob) {
-  //       registerData.append('dob', updatedProfile.dob);
-  //     }
-  //     if (updatedProfile.education) {
-  //       registerData.append('education', updatedProfile.education);
-  //     }
-  //     // registerData.append('gender', 'female');
-  //     if (this.selectedFile) {
-  //       registerData.append('profileImage', this.selectedFile);
-  //     }
-
-  //     console.log(JSON.stringify(registerData));
-
-  //     this.userService.updateProfile(registerData).subscribe((data) => {
-  //       console.log(data);
-  //     });
-  //   });
-  // }
 }

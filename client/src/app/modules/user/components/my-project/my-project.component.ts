@@ -16,10 +16,10 @@ export class MyProjectComponent implements OnInit {
   paginationPageSize = 20;
   paginationPageSizeSelector = [20, 50, 100];
   colDefs: ColDef[] = [
-    { field: 'index', flex: 1, filter: true },
-    { field: 'name', flex: 1, filter: true },
+    { field: 'index', filter: true },
+    { field: 'name', filter: true },
     { field: 'description', flex: 1, filter: true },
-    { field: 'status', flex: 1, filter: true },
+    { field: 'status', filter: true },
     {
       field: 'startDate',
       flex: 1,
@@ -31,6 +31,7 @@ export class MyProjectComponent implements OnInit {
     { field: 'duration', flex: 1, filter: true },
     {
       field: 'action',
+      headerName: 'Leave Project',
       cellRenderer: LeaveActionComponent,
     },
   ];

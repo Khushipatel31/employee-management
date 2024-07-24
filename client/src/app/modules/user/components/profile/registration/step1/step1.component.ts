@@ -9,6 +9,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class Step1Component implements OnInit {
   formData!: FormGroup;
+  error: String = '';
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder
@@ -26,14 +27,23 @@ export class Step1Component implements OnInit {
   }
 
   onFormSubmit() {
+    if (this.formData.invalid) {
+      this.error = 'Enter details properly';
+      return;
+    } else {
+      this.error = '';
+    }
     this.userService.profileSubject.subscribe((data) => {
+      const coursesString = JSON.stringify(data.courses);
       const updatedProfile = {
         ...data,
+        profileCompleted: '0',
         ...this.formData.value,
+        courses: coursesString,
       };
-
       this.userService.updateProfile(updatedProfile).subscribe((data) => {
         console.log(data);
+        this.error = '';
       });
     });
   }

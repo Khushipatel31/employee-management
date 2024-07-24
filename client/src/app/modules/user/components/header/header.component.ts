@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminLogoutComponent } from '../../../../components/dialogs/admin-logout/admin-logout.component';
+import { ViewEmployeeDialogComponent } from '../../../admin/components/view-employee-dialog/view-employee-dialog.component';
 
 @Component({
   selector: 'app-header',
@@ -10,10 +11,22 @@ import { AdminLogoutComponent } from '../../../../components/dialogs/admin-logou
 })
 export class HeaderComponent implements OnInit {
   username: string = '';
+  profileData!: any;
   constructor(private userService: UserService, private dialog: MatDialog) {}
   ngOnInit(): void {
+    this.userService.fetchProfileDetail();
     this.userService.usernameSubject.subscribe((data: string) => {
       this.username = data;
+    });
+    this.userService.profileViewSubject.subscribe((data) => {
+      this.profileData = data;
+    });
+  }
+  openProfileModal() {
+    this.dialog.open(ViewEmployeeDialogComponent, {
+      width: '650px',
+      height: '650px',
+      data: this.profileData,
     });
   }
   logout() {

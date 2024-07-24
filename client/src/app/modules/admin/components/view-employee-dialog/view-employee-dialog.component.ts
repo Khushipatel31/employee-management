@@ -30,7 +30,7 @@ export class ViewEmployeeDialogComponent {
     this.profileUrl = this.data.profile?.url || '';
     this.fullname = this.data.fullname || '';
     this.email = this.data.email || '';
-    this.designation = this.data.designationName || '';
+    this.designation = this.data.designation.name || '';
     this.joinDate = this.data.joinDate || null;
     this.address = this.data.address || '';
     this.city = this.data.city || '';

@@ -25,12 +25,16 @@ export class Step3Component {
     });
   }
   onFormSubmit() {
+    if (this.formData.invalid) {
+      return;
+    }
     this.userService.profileSubject.subscribe((data) => {
       const coursesString = JSON.stringify(data.courses);
       const updatedProfile = {
         ...data,
         ...this.formData.value,
         courses: coursesString,
+        profileCompleted: '2',
       };
       this.userService.updateProfile(updatedProfile).subscribe((data) => {
         console.log(data);
