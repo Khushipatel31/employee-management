@@ -8,6 +8,16 @@ const { randomBytes } = require("crypto");
 const projectModel = require("../models/projects");
 const userProjectModel = require("../models/user_projects");
 
+const getCounts = catchAsyncErrors(async (req, res, next) => {
+    const designations = await designationModel.countDocuments();
+    const employees = await userModel.find({ is_active: 1, role: 'user' });
+    const projects = await projectModel.find({ is_active: 1 });
+    res.status(200).json({
+        success: true,
+        data: { employees: employees.length, projects: projects.length, designations },
+    });
+});
+
 const addDesignation = catchAsyncErrors(async (req, res, next) => {
     const { designation } = req.body;
     if (!designation) {
@@ -30,8 +40,8 @@ const getDesignations = catchAsyncErrors(async (req, res, next) => {
 
 const updateDesignation = catchAsyncErrors(async (req, res, next) => {
     const { designationId, designation } = req.body;
-    console.log(designationId,designation)
-    console.log( new mongoose.Types.ObjectId(designationId))
+    console.log(designationId, designation)
+    console.log(new mongoose.Types.ObjectId(designationId))
     const des = await designationModel.findByIdAndUpdate(
         new mongoose.Types.ObjectId(designationId),
         { name: designation },
@@ -184,5 +194,6 @@ module.exports = {
     getAllProjects,
     getProject,
     deleteProject,
-    updateDesignation
+    updateDesignation,
+    getCounts
 };

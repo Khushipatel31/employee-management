@@ -9,6 +9,13 @@ const router = express.Router();
 
 router.get("/verify", isAuthenticatedUser, verify);
 
+router.get(
+  "/counts",
+  isAuthenticatedUser,
+  authorizeRoles("admin"),
+  adminController.getCounts
+);
+
 router
   .route("/designation")
   .post(
@@ -20,7 +27,8 @@ router
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.getDesignations
-  ).put(
+  )
+  .put(
     isAuthenticatedUser,
     authorizeRoles("admin"),
     adminController.updateDesignation
@@ -68,6 +76,7 @@ router
     authorizeRoles("admin"),
     adminController.getAllProjects
   );
+
 
 router
   .route("/project/:id")

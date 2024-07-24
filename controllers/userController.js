@@ -76,6 +76,22 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
   })
 })
 
+const getCounts = catchAsyncError(async (req, res, next) => {
+  const projects = await projectModel.find({});
+  let total = projects.length, active = 0, past = 0;
+  projects.foreach((ele) => {
+    if (ele.endDate < new Date()) {
+      past++;
+    } else {
+      active++;
+    }
+  })
+  res.status(200).json({
+    success: true,
+    data: { total, active, past }
+  })
+})
+
 
 const getEmployees = catchAsyncError(async (req, res, next) => {
   const employees = await userModel.find({
@@ -162,5 +178,6 @@ module.exports = {
   getEmployees,
   completeProfile,
   getEmployeeProjects,
-  leaveProject
+  leaveProject,
+  getCounts
 };

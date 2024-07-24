@@ -56,6 +56,7 @@ export class ProjectComponent {
           this.admin.fetchProjects();
         }
       });
+      this.admin.getCounts();
     } else {
       const formValue = this.projectForm.value;
       console.log(this.data.id);

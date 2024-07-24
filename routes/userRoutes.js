@@ -4,7 +4,7 @@ const userController = require("../controllers/userController")
 const { verify, isAuthenticatedUser, authorizeRoles } = require('../middleware/auth');
 const upload = require("../utils/multerConfig")
 router.get("/verify", isAuthenticatedUser, verify);
-
+router.get("/counts", isAuthenticatedUser, userController.getCounts)
 router.get("/projects", isAuthenticatedUser, userController.getProjects)
 router.post("/assignProject", isAuthenticatedUser, userController.assignProject)
 router.put("/leaveProject/:projectId", isAuthenticatedUser, userController.leaveProject)

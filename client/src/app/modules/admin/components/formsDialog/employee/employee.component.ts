@@ -48,7 +48,7 @@ export class EmployeeComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log(this.employeeForm.value)
+    console.log(this.employeeForm.value);
     if (this.employeeForm.invalid) {
       this.error = 'Enter project details properly';
       return;
@@ -71,6 +71,7 @@ export class EmployeeComponent implements OnInit {
           this.admin.fetchEmployees();
         }
       });
+      this.admin.getCounts();
     } else {
       const formValue = this.employeeForm.value;
       let formValues = {
@@ -90,9 +91,8 @@ export class EmployeeComponent implements OnInit {
       this.dialogRef.close(true);
       this._snackBar.openFromComponent(NotifyComponent, {
         duration: 5 * 1000,
-        data: 'Project edited Successfully!!',
+        data: 'Employee edited Successfully!!',
       });
     }
-   
   }
 }

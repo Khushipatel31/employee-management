@@ -25,6 +25,7 @@ export class EmployeeDeleteComponent {
       });
       this.dialogRef.close();
       this.adminService.fetchEmployees();
+      this.adminService.getCounts();
     });
   }
   onNoClick(): void {

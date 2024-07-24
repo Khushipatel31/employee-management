@@ -7,25 +7,28 @@ import { NotifyComponent } from '../../../../../components/notify/notify.compone
 @Component({
   selector: 'app-project-delete',
   templateUrl: './project-delete.component.html',
-  styleUrl: './project-delete.component.css'
+  styleUrl: './project-delete.component.css',
 })
 export class ProjectDeleteComponent {
-  constructor(private adminService:AdminServices,private _snackBar:MatSnackBar){}
+  constructor(
+    private adminService: AdminServices,
+    private _snackBar: MatSnackBar
+  ) {}
 
-  readonly dialogRef=inject(MatDialogRef<ProjectDeleteComponent>);
+  readonly dialogRef = inject(MatDialogRef<ProjectDeleteComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
   buttonClicked() {
     this.adminService.deleteProject(this.data).subscribe((data) => {
-        this._snackBar.openFromComponent(NotifyComponent, {
-          duration: 5 * 1000,
-          data: 'Project deleted Successfully!!',
-        });
-        this.dialogRef.close();
-        this.adminService.fetchProjects();
+      this._snackBar.openFromComponent(NotifyComponent, {
+        duration: 5 * 1000,
+        data: 'Project deleted Successfully!!',
+      });
+      this.dialogRef.close();
+      this.adminService.fetchProjects();
+      this.adminService.getCounts();
     });
   }
   onNoClick(): void {
     this.dialogRef.close();
   }
-
 }

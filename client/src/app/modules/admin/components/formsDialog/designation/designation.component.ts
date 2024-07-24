@@ -50,10 +50,11 @@ export class DesignationComponent {
             this.admin.fetchDesignation();
           }
         });
+      this.admin.getCounts();
     } else {
       this.admin.editDesignation({
         designationId: this.data.id,
-        designation: this.designationForm.value.designation
+        designation: this.designationForm.value.designation,
       });
       this.loading = false;
       this.dialogRef.close(true);

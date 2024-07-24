@@ -20,12 +20,9 @@ export class DesignationComponent implements OnInit {
     {
       field: 'action',
       cellRenderer: DesignationActionComponent,
-    }
+    },
   ];
-  constructor(
-    private dialog: MatDialog,
-    private admin: AdminServices,
-  ) {}
+  constructor(private dialog: MatDialog, private admin: AdminServices) {}
 
   ngOnInit(): void {
     this.admin.fetchDesignation();
@@ -40,7 +37,7 @@ export class DesignationComponent implements OnInit {
       height: '600 px',
       data: {
         edit: false,
-        name:'',
+        name: '',
       },
     });
   }

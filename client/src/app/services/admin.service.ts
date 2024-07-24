@@ -8,9 +8,11 @@ import { BehaviorSubject, map, Observable } from 'rxjs';
 export class AdminServices {
   designations: any;
   projects: any;
+  counts: any;
   designationSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   projectSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   employeeSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
   constructor(private http: HttpServices) {}
 
@@ -22,12 +24,22 @@ export class AdminServices {
     this.projectSubject.next(newProjects);
   }
 
+  subjectCount(counts: any): void {
+    this.countSubject.next(counts);
+  }
+
   subjectEmployee(newProjects: any): void {
     this.employeeSubject.next(newProjects);
   }
 
   addDesignation(data: string) {
     return this.http.postMethod('/admin/designation', data);
+  }
+
+  getCounts() {
+    return this.http.getMethod('/admin/counts').subscribe((data) => {
+      this.subjectCount(data);
+    });
   }
 
   fetchDesignation() {
