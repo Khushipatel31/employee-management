@@ -38,8 +38,6 @@ export class ProjectComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchProjects();
     this.userService.projectSubject.subscribe((data: any) => {
-      console.log(data);
-      console.log(this.projects);
       this.projects = data;
     });
   }

@@ -1,8 +1,18 @@
 <div class="w-full flex justify-center items-center">
-    <div class="flex w-3/5 gap-5 flex-col py-10 justify-center">
+    <div class="flex w-2/5 gap-5 flex-col py-10 justify-center">
+        <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">
+            Personal Details
+        </div>
         <form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
+            <div>
+                <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="w-1/5 " />
+            </div>
+            <div>
+                <mat-label class="w-full font-semibold py-1 text-[#002D62]">Profile Image</mat-label>
+                <input type="file" class="p-5" (change)="onFileChange($event)" />
+            </div>
             <mat-form-field class="w-full">
-                <mat-label>Join Date</mat-label>
+                <mat-label>Birth Date</mat-label>
                 <input readonly matInput [matDatepicker]="picker" formControlName="dob">
                 <mat-datepicker #picker></mat-datepicker>
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
@@ -15,33 +25,31 @@
                     Education is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
-            <mat-label>Courses</mat-label>
+            <div class="font-semibold py-1 text-[#002D62]">Courses</div>
             <div formArrayName="courses">
                 <div *ngFor="let course of courses.controls; let i=index">
                     <mat-form-field class="w-full">
                         <mat-label>Course {{i + 1}}</mat-label>
                         <div class="flex flex-row">
                             <input type="text" matInput [formControlName]="i" placeholder="Course {{i + 1}}" />
-                            <button mat-icon-button color="warn" (click)="removeCourse(i)">
-                                Remove
+                            <button mat-icon-button color="warn" (click)="removeCourse(i)"
+                                class="font-semibold py-1 text-red-600">
+                                <i class="fa-solid fa-trash-can"></i>
                             </button>
                         </div>
                     </mat-form-field>
                 </div>
-                <button mat-button type="button" (click)="addCourse()">Add Course</button>
-            </div>
-            <img *ngIf="profileImageUrl" [src]="profileImageUrl" alt="Profile Image" class="w-1/5 " />
-            <div class="w-full">
-                <mat-label>Profile Image</mat-label>
-                <input type="file" (change)="onFileChange($event)" />
+                <button mat-button type="button"
+                    class="py-2 px-4 mb-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300"
+                    (click)="addCourse()">Add Course</button>
             </div>
             <mat-form-field class="w-full">
                 <mat-label>Contact</mat-label>
                 <input type="number" matInput formControlName="contact" placeholder="contact" />
             </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Next</button>
-            </div>
+            <button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300"
+                matStepperNext>Save and Next</button>
         </form>
     </div>
 </div>

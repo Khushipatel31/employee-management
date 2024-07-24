@@ -1,8 +1,11 @@
 <div class="w-full flex justify-center items-center">
-    <div class="flex w-3/5 gap-5 flex-col py-10 justify-center">
+    <div class="flex w-2/5 gap-5 flex-col py-10 justify-center">
+        <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">
+            Address Details
+        </div>
         <form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
             <mat-form-field class="w-full">
-                <mat-label>Name</mat-label>
+                <mat-label>Address</mat-label>
                 <input type="text" matInput formControlName="address" placeholder="address" />
                 @if (formData.get('address')?.errors &&
                 !formData.get('address')?.hasError('required')) {
@@ -23,9 +26,9 @@
                 <mat-label>PIN</mat-label>
                 <input type="number" matInput formControlName="pin" placeholder="pin" />
             </mat-form-field>
-            <div>
-                <button mat-button matStepperNext>Next</button>
-            </div>
+            <button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300"
+                matStepperNext>Save</button>
         </form>
     </div>
 </div>

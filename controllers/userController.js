@@ -96,6 +96,14 @@ const assignProject = catchAsyncError(async (req, res, next) => {
   });
 });
 
+const leaveProject = catchAsyncError(async (req, res, next) => {
+  const { projectId } = req.params;
+  await userProjectModel.deleteOne({ project: projectId, user: req.user.id });
+  res.status(200).json({
+    success: true
+  })
+})
+
 const completeProfile = catchAsyncError(async (req, res, next) => {
   let { fullname, gender, education, contact, dob, address, state, city, pin, profile } = req.body;
   const courses = JSON.parse(req.body.courses);
@@ -153,5 +161,6 @@ module.exports = {
   getMyProjects,
   getEmployees,
   completeProfile,
-  getEmployeeProjects
+  getEmployeeProjects,
+  leaveProject
 };

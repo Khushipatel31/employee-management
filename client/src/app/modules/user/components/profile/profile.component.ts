@@ -13,19 +13,8 @@ import { UserService } from '../../../../services/user.service';
   styleUrl: './profile.component.css',
 })
 export class ProfileComponent implements OnInit {
-  constructor(
-    private _formBuilder: FormBuilder,
-    private userService: UserService
-  ) {}
+  constructor(private userService: UserService) {}
   ngOnInit(): void {
     this.userService.fetchProfileDetail();
   }
-
-  firstFormGroup = this._formBuilder.group({
-    firstCtrl: ['', Validators.required],
-  });
-  secondFormGroup = this._formBuilder.group({
-    secondCtrl: ['', Validators.required],
-  });
-  isLinear = false;
 }

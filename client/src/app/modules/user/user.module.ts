@@ -25,6 +25,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapter';
 import { MatIconModule } from '@angular/material/icon';
 import { LeaveActionComponent } from './components/actionButtons/leave-action/leave-action.component';
+import { LeaveProjectComponent } from './components/dialogs/leave-project/leave-project.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -43,6 +44,7 @@ import { LeaveActionComponent } from './components/actionButtons/leave-action/le
     Step2Component,
     Step3Component,
     LeaveActionComponent,
+    LeaveProjectComponent,
   ],
   imports: [
     CommonModule,

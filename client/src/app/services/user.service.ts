@@ -106,6 +106,10 @@ export class UserService {
     return this.http.postMethod('/user/assignProject', { project: id });
   }
 
+  leaveProject(id: string) {
+    return this.http.putMethod(`/user/leaveProject/${id}`, {});
+  }
+
   fetchEmployee() {
     return this.http.getMethod('/user/employees').pipe(
       map((data: any) => {
