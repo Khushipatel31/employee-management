@@ -48,7 +48,6 @@ export class EmployeeComponent implements OnInit {
   }
 
   onFormSubmit() {
-    console.log(this.employeeForm.value);
     if (this.employeeForm.invalid) {
       this.error = 'Enter project details properly';
       return;

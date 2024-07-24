@@ -146,10 +146,23 @@ const getAllProjects = catchAsyncErrors(async (req, res, next) => {
 
 const getProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
-    const employees = await userProjectModel.find({ project: id }).populate("user");
+    const employees = await userProjectModel.find({ project: id })
+        .populate({
+            path: 'user',
+            populate: {
+                path: 'designation'
+            }
+        }).lean();
+
+    const emps = [];
+    employees.forEach((ele) => {
+        let emp = ele.user;
+        emp.projectJoinDate = ele.createdAt;
+        emps.push(emp);
+    })
     res.status(200).json({
         success: true,
-        data: employees
+        data: emps
     })
 })
 

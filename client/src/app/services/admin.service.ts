@@ -11,6 +11,7 @@ export class AdminServices {
   counts: any;
   designationSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   projectSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
+  projectEmployeesSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   employeeSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
 
@@ -18,6 +19,9 @@ export class AdminServices {
 
   subjectDesignation(newDesignations: any): void {
     this.designationSubject.next(newDesignations);
+  }
+  subjectProjectEmployees(data: any): void {
+    this.projectEmployeesSubject.next(data);
   }
 
   subjectProject(newProjects: any): void {
@@ -40,6 +44,25 @@ export class AdminServices {
     return this.http.getMethod('/admin/counts').subscribe((data) => {
       this.subjectCount(data);
     });
+  }
+
+  fetchProjectEmployees(id: string) {
+    this.http
+      .getMethod(`/admin/project/${id}`)
+      .pipe(
+        map((data: any) => {
+          data.data.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            (ele.designationName = ele.designation.name),
+              (ele.designation = ele.designation._id);
+          });
+          console.log(data.data);
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectProjectEmployees(data);
+      });
   }
 
   fetchDesignation() {

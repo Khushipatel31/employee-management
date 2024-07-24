@@ -5,6 +5,7 @@ import { HomeComponent } from './components/home/home.component';
 import { DesignationComponent } from './components/designation/designation.component';
 import { EmployeeComponent } from './components/employee/employee.component';
 import { ProjectComponent } from './components/project/project.component';
+import { ProjectEmployeesComponent } from './components/project-employees/project-employees.component';
 
 const routes: Routes = [
   {
@@ -31,6 +32,10 @@ const routes: Routes = [
       {
         path: 'project',
         component: ProjectComponent,
+      },
+      {
+        path: 'project/:id',
+        component: ProjectEmployeesComponent,
       },
     ],
   },
