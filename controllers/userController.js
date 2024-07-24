@@ -77,20 +77,25 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
 })
 
 const getCounts = catchAsyncError(async (req, res, next) => {
-  const projects = await projectModel.find({});
+  const projects = await userProjectModel.find({ user: req.user.id }).populate("project").lean();
   let total = projects.length, active = 0, past = 0;
-  projects.foreach((ele) => {
-    if (ele.endDate < new Date()) {
+
+  console.log(projects);
+
+  projects.forEach((ele) => {
+    if (ele.project.endDate < new Date()) {
       past++;
     } else {
       active++;
     }
-  })
+  });
+
   res.status(200).json({
     success: true,
     data: { total, active, past }
-  })
-})
+  });
+});
+
 
 
 const getEmployees = catchAsyncError(async (req, res, next) => {

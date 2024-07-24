@@ -19,6 +19,7 @@ export class MyProjectComponent implements OnInit {
     { field: 'index', flex: 1, filter: true },
     { field: 'name', flex: 1, filter: true },
     { field: 'description', flex: 1, filter: true },
+    { field: 'status', flex: 1, filter: true },
     {
       field: 'startDate',
       flex: 1,
@@ -38,6 +39,7 @@ export class MyProjectComponent implements OnInit {
   ngOnInit(): void {
     this.userService.fetchMyProjects();
     this.userService.myProjectSubject.subscribe((data: any) => {
+      console.log(data);
       this.projects = data;
     });
   }
