@@ -18,6 +18,17 @@
                 <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
 
             </mat-form-field>
+            <div class="w-full py-2">
+                <div class="font-semibold py-1 text-[#002D62]">Gender</div>
+                <mat-radio-group formControlName="gender" class="flex gap-5">
+                    <mat-radio-button value="Male">Male</mat-radio-button>
+                    <mat-radio-button value="Female">Female</mat-radio-button>
+                    <mat-radio-button value="Other">Other</mat-radio-button>
+                </mat-radio-group>
+                <mat-error *ngIf="formData.get('gender')?.hasError('required')">
+                    Gender is <strong>required</strong>
+                </mat-error>
+            </div>
             <mat-form-field class="w-full">
                 <mat-label>Education</mat-label>
                 <input type="text" matInput formControlName="education" placeholder="Education" />

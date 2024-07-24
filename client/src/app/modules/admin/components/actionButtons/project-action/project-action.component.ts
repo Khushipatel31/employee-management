@@ -4,15 +4,16 @@ import { ICellRendererParams } from 'ag-grid-community';
 import { ProjectComponent } from '../../formsDialog/project/project.component';
 import { duration } from 'moment';
 import { ProjectDeleteComponent } from '../../deleteDialog/project-delete/project-delete.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-action',
   templateUrl: './project-action.component.html',
-  styleUrl: './project-action.component.css'
+  styleUrl: './project-action.component.css',
 })
 export class ProjectActionComponent {
   params: any;
-  constructor(private dialog: MatDialog) {}
+  constructor(private dialog: MatDialog, private router: Router) {}
   agInit(params: ICellRendererParams): void {
     this.params = params;
   }
@@ -30,10 +31,14 @@ export class ProjectActionComponent {
         description: this.params.data.description,
         startDate: this.params.data.startDate,
         id: this.params.data._id,
-        duration:this.params.data.duration,
-        edit:true
+        duration: this.params.data.duration,
+        edit: true,
       },
     });
+  }
+
+  detail() {
+    this.router.navigate([`admin/project/${this.params.data._id}`]);
   }
 
   delete() {
@@ -42,5 +47,4 @@ export class ProjectActionComponent {
       data: this.params.data._id,
     });
   }
-
 }

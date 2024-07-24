@@ -20,16 +20,9 @@ export class ViewEmployeeComponent {
   }
   clicked() {
     this.dialog.open(ViewEmployeeDialogComponent, {
-      width: '600px',
-      height: '600 px',
-      data: {
-        // name: this.params.data.name,
-        // description: this.params.data.description,
-        // startDate: this.params.data.startDate,
-        // id: this.params.data._id,
-        // duration: this.params.data.duration,
-        // edit: true,
-      },
+      width: '650px',
+      height: '650px',
+      data: this.params.data,
     });
   }
 }

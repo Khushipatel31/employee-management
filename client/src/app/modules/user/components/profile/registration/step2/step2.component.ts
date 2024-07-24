@@ -25,6 +25,7 @@ export class Step2Component implements OnInit {
         contact: [data?.contact || '', Validators.required],
         courses: this.formBuilder.array([]),
         profileImage: [null],
+        gender: [data?.gender || '', Validators.required],
       });
       if (data?.courses) {
         data.courses.forEach((course: string) => this.addCourse(course));
@@ -116,6 +117,7 @@ export class Step2Component implements OnInit {
     profileData.append('courses', JSON.stringify(updatedProfile.courses));
     profileData.append('education', updatedProfile.education);
     profileData.append('fullname', updatedProfile.fullname);
+    profileData.append('gender', updatedProfile.gender);
     profileData.append('pin', updatedProfile.pin);
     profileData.append('dob', updatedProfile.dob);
     profileData.append('state', updatedProfile.state);

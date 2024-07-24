@@ -18,6 +18,7 @@ export interface Employee {
   is_active: number;
   role: string;
   profileCompleted: number;
+  gender: string;
   designation: IDesignation;
   projects: string[];
   courses: string[];

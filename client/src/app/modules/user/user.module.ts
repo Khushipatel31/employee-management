@@ -26,6 +26,7 @@ import { MAT_MOMENT_DATE_ADAPTER_OPTIONS } from '@angular/material-moment-adapte
 import { MatIconModule } from '@angular/material/icon';
 import { LeaveActionComponent } from './components/actionButtons/leave-action/leave-action.component';
 import { LeaveProjectComponent } from './components/dialogs/leave-project/leave-project.component';
+import { MatRadioModule } from '@angular/material/radio';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -57,6 +58,7 @@ import { LeaveProjectComponent } from './components/dialogs/leave-project/leave-
     MatInputModule,
     MatDatepickerModule,
     MatIconModule,
+    MatRadioModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },

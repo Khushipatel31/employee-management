@@ -1,1 +1,68 @@
-<p>view-employee-dialog works!</p>
+<div class="flex items-center justify-center ">
+    <div class="rounded-lg p-6 w-full">
+        <button (click)="closeModal()" class="absolute top-0 right-0 mt-2 mr-2 text-gray-500 hover:text-gray-800">
+            ✖
+        </button>
+        <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">
+            Personal Details
+        </div>
+        <div class="flex flex-col gap-5 w-full justify-center px-4">
+            <img *ngIf="profileUrl" [src]="profileUrl" alt="Profile Image"
+                class="w-24 h-24 self-center rounded-full mb-4">
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Fullname:</div>
+                <div *ngIf="fullname" class="text-xl text-gray-600 font-semibold">{{fullname}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Email:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{email}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Designation:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{designation}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Join Date:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{joinDate | date}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Address:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{address}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">City:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{city}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">State:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{state}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Pin:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{pin}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Contact:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{contact}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">DOB:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{dob | date}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Education:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{education}}</div>
+            </div>
+            <div class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Gender:</div>
+                <div *ngIf="email" class="text-gray-600 text-xl">{{gender}}</div>
+            </div>
+            <div *ngIf="courses.length">
+                <div class="font-semibold text-xl text-[#002D62]">Courses:</div>
+                <ul>
+                    <li *ngFor="let course of courses" class="text-gray-600">{{course}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
