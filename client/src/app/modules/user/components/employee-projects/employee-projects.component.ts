@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { UserService } from '../../../../services/user.service';
 import { ColDef } from 'ag-grid-community';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 
 @Component({
   selector: 'app-employee-projects',
@@ -42,7 +42,8 @@ export class EmployeeProjectsComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private userService: UserService,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private location: Location
   ) {}
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
@@ -56,5 +57,8 @@ export class EmployeeProjectsComponent implements OnInit {
         this.error = err.error.error.message;
       }
     );
+  }
+  goBack(): void {
+    this.location.back();
   }
 }

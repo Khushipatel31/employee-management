@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ColDef } from 'ag-grid-community';
 import { AdminServices } from '../../../../services/admin.service';
-import { DatePipe } from '@angular/common';
+import { DatePipe, Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { ViewEmployeeComponent } from '../actionButtons/view-employee/view-employee.component';
 
@@ -39,8 +39,13 @@ export class ProjectEmployeesComponent implements OnInit {
     private dialog: MatDialog,
     private admin: AdminServices,
     private datePipe: DatePipe,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location
   ) {}
+
+  goBack(): void {
+    this.location.back();
+  }
 
   ngOnInit(): void {
     let id = this.route.snapshot.params['id'];
