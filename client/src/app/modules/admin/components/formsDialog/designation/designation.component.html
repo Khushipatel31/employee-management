@@ -7,8 +7,7 @@
         <form [formGroup]="designationForm" (ngSubmit)="onFormSubmit()">
             <mat-form-field class="w-full">
                 <mat-label>Designation</mat-label>
-                <input
-                type="designation" matInput formControlName="designation" placeholder="Designation" />
+                <input type="designation" matInput formControlName="designation" placeholder="Designation" />
                 @if (designationForm.get('designation')?.errors &&
                 !designationForm.get('designation')?.hasError('required')) {
                 <mat-error>Please enter a valid designation address</mat-error>
@@ -16,6 +15,14 @@
                 <mat-error>designation is <strong>required</strong></mat-error>
                 }
             </mat-form-field>
+            <mat-radio-group formControlName="manager" class="w-full">
+                <mat-label>Manager</mat-label>
+                <mat-radio-button class="mr-4" [value]="true">Yes</mat-radio-button>
+                <mat-radio-button class="mr-4" [value]="false">No</mat-radio-button>
+            </mat-radio-group>
+            <mat-error *ngIf="designationForm.get('manager')?.hasError('required')">
+                Manager field is <strong>required</strong>
+            </mat-error>
             <button [disabled]="loading" mat-flat-button
                 class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
                 {{ loading ? 'Submitting...' : 'Submit' }}

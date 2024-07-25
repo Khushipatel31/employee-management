@@ -32,6 +32,8 @@ import { AdminLogoutComponent } from '../../components/dialogs/admin-logout/admi
 import { ProjectEmployeesComponent } from './components/project-employees/project-employees.component';
 import { ViewEmployeeDialogComponent } from './components/view-employee-dialog/view-employee-dialog.component';
 import { ViewEmployeeComponent } from './components/actionButtons/view-employee/view-employee.component';
+import { MatRadioModule } from '@angular/material/radio';
+
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -67,6 +69,7 @@ import { ViewEmployeeComponent } from './components/actionButtons/view-employee/
     MatNativeDateModule,
     MatMomentDateModule,
     MatSelectModule,
+    MatRadioModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },

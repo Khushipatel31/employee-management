@@ -27,6 +27,7 @@ export class DesignationComponent {
   ) {
     this.designationForm = this.formBuilder.group({
       designation: [this.data?.name || '', Validators.required],
+      manager: [this.data?.manager || false, Validators.required],
     });
   }
 
@@ -38,6 +39,7 @@ export class DesignationComponent {
 
     if (!this.data.edit) {
       this.loading = true;
+      console.log(this.designationForm.value.manager);
       this.admin
         .addDesignation(this.designationForm.value)
         .subscribe((data) => {
