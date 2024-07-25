@@ -84,6 +84,10 @@ export class UserService {
     });
   }
 
+  fetchManagers() {
+    return this.http.getMethod('/user/managers');
+  }
+
   updateProfile(data: any) {
     return this.http.putMethod('/user/completeProfile', data);
   }
@@ -120,12 +124,12 @@ export class UserService {
       });
   }
 
-  joinProject(id: string) {
-    return this.http.postMethod('/user/assignProject', { project: id });
+  joinProject(data: any) {
+    return this.http.postMethod('/user/assignProject', data);
   }
 
-  leaveProject(id: string) {
-    return this.http.putMethod(`/user/leaveProject/${id}`, {});
+  leaveProject(id: string, data: any) {
+    return this.http.putMethod(`/user/leaveProject/${id}`, data);
   }
 
   fetchEmployee() {

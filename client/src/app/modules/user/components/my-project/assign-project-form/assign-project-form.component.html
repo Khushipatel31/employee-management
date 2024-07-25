@@ -1,0 +1,71 @@
+<div class="py-16 px-8">
+    <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">PROJECT</div>
+    <div class="flex w-full gap-5 flex-col">
+        <form [formGroup]="projectForm" (ngSubmit)="onFormSubmit()">
+            <mat-form-field *ngIf="!data?.edit" class="w-full">
+                <mat-label>Project</mat-label>
+                <mat-select formControlName="project">
+                    <mat-option *ngFor="let project of projects" [value]="project._id">{{ project.name }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="projectForm.get('project')?.hasError('required')">Project is
+                    <strong>required</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" *ngIf="data?.edit">
+                <mat-label>Project</mat-label>
+                <input type="text" readonly matInput formControlName="project" placeholder="name" />
+            </mat-form-field>
+
+            <mat-form-field *ngIf="!data?.edit" class="w-full">
+                <mat-label>Reporting To</mat-label>
+                <mat-select formControlName="reportingTo">
+                    <mat-option *ngFor="let user of managers" [value]="user._id">{{ user.fullname }}</mat-option>
+                </mat-select>
+                <mat-error *ngIf="projectForm.get('reportingTo')?.hasError('required')">Reporting to is
+                    <strong>required</strong></mat-error>
+            </mat-form-field>
+            <mat-form-field class="w-full" *ngIf="data?.edit">
+                <mat-label>Report To</mat-label>
+                <input type="text" readonly matInput formControlName="reportingTo" />
+            </mat-form-field>
+            <mat-form-field class="w-full" *ngIf="!data?.edit">
+                <mat-label>Join Date</mat-label>
+                <input matInput [matDatepicker]="joinPicker" formControlName="joinDate">
+                <mat-datepicker-toggle matIconSuffix [for]="joinPicker"></mat-datepicker-toggle>
+                <mat-datepicker #joinPicker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="w-full" *ngIf="data?.edit">
+                <mat-label>Join Date</mat-label>
+                <input matInput [matDatepicker]="joinPicker" readonly formControlName="joinDate">
+                <mat-datepicker #joinPicker></mat-datepicker>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Leave Date</mat-label>
+                <input matInput [matDatepicker]="leavePicker" formControlName="leaveDate">
+                <mat-datepicker-toggle matIconSuffix [for]="leavePicker"></mat-datepicker-toggle>
+                <mat-datepicker #leavePicker></mat-datepicker>
+            </mat-form-field>
+
+            <div class="flex flex-col w-full gap-2" *ngIf="!data?.edit">
+                <label class="text-base font-medium">Tech Stack</label>
+                <div formArrayName="techStack">
+                    <div *ngFor="let tech of techStack.controls; let i=index" [formGroupName]="i"
+                        class="flex gap-2 items-center">
+                        <mat-form-field class="flex-1">
+                            <input matInput formControlName="tech" placeholder="Tech Stack">
+                        </mat-form-field>
+                        <button mat-icon-button color="warn" (click)="removeTechStack(i)">
+                            <mat-icon>remove_circle</mat-icon>
+                        </button>
+                    </div>
+                </div>
+                <button mat-stroked-button color="primary" (click)="addTechStack()">Add Tech Stack</button>
+            </div>
+
+            <button [disabled]="loading" mat-flat-button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
+                {{ loading ? 'Submitting...' : 'Submit' }}
+            </button>
+        </form>
+    </div>
+</div>

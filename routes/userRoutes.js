@@ -7,9 +7,10 @@ router.get("/verify", isAuthenticatedUser, verify);
 router.get("/counts", isAuthenticatedUser, userController.getCounts)
 router.get("/projects", isAuthenticatedUser, userController.getProjects)
 router.post("/assignProject", isAuthenticatedUser, userController.assignProject)
-router.put("/leaveProject/:projectId", isAuthenticatedUser, userController.leaveProject)
+router.put("/leaveProject/:userProjectId", isAuthenticatedUser, userController.leaveProject)
 router.get("/getProjects/:empId", isAuthenticatedUser, userController.getEmployeeProjects)
 router.get("/myProjects", isAuthenticatedUser, userController.getMyProjects)
 router.put("/completeProfile", isAuthenticatedUser, upload.single('profileImage'), userController.completeProfile)
 router.get("/employees", isAuthenticatedUser, userController.getEmployees)
+router.get("/managers", isAuthenticatedUser, userController.getAllManagers)
 module.exports = router

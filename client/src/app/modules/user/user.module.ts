@@ -27,6 +27,8 @@ import { MatIconModule } from '@angular/material/icon';
 import { LeaveActionComponent } from './components/actionButtons/leave-action/leave-action.component';
 import { LeaveProjectComponent } from './components/dialogs/leave-project/leave-project.component';
 import { MatRadioModule } from '@angular/material/radio';
+import { AssignProjectFormComponent } from './components/my-project/assign-project-form/assign-project-form.component';
+import { MatSelectModule } from '@angular/material/select';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -46,6 +48,7 @@ import { MatRadioModule } from '@angular/material/radio';
     Step3Component,
     LeaveActionComponent,
     LeaveProjectComponent,
+    AssignProjectFormComponent,
   ],
   imports: [
     CommonModule,
@@ -59,6 +62,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatDatepickerModule,
     MatIconModule,
     MatRadioModule,
+    MatSelectModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },

@@ -16,14 +16,14 @@ export class LeaveProjectComponent {
   constructor(private _snackBar: MatSnackBar, private user: UserService) {}
 
   buttonClicked() {
-    this.user.leaveProject(this.data.id).subscribe((data) => {
-      this._snackBar.openFromComponent(NotifyComponent, {
-        duration: 5 * 1000,
-        data: 'You have left this project!!',
-      });
-      this.dialogRef.close();
-      this.user.fetchMyProjects();
-    });
+    // this.user.leaveProject(this.data.id).subscribe((data) => {
+    //   this._snackBar.openFromComponent(NotifyComponent, {
+    //     duration: 5 * 1000,
+    //     data: 'You have left this project!!',
+    //   });
+    //   this.dialogRef.close();
+    //   this.user.fetchMyProjects();
+    // });
   }
   onNoClick(): void {
     this.dialogRef.close();

@@ -6,9 +6,11 @@ const cloudinary = require("cloudinary");
 const fs = require("fs");
 const path = require("path");
 const { CustomHttpError } = require("../utils/customError");
+const designationModel = require("../models/designations");
+const { default: mongoose } = require("mongoose");
 
 const getProjects = catchAsyncError(async (req, res, next) => {
-  const projects = await projectModel.find({});
+  const projects = await projectModel.find({ is_active: 1 });
   const assignedToMe = await userProjectModel.find({ user: req.user._id });
   const notAssignedToMe = [];
   projects.forEach((ele) => {
@@ -31,7 +33,7 @@ const getProjects = catchAsyncError(async (req, res, next) => {
 });
 
 const getMyProjects = catchAsyncError(async (req, res, next) => {
-  const assignedProjects = await userProjectModel.find({ user: req.user.id }).populate("project").lean();
+  const assignedProjects = await userProjectModel.find({ user: req.user.id, is_active: 1 }).populate("project").populate("reportingTo").populate("user").populate("reportingTo").lean();
   const myProjects = [];
   assignedProjects.forEach((ele) => {
     const project = {
@@ -42,7 +44,11 @@ const getMyProjects = catchAsyncError(async (req, res, next) => {
     } else {
       project.status = "Ongoing"
     };
-    project.joinedOn = ele.createdAt;
+    project.reportingTo = ele.reportingTo;
+    project.joinedOn = ele.joinDate;
+    project.userProjectId = ele._id;
+    project.techStack = ele.techStack;
+    project.leaveDate = ele.leaveDate;
     myProjects.push(project);
   })
   res.status(200).json({
@@ -67,7 +73,7 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
     } else {
       project.status = "Ongoing"
     };
-    project.joinedOn = ele.createdAt;
+    project.joinedOn = ele.joinDate;
     projects.push(project);
   })
   res.status(200).json({
@@ -75,6 +81,7 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
     data: projects
   })
 })
+
 
 const getCounts = catchAsyncError(async (req, res, next) => {
   const projects = await userProjectModel.find({ user: req.user.id }).populate("project").lean();
@@ -107,17 +114,41 @@ const getEmployees = catchAsyncError(async (req, res, next) => {
 })
 
 const assignProject = catchAsyncError(async (req, res, next) => {
-  const { project } = req.body;
-  const assignedProject = new userProjectModel({ project, user: req.user._id });
+  const { project, reportingTo, techStack, joinDate, leaveDate } = req.body;
+  console.log(req.body)
+  const assignedProject = new userProjectModel({
+    project,
+    user: req.user.id,
+    reportingTo,
+    techStack,
+    joinDate,
+    leaveDate
+  });
   await assignedProject.save();
   res.status(200).json({
     success: true,
   });
 });
 
+const getAllManagers = catchAsyncError(async (req, res, next) => {
+  const employees = await userModel.find({ role: 'user' }).populate("designation");
+  const managers = [];
+  employees.forEach((ele) => {
+    console.log(ele)
+    if (ele.designation.is_manager) {
+      managers.push(ele);
+    }
+  })
+  res.status(200).json({
+    success: true,
+    data: managers
+  })
+});
+
 const leaveProject = catchAsyncError(async (req, res, next) => {
-  const { projectId } = req.params;
-  await userProjectModel.deleteOne({ project: projectId, user: req.user.id });
+  const { userProjectId } = req.params;
+  const { leaveDate } = req.body;
+  await userProjectModel.findByIdAndUpdate(userProjectId, { leaveDate, is_active: 0 });
   res.status(200).json({
     success: true
   })
@@ -184,5 +215,6 @@ module.exports = {
   completeProfile,
   getEmployeeProjects,
   leaveProject,
-  getCounts
+  getCounts,
+  getAllManagers
 };

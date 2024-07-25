@@ -45,6 +45,7 @@ export class Step1Component implements OnInit {
         console.log(data);
         this.error = '';
       });
+      this.userService.fetchProfileDetail();
     });
   }
 }

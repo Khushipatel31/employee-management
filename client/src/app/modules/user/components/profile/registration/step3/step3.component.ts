@@ -38,6 +38,7 @@ export class Step3Component {
       };
       this.userService.updateProfile(updatedProfile).subscribe((data) => {
         console.log(data);
+        this.userService.fetchProfileDetail();
       });
     });
   }

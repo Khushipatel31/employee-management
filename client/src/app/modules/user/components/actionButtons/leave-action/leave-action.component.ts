@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { ICellRendererParams } from 'ag-grid-community';
 import { LeaveProjectComponent } from '../../dialogs/leave-project/leave-project.component';
+import { AssignProjectFormComponent } from '../../my-project/assign-project-form/assign-project-form.component';
 
 @Component({
   selector: 'app-leave-action',
@@ -18,12 +19,17 @@ export class LeaveActionComponent {
     this.params = params;
     return true;
   }
+
   leave() {
-    this.dialog.open(LeaveProjectComponent, {
+    this.dialog.open(AssignProjectFormComponent, {
       width: '600px',
       height: '600 px',
       data: {
-        id: this.params.data._id,
+        id: this.params.data.userProjectId,
+        project: this.params.data.name,
+        reportingTo: this.params.data.reportingTo.fullname,
+        joinDate: this.params.data.joinedOn,
+        leaveDate: this.params.data.leaveDate,
         edit: true,
       },
     });

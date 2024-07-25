@@ -96,6 +96,7 @@ export class Step2Component implements OnInit {
     console.log(profileData.get('courses'));
     this.userService.updateProfile(profileData).subscribe((data) => {
       console.log(data);
+      this.userService.fetchProfileDetail();
     });
   }
 }

@@ -4,6 +4,7 @@ import { ColDef } from 'ag-grid-community';
 import { UserService } from '../../../../services/user.service';
 import { DatePipe } from '@angular/common';
 import { LeaveActionComponent } from '../actionButtons/leave-action/leave-action.component';
+import { AssignProjectFormComponent } from './assign-project-form/assign-project-form.component';
 
 @Component({
   selector: 'app-my-project',
@@ -21,27 +22,44 @@ export class MyProjectComponent implements OnInit {
     { field: 'description', flex: 1, filter: true },
     { field: 'status', filter: true },
     {
-      field: 'startDate',
+      field: 'joinedOn',
       flex: 1,
       filter: true,
       valueFormatter: (p: any) => {
         return this.datePipe.transform(p.value, 'shortDate') + '';
       },
     },
-    { field: 'duration', flex: 1, filter: true },
     {
       field: 'action',
       headerName: 'Leave Project',
       cellRenderer: LeaveActionComponent,
     },
   ];
-  constructor(private userService: UserService, private datePipe: DatePipe) {}
+  constructor(
+    private userService: UserService,
+    private datePipe: DatePipe,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     this.userService.fetchMyProjects();
     this.userService.myProjectSubject.subscribe((data: any) => {
-      console.log(data);
       this.projects = data;
+    });
+  }
+
+  assignForm() {
+    this.dialog.open(AssignProjectFormComponent, {
+      width: '600px',
+      height: '600 px',
+      data: {
+        name: '',
+        description: '',
+        duration: '',
+        startDate: '',
+        edit: false,
+        id: '',
+      },
     });
   }
 }

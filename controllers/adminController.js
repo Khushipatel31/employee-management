@@ -19,11 +19,11 @@ const getCounts = catchAsyncErrors(async (req, res, next) => {
 });
 
 const addDesignation = catchAsyncErrors(async (req, res, next) => {
-    const { designation } = req.body;
+    const { designation, manager } = req.body;
     if (!designation) {
         return next(new CustomHttpError(400, "Please write designation"));
     }
-    const des = new designationModel({ name: designation });
+    const des = new designationModel({ name: designation, is_manager: manager });
     await des.save();
     res.status(200).json({
         success: true,
@@ -40,8 +40,6 @@ const getDesignations = catchAsyncErrors(async (req, res, next) => {
 
 const updateDesignation = catchAsyncErrors(async (req, res, next) => {
     const { designationId, designation } = req.body;
-    console.log(designationId, designation)
-    console.log(new mongoose.Types.ObjectId(designationId))
     const des = await designationModel.findByIdAndUpdate(
         new mongoose.Types.ObjectId(designationId),
         { name: designation },
