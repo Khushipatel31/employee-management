@@ -6,6 +6,7 @@ const designationModel = require("../models/designations");
 const { sendEmail } = require("../utils/sendMail");
 const { randomBytes } = require("crypto");
 const projectModel = require("../models/projects");
+const leaveModel = require("../models/leaves");
 const userProjectModel = require("../models/user_projects");
 
 const getCounts = catchAsyncErrors(async (req, res, next) => {
@@ -193,6 +194,31 @@ const deleteProject = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+const getAllLeave = catchAsyncErrors(async (req, res, next) => {
+    const leaves = await leaveModel.find({}).populate("user").lean();
+    const pendingLeaves = [];
+    const approvedLeaves = [];
+
+    for (const ele of leaves) {
+        if (ele.is_approved === 0) {
+            pendingLeaves.push(ele);
+        } else {
+            const user = await userModel.findById(ele.approved_by).lean();
+            const leave = { ...ele, approvedBy: user };
+            approvedLeaves.push(leave);
+        }
+    }
+
+    res.status(200).json({
+        success: true,
+        data: {
+            pendingLeaves,
+            approvedLeaves
+        }
+    });
+});
+
+
 module.exports = {
     addDesignation,
     getDesignations,
@@ -206,5 +232,6 @@ module.exports = {
     getProject,
     deleteProject,
     updateDesignation,
-    getCounts
+    getCounts,
+    getAllLeave
 };

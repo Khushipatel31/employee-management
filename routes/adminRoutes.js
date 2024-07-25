@@ -1,5 +1,6 @@
 const express = require("express");
 const adminController = require("../controllers/adminController.js");
+const commonController = require("../controllers/commonController.js");
 const {
   isAuthenticatedUser,
   verify,
@@ -86,4 +87,7 @@ router
     authorizeRoles("admin"),
     adminController.deleteProject
   );
+
+router.put("/leave/:id", isAuthenticatedUser, authorizeRoles("admin"), commonController.updateLeave);
+router.get("/leaves", isAuthenticatedUser, adminController.getAllLeave)
 module.exports = router;

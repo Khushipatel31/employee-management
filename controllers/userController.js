@@ -2,11 +2,12 @@ const catchAsyncError = require("../middleware/catchAsyncError");
 const projectModel = require("../models/projects");
 const userProjectModel = require("../models/user_projects");
 const userModel = require("../models/users");
+const leaveModel = require("../models/leaves");
 const cloudinary = require("cloudinary");
+
 const fs = require("fs");
 const path = require("path");
 const { CustomHttpError } = require("../utils/customError");
-const designationModel = require("../models/designations");
 const { default: mongoose } = require("mongoose");
 
 const getProjects = catchAsyncError(async (req, res, next) => {
@@ -199,12 +200,65 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
     });
   }
 
-
   res.status(200).json({
     success: true,
     data: updatedEmployee,
   });
 
+})
+
+const getMyLeaves = catchAsyncError(async (req, res, next) => {
+  const leaves = await leaveModel.find({ user: req.user.id, is_active: 1 });
+  res.status(200).json({
+    success: true,
+    data: leaves
+  })
+})
+
+const addLeave = catchAsyncError(async (req, res, next) => {
+  const { leaveType, from, to, reason } = req.body;
+  const allManagers = await userProjectModel.find({ user: req.user.id });
+  const uniqueManagersSet = new Set();
+  allManagers.forEach(ele => {
+    uniqueManagersSet.add(ele.reportingTo.toString());
+  });
+  const managers = Array.from(uniqueManagersSet);
+  const leave = new leaveModel({ user: req.user.id, leaveType, from, to, reason, managers });
+  await leave.save();
+  res.status(200).json({
+    success: true,
+    data: leave
+  })
+})
+
+const getEmployeeLeaves = catchAsyncError(async (req, res, next) => {
+  const leaves = await leaveModel.find({
+    managers: { $in: [new mongoose.Types.ObjectId(req.user.id)] }
+  }).lean();
+
+  const pendingLeaves = [];
+  const approvedLeaves = [];
+
+  for (const ele of leaves) {
+    if (ele.is_approved === 0) {
+      pendingLeaves.push(ele);
+    } else {
+      const user = await userModel.findById(ele.approved_by).lean();
+      const leave = { ...ele, approvedBy: user };
+      approvedLeaves.push(leave);
+    }
+  }
+
+  res.status(200).json({
+    success: true,
+    data: {
+      success: true,
+      data: {
+        approvedLeaves,
+        pendingLeaves
+      }
+    }
+  })
 })
 
 module.exports = {
@@ -216,5 +270,8 @@ module.exports = {
   getEmployeeProjects,
   leaveProject,
   getCounts,
-  getAllManagers
+  getAllManagers,
+  addLeave,
+  getMyLeaves,
+  getEmployeeLeaves
 };
