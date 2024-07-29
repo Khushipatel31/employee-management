@@ -44,11 +44,16 @@ export class UserService {
   profileData: Employee | null = null;
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   profileViewSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  leaveSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http: HttpServices) {}
 
   subjectUsername(name: any): void {
     this.usernameSubject.next(name);
+  }
+
+  subjectLeave(data: any): void {
+    this.leaveSubject.next(data);
   }
 
   subjectProfileView(data: any): void {
@@ -108,6 +113,30 @@ export class UserService {
       });
   }
 
+  fetchLeaves() {
+    this.http
+      .getMethod('/user/leave')
+      .pipe(
+        map((data: any) => {
+          data.data.approved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+          });
+          data.data.pending.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+          });
+          data.data.rejected.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+          });
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectLeave(data);
+      });
+  }
+
   fetchMyProjects() {
     this.http
       .getMethod('/user/myProjects')
@@ -157,5 +186,9 @@ export class UserService {
         }
       })
     );
+  }
+
+  createLeave(data: any) {
+    return this.http.postMethod('/user/leave', data);
   }
 }

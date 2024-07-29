@@ -1,0 +1,51 @@
+<div class="py-16 px-8">
+    <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">Leave Request</div>
+    <div class="flex w-full gap-5 flex-col">
+        <form [formGroup]="leaveForm" (ngSubmit)="onFormSubmit()">
+            <mat-form-field class="w-full">
+                <mat-label>Leave Type</mat-label>
+                <mat-select formControlName="leaveType">
+                    <mat-option *ngFor="let leaveType of leaveTypes" [value]="leaveType">
+                        {{ leaveType }}
+                    </mat-option>
+                </mat-select>
+                <mat-error *ngIf="leaveForm.get('leaveType')?.hasError('required')">
+                    Leave type is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>From</mat-label>
+                <input matInput [matDatepicker]="fromPicker" formControlName="from" />
+                <mat-datepicker-toggle matIconSuffix [for]="fromPicker"></mat-datepicker-toggle>
+                <mat-datepicker #fromPicker></mat-datepicker>
+                <mat-error *ngIf="leaveForm.get('from')?.hasError('required')">
+                    Start date is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>To</mat-label>
+                <input matInput [matDatepicker]="toPicker" formControlName="to" />
+                <mat-datepicker-toggle matIconSuffix [for]="toPicker"></mat-datepicker-toggle>
+                <mat-datepicker #toPicker></mat-datepicker>
+                <mat-error *ngIf="leaveForm.get('to')?.hasError('required')">
+                    End date is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <mat-form-field class="w-full">
+                <mat-label>Reason</mat-label>
+                <textarea matInput formControlName="reason" placeholder="Flu and high fever"></textarea>
+                <mat-error *ngIf="leaveForm.get('reason')?.hasError('required')">
+                    Reason is <strong>required</strong>
+                </mat-error>
+            </mat-form-field>
+
+            <button [disabled]="loading" mat-flat-button
+                class="w-full py-2 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300">
+                {{ loading ? 'Submitting...' : 'Submit' }}
+            </button>
+        </form>
+    </div>
+</div>

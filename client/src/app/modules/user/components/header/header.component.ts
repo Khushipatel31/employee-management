@@ -3,6 +3,7 @@ import { UserService } from '../../../../services/user.service';
 import { MatDialog } from '@angular/material/dialog';
 import { AdminLogoutComponent } from '../../../../components/dialogs/admin-logout/admin-logout.component';
 import { ViewEmployeeDialogComponent } from '../../../admin/components/view-employee-dialog/view-employee-dialog.component';
+import { CreateLeaveComponent } from '../dialogs/create-leave/create-leave.component';
 
 @Component({
   selector: 'app-header',
@@ -31,6 +32,13 @@ export class HeaderComponent implements OnInit {
   }
   logout() {
     this.dialog.open(AdminLogoutComponent, {
+      width: '600px',
+      height: '600 px',
+    });
+  }
+
+  createLeave() {
+    this.dialog.open(CreateLeaveComponent, {
       width: '600px',
       height: '600 px',
     });

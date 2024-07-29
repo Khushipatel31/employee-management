@@ -30,6 +30,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { AssignProjectFormComponent } from './components/my-project/assign-project-form/assign-project-form.component';
 import { MatSelectModule } from '@angular/material/select';
 import { MyProjectDetailsComponent } from './components/my-project/my-project-details/my-project-details.component';
+import { CreateLeaveComponent } from './components/dialogs/create-leave/create-leave.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -51,6 +52,7 @@ import { MyProjectDetailsComponent } from './components/my-project/my-project-de
     LeaveProjectComponent,
     AssignProjectFormComponent,
     MyProjectDetailsComponent,
+    CreateLeaveComponent,
   ],
   imports: [
     CommonModule,

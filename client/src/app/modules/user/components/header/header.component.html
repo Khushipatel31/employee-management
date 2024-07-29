@@ -4,8 +4,14 @@
             class="w-10 h-10 rounded-full border border-white" (click)="openProfileModal()" />
         {{username}}
     </div>
-    <button (click)="logout()"
-        class="py-2 px-4 font-medium rounded-md bg-white text-[#002D62] border-[#002D62] border-1 focus:outline-none focus:ring focus:border-blue-300">
-        Logout
-    </button>
+    <div class="gap-5 flex ">
+        <button (click)="createLeave()"
+            class="py-2 px-4 font-medium rounded-md bg-white text-[#002D62] border-[#002D62] border-1 focus:outline-none focus:ring focus:border-blue-300">
+            Take Leave
+        </button>
+        <button (click)="logout()"
+            class="py-2 px-4 font-medium rounded-md bg-white text-[#002D62] border-[#002D62] border-1 focus:outline-none focus:ring focus:border-blue-300">
+            Logout
+        </button>
+    </div>
 </div>

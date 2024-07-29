@@ -208,10 +208,24 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
 })
 
 const getMyLeaves = catchAsyncError(async (req, res, next) => {
-  const leaves = await leaveModel.find({ user: req.user.id, is_active: 1 });
+  const leaves = await leaveModel.find({ user: req.user.id, is_active: 1 }).populate("approved_by");
+  const approved = [], pending = [], rejected = [];
+
+  leaves.forEach((ele) => {
+    if (ele.is_approved == 0) {
+      pending.push(ele);
+    } else if (ele.is_approved == 1) {
+      approved.push(ele);
+    } else {
+      rejected.push(ele);
+    }
+  })
+
   res.status(200).json({
     success: true,
-    data: leaves
+    data: {
+      pending, approved, rejected
+    }
   })
 })
 
@@ -224,6 +238,7 @@ const addLeave = catchAsyncError(async (req, res, next) => {
   });
   const managers = Array.from(uniqueManagersSet);
   const leave = new leaveModel({ user: req.user.id, leaveType, from, to, reason, managers });
+  leave.approved_by = null;
   await leave.save();
   res.status(200).json({
     success: true,
