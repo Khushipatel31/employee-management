@@ -249,29 +249,26 @@ const addLeave = catchAsyncError(async (req, res, next) => {
 const getEmployeeLeaves = catchAsyncError(async (req, res, next) => {
   const leaves = await leaveModel.find({
     managers: { $in: [new mongoose.Types.ObjectId(req.user.id)] }
-  }).lean();
+  }).populate("approved_by").populate("user");
 
-  const pendingLeaves = [];
-  const approvedLeaves = [];
+  const pending = [], approved = [], rejected = [];
 
   for (const ele of leaves) {
     if (ele.is_approved === 0) {
-      pendingLeaves.push(ele);
+      pending.push(ele);
+    } else if (ele.is_approved == 1) {
+      approved.push(ele);
     } else {
-      const user = await userModel.findById(ele.approved_by).lean();
-      const leave = { ...ele, approvedBy: user };
-      approvedLeaves.push(leave);
+      rejected.push(ele);
     }
   }
-
   res.status(200).json({
     success: true,
     data: {
       success: true,
-      data: {
-        approvedLeaves,
-        pendingLeaves
-      }
+      pending,
+      approved,
+      rejected
     }
   })
 })

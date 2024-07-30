@@ -8,6 +8,7 @@ import { MyProjectComponent } from './components/my-project/my-project.component
 import { ProjectComponent } from './components/project/project.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { EmployeeProjectsComponent } from './components/employee-projects/employee-projects.component';
+import { EmployeeLeavesComponent } from './components/employee-leaves/employee-leaves.component';
 
 const routes: Routes = [
   {
@@ -42,6 +43,10 @@ const routes: Routes = [
       {
         path: 'profile',
         component: ProfileComponent,
+      },
+      {
+        path: 'leave',
+        component: EmployeeLeavesComponent,
       },
     ],
   },

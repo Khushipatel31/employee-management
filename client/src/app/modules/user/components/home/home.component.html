@@ -16,9 +16,13 @@
         </div>
     </div>
 </div>
-<div class="flex items-center justify-center py-10  ">
+
+<div class="flex items-center justify-center py-10 gap-10  ">
+    <div class="text-2xl text-start gap-5 text-my-blue">
+        My Leaves
+    </div>
     <mat-form-field appearance="fill">
-        <mat-label>Select Task Type</mat-label>
+        <mat-label>Select Leave Status</mat-label>
         <mat-select [(value)]="status" (selectionChange)="onStatusChange($event)">
             <mat-option value="pending">Pending</mat-option>
             <mat-option value="approved">Approved</mat-option>

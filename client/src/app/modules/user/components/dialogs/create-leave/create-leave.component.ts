@@ -54,6 +54,7 @@ export class CreateLeaveComponent implements OnInit {
           data: 'Leave Applied Successfully',
         });
       }
+      this.userServics.fetchLeaves();
     });
   }
 }

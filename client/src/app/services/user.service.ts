@@ -45,11 +45,16 @@ export class UserService {
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   profileViewSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   leaveSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  employeeLeavesSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http: HttpServices) {}
 
   subjectUsername(name: any): void {
     this.usernameSubject.next(name);
+  }
+
+  subjectEmployeeLeaves(data: any): void {
+    this.employeeLeavesSubject.next(data);
   }
 
   subjectLeave(data: any): void {
@@ -74,6 +79,12 @@ export class UserService {
 
   subjectMyProject(newProjects: any) {
     this.myProjectSubject.next(newProjects);
+  }
+
+  updateLeave(data: any, id: string) {
+    this.http.putMethod(`/user/leave/${id}`, data).subscribe((data) => {
+      this.fetchEmployeeLeaves();
+    });
   }
 
   fetchProfileDetail() {
@@ -110,6 +121,33 @@ export class UserService {
       )
       .subscribe((data) => {
         this.subjectProject(data);
+      });
+  }
+
+  fetchEmployeeLeaves() {
+    this.http
+      .getMethod('/user/employeeLeaves')
+      .pipe(
+        map((data: any) => {
+          data.data.approved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+            ele.username = ele.user.fullname;
+          });
+          data.data.pending.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.username = ele.user.fullname;
+          });
+          data.data.rejected.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+            ele.username = ele.user.fullname;
+          });
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectEmployeeLeaves(data);
       });
   }
 

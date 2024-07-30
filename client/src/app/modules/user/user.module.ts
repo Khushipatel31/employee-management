@@ -31,6 +31,9 @@ import { AssignProjectFormComponent } from './components/my-project/assign-proje
 import { MatSelectModule } from '@angular/material/select';
 import { MyProjectDetailsComponent } from './components/my-project/my-project-details/my-project-details.component';
 import { CreateLeaveComponent } from './components/dialogs/create-leave/create-leave.component';
+import { EmployeeLeavesComponent } from './components/employee-leaves/employee-leaves.component';
+import { EmployeeLeaveActionComponent } from './components/actionButtons/employee-leave-action/employee-leave-action.component';
+import { EmployeeLeaveComponent } from './components/dialogs/employee-leave/employee-leave.component';
 @NgModule({
   declarations: [
     DashboardComponent,
@@ -53,6 +56,9 @@ import { CreateLeaveComponent } from './components/dialogs/create-leave/create-l
     AssignProjectFormComponent,
     MyProjectDetailsComponent,
     CreateLeaveComponent,
+    EmployeeLeavesComponent,
+    EmployeeLeaveActionComponent,
+    EmployeeLeaveComponent,
   ],
   imports: [
     CommonModule,

@@ -1,24 +1,22 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
-import { ICellRendererParams } from 'ag-grid-community';
-import { AdminServices } from '../../../../../services/admin.service';
+import { UserService } from '../../../../../services/user.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { NotifyComponent } from '../../../../../components/notify/notify.component';
 
 @Component({
-  selector: 'app-leave-dialog',
-  templateUrl: './leave-dialog.component.html',
-  styleUrl: './leave-dialog.component.css',
+  selector: 'app-employee-leave',
+  templateUrl: './employee-leave.component.html',
+  styleUrl: './employee-leave.component.css',
 })
-export class LeaveDialogComponent implements OnInit {
+export class EmployeeLeaveComponent {
   approveForm!: FormGroup;
-
-  readonly dialogRef = inject(MatDialogRef<LeaveDialogComponent>);
+  readonly dialogRef = inject(MatDialogRef<EmployeeLeaveComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
   constructor(
     private fb: FormBuilder,
-    private adminService: AdminServices,
+    private userService: UserService,
     private _snackBar: MatSnackBar
   ) {}
   ngOnInit(): void {
@@ -26,7 +24,6 @@ export class LeaveDialogComponent implements OnInit {
       status: ['true'],
     });
   }
-
   onSubmit(): void {
     let formData = { ...this.approveForm.value };
     if (this.approveForm.value.status == 'true') {
@@ -34,9 +31,8 @@ export class LeaveDialogComponent implements OnInit {
     } else {
       formData.status = 2;
     }
-    this.adminService.updateLeave(formData, this.data);
+    this.userService.updateLeave(formData, this.data);
     this.dialogRef.close(true);
-
     if (formData.status == 1) {
       this._snackBar.openFromComponent(NotifyComponent, {
         duration: 5 * 1000,

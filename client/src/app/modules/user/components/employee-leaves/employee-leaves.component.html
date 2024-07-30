@@ -1,0 +1,20 @@
+<div class="flex items-center justify-center py-10 gap-10  ">
+    <div class="text-2xl text-start gap-5 text-my-blue font-medium">
+        Employee Leaves
+    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Select Leave Status</mat-label>
+        <mat-select [(value)]="status" (selectionChange)="onStatusChange($event)">
+            <mat-option value="pending">Pending</mat-option>
+            <mat-option value="approved">Approved</mat-option>
+            <mat-option value="rejected">Rejected</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+
+<div class="flex items-center justify-center">
+    <ag-grid-angular class="self-center items-center mb-[10vh]  w-[75rem] ag-theme-quartz" [pagination]="pagination"
+        [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"
+        [rowData]="rowData" [columnDefs]="colDefs" style="height: 30rem;">
+    </ag-grid-angular>
+</div>
