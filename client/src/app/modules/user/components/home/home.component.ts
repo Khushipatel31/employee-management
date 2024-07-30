@@ -27,14 +27,15 @@ export class HomeComponent implements OnInit {
       filter: true,
       flex: 0.5,
     },
-    { field: 'reason', filter: true },
-    { field: 'leaveType', filter: true },
+    { field: 'reason', filter: true, flex: 1 },
+    { field: 'leaveType', filter: true, flex: 1 },
     {
       field: 'from',
       filter: true,
       valueFormatter: (p: any) => {
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
+      flex: 1,
     },
     {
       field: 'to',
@@ -42,13 +43,13 @@ export class HomeComponent implements OnInit {
       valueFormatter: (p: any) => {
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
+      flex: 1,
     },
   ];
   constructor(private userService: UserService, private datepipe: DatePipe) {}
   ngOnInit(): void {
     this.userService.fetchLeaves();
     this.userService.leaveSubject.subscribe((data: any) => {
-      console.log(data);
       this.pending = data.pending;
       this.rejected = data.rejected;
       this.approved = data.approved;

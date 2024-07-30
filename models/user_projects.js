@@ -17,6 +17,7 @@ const userProjectSchema = new mongoose.Schema(
     joinDate: Date,
     leaveDate: Date,
     is_active: { type: Number, default: 1 },
+    is_approved: { default: 0, type: Number, enum: [0, 1, 2] },//0 -pending 1 -approved 2 -rejected
   },
 
   { timestamps: true }

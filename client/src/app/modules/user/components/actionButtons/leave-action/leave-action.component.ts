@@ -25,10 +25,10 @@ export class LeaveActionComponent {
       width: '600px',
       height: '600 px',
       data: {
-        id: this.params.data.userProjectId,
-        project: this.params.data.name,
+        id: this.params.data._id,
+        project: this.params.data.projectName,
         reportingTo: this.params.data.reportingTo.fullname,
-        joinDate: this.params.data.joinedOn,
+        joinDate: this.params.data.joinDate,
         leaveDate: this.params.data.leaveDate,
         edit: true,
       },

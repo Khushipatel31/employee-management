@@ -22,11 +22,11 @@ export class EmployeeLeavesComponent implements OnInit {
   attributes: ColDef[] = [
     {
       field: 'index',
-      filter: true,
+      flex: 0.5,
     },
-    { field: 'leaveType', filter: true },
-    { field: 'username', filter: true },
-    { field: 'reason', filter: true },
+    { field: 'leaveType', filter: true, flex: 1 },
+    { field: 'username', filter: true, flex: 1 },
+    { field: 'reason', filter: true, flex: 1 },
     {
       field: 'from',
       filter: true,

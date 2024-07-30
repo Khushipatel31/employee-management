@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { AdminServices } from '../../../../services/admin.service';
 import { DatePipe } from '@angular/common';
 import { ColDef } from 'ag-grid-community';
@@ -28,14 +28,15 @@ export class HomeComponent implements OnInit {
       filter: true,
       flex: 0.5,
     },
-    { field: 'reason', filter: true },
-    { field: 'leaveType', filter: true },
+    { field: 'reason', filter: true, flex: 1 },
+    { field: 'leaveType', filter: true, flex: 1 },
     {
       field: 'from',
       filter: true,
       valueFormatter: (p: any) => {
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
+      flex: 1,
     },
     {
       field: 'to',
@@ -43,12 +44,15 @@ export class HomeComponent implements OnInit {
       valueFormatter: (p: any) => {
         return this.datepipe.transform(p.value, 'shortDate') + '';
       },
+      flex: 1,
     },
     {
       field: 'markAsComplete',
       cellRenderer: ApproveLeaveComponent,
+      flex: 1,
     },
   ];
+  @ViewChild('agGrid') agGrid: any;
   constructor(
     private adminService: AdminServices,
     private datepipe: DatePipe
@@ -81,12 +85,14 @@ export class HomeComponent implements OnInit {
       columns = columns.filter((col) => col.field !== 'markAsComplete');
       columns.push({
         field: 'approvedByName',
+        headerName: 'By',
       });
     } else {
       this.rowData = this.rejected;
       columns = columns.filter((col) => col.field !== 'markAsComplete');
       columns.push({
         field: 'approvedByName',
+        headerName: 'By',
       });
     }
     this.colDefs = columns;

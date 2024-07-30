@@ -4,9 +4,23 @@
         Join Project
     </button>
 </div>
-<div class="flex items-center justify-center py-10 px-5">
-    <ag-grid-angular class="self-center items-center w-[95%] ag-theme-quartz" [pagination]="pagination"
+
+<div class="flex items-center justify-center py-10 gap-10  ">
+    <div class="text-2xl text-start gap-5 text-my-blue">
+        My Leaves
+    </div>
+    <mat-form-field appearance="fill">
+        <mat-label>Select Leave Status</mat-label>
+        <mat-select [(value)]="status" (selectionChange)="onStatusChange($event)">
+            <mat-option value="pending">Pending</mat-option>
+            <mat-option value="approved">Approved</mat-option>
+            <mat-option value="disapproved">Rejected</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div class="flex items-center justify-center">
+    <ag-grid-angular class="self-center items-center mb-[10vh]  w-[75rem] ag-theme-quartz" [pagination]="pagination"
         [paginationPageSize]="paginationPageSize" [paginationPageSizeSelector]="paginationPageSizeSelector"
-        [rowData]="projects" [columnDefs]="colDefs" style="height: 30rem">
+        [rowData]="rowData" [columnDefs]="colDefs" style="height: 30rem;">
     </ag-grid-angular>
 </div>

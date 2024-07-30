@@ -218,6 +218,14 @@ const getAllLeave = catchAsyncErrors(async (req, res, next) => {
     });
 });
 
+const updateProjectRequest = catchAsyncErrors(async (req, res, next) => {
+    const { id } = req.params;
+    const { status } = req.body;
+    await userProjectModel.findByIdAndUpdate(id, { is_approved: Number(status) }, { new: true });
+    res.status(200).json({
+        success: true
+    })
+})
 
 module.exports = {
     addDesignation,
@@ -233,5 +241,6 @@ module.exports = {
     deleteProject,
     updateDesignation,
     getCounts,
-    getAllLeave
+    getAllLeave,
+    updateProjectRequest
 };

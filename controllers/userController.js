@@ -34,28 +34,48 @@ const getProjects = catchAsyncError(async (req, res, next) => {
 });
 
 const getMyProjects = catchAsyncError(async (req, res, next) => {
-  const assignedProjects = await userProjectModel.find({ user: req.user.id, is_active: 1 }).populate("project").populate("reportingTo").populate("user").populate("reportingTo").lean();
-  const myProjects = [];
-  assignedProjects.forEach((ele) => {
-    const project = {
-      ...ele.project,
-    }
-    if (ele.project.endDate < new Date()) {
-      project.status = "Completed";
+  // const assignedProjects = await userProjectModel.find({ user: req.user.id, is_active: 1 }).populate("project").populate("reportingTo").populate("user").populate("reportingTo").lean();
+  // const myProjects = [];
+  // assignedProjects.forEach((ele) => {
+  //   const project = {
+  //     ...ele.project,
+  //   }
+  //   if (ele.project.endDate < new Date()) {
+  //     project.status = "Completed";
+  //   } else {
+  //     project.status = "Ongoing"
+  //   };
+  //   project.reportingTo = ele.reportingTo;
+  //   project.joinedOn = ele.joinDate;
+  //   project.userProjectId = ele._id;
+  //   project.techStack = ele.techStack;
+  //   project.leaveDate = ele.leaveDate;
+  //   myProjects.push(project);
+  // })
+  // res.status(200).json({
+  //   success: true,
+  //   data: myProjects
+  // })
+
+  const projects = await userProjectModel.find({ user: req.user.id, is_active: 1 }).populate("project").populate("reportingTo").lean();
+  const approved = [], pending = [], disapproved = [];
+  projects.forEach((ele) => {
+    console.log(ele)
+    if (ele.is_approved == 0) {
+      pending.push(ele);
+    } else if (ele.is_approved == 1) {
+      approved.push(ele);
     } else {
-      project.status = "Ongoing"
-    };
-    project.reportingTo = ele.reportingTo;
-    project.joinedOn = ele.joinDate;
-    project.userProjectId = ele._id;
-    project.techStack = ele.techStack;
-    project.leaveDate = ele.leaveDate;
-    myProjects.push(project);
+      disapproved.push(ele);
+    }
   })
   res.status(200).json({
     success: true,
-    data: myProjects
+    data: {
+      pending, approved, disapproved
+    }
   })
+
 })
 
 const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
@@ -116,7 +136,6 @@ const getEmployees = catchAsyncError(async (req, res, next) => {
 
 const assignProject = catchAsyncError(async (req, res, next) => {
   const { project, reportingTo, techStack, joinDate, leaveDate } = req.body;
-  console.log(req.body)
   const assignedProject = new userProjectModel({
     project,
     user: req.user.id,

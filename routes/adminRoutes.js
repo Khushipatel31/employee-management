@@ -87,7 +87,7 @@ router
     authorizeRoles("admin"),
     adminController.deleteProject
   );
-
+router.put("/projectJoinRequest/:id", isAuthenticatedUser, authorizeRoles("admin"), adminController.updateProjectRequest);
 router.put("/leave/:id", isAuthenticatedUser, authorizeRoles("admin"), commonController.updateLeave);
-router.get("/leave", isAuthenticatedUser, adminController.getAllLeave)
+router.get("/leave", isAuthenticatedUser, authorizeRoles("admin"), adminController.getAllLeave);
 module.exports = router;

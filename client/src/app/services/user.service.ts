@@ -180,8 +180,32 @@ export class UserService {
       .getMethod('/user/myProjects')
       .pipe(
         map((data: any) => {
-          data.data.forEach((ele: any, i: number) => {
+          data.data.approved.forEach((ele: any, i: number) => {
             ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            if (ele.project.endDate > new Date()) {
+              ele.projectStatus = 'Active';
+            } else {
+              ele.projectStatus = 'Completed';
+            }
+          });
+          data.data.pending.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            if (ele.project.endDate > new Date()) {
+              ele.projectStatus = 'Active';
+            } else {
+              ele.projectStatus = 'Completed';
+            }
+          });
+          data.data.disapproved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            if (ele.project.endDate > new Date()) {
+              ele.projectStatus = 'Active';
+            } else {
+              ele.projectStatus = 'Completed';
+            }
           });
           return data.data;
         })
@@ -189,6 +213,14 @@ export class UserService {
       .subscribe((data) => {
         this.subjectMyProject(data);
       });
+    // .pipe(
+    //   map((data: any) => {
+    //     // data.data.forEach((ele: any, i: number) => {
+    //     //   ele.index = i + 1;
+    //     // });
+    //     // return data.data;
+    //   })
+    // )
   }
 
   joinProject(data: any) {
