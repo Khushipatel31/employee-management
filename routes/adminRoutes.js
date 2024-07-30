@@ -89,5 +89,5 @@ router
   );
 
 router.put("/leave/:id", isAuthenticatedUser, authorizeRoles("admin"), commonController.updateLeave);
-router.get("/leaves", isAuthenticatedUser, adminController.getAllLeave)
+router.get("/leave", isAuthenticatedUser, adminController.getAllLeave)
 module.exports = router;

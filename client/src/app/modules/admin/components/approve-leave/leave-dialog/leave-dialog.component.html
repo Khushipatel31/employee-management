@@ -1,0 +1,13 @@
+<div class="flex flex-col h-full justify-center items-center w-full py-10">
+    <form [formGroup]="approveForm" (ngSubmit)="onSubmit()" class="flex flex-col">
+        <mat-label class="text-my-blue text-xl py-1">Do you want to approve leave?
+        </mat-label>
+        <mat-radio-group formControlName="status" class="w-full block pb-1">
+            <mat-radio-button value="true">Yes</mat-radio-button>
+            <mat-radio-button value="false">No</mat-radio-button>
+        </mat-radio-group>
+        <button
+            class="block w-full py-2 my-5 px-4 bg-[#002D62] text-white rounded-md hover:bg-white hover:border-[#002D62] hover:border hover:text-[#002D62] focus:outline-none focus:ring focus:border-blue-300"
+            mat-button type="submit">Submit</button>
+    </form>
+</div>

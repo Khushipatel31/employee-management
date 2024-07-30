@@ -195,25 +195,25 @@ const deleteProject = catchAsyncErrors(async (req, res, next) => {
 });
 
 const getAllLeave = catchAsyncErrors(async (req, res, next) => {
-    const leaves = await leaveModel.find({}).populate("user").lean();
-    const pendingLeaves = [];
-    const approvedLeaves = [];
+    const leaves = await leaveModel.find({}).populate("user").populate("approved_by");
+    const pending = [], approved = [], rejected = [];
 
     for (const ele of leaves) {
         if (ele.is_approved === 0) {
-            pendingLeaves.push(ele);
+            pending.push(ele);
+        } else if (ele.is_approved == 1) {
+            approved.push(ele);
         } else {
-            const user = await userModel.findById(ele.approved_by).lean();
-            const leave = { ...ele, approvedBy: user };
-            approvedLeaves.push(leave);
+            rejected.push(ele);
         }
     }
 
     res.status(200).json({
         success: true,
         data: {
-            pendingLeaves,
-            approvedLeaves
+            pending,
+            approved,
+            rejected
         }
     });
 });

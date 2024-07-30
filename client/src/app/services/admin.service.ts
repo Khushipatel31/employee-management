@@ -14,6 +14,7 @@ export class AdminServices {
   projectEmployeesSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   employeeSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
+  leaveSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
   constructor(private http: HttpServices) {}
 
@@ -24,6 +25,9 @@ export class AdminServices {
     this.projectEmployeesSubject.next(data);
   }
 
+  subjectLeave(data: any): void {
+    this.leaveSubject.next(data);
+  }
   subjectProject(newProjects: any): void {
     this.projectSubject.next(newProjects);
   }
@@ -43,6 +47,36 @@ export class AdminServices {
   getCounts() {
     return this.http.getMethod('/admin/counts').subscribe((data) => {
       this.subjectCount(data);
+    });
+  }
+
+  fetchLeaves() {
+    this.http
+      .getMethod('/admin/leave')
+      .pipe(
+        map((data: any) => {
+          data.data.approved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+          });
+          data.data.pending.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+          });
+          data.data.rejected.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.approvedByName = ele.approved_by.fullname;
+          });
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectLeave(data);
+      });
+  }
+
+  updateLeave(data: any, id: string) {
+    this.http.putMethod(`/admin/leave/${id}`, data).subscribe((data) => {
+      this.fetchLeaves();
     });
   }
 

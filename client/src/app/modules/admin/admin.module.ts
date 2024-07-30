@@ -33,7 +33,9 @@ import { ProjectEmployeesComponent } from './components/project-employees/projec
 import { ViewEmployeeDialogComponent } from './components/view-employee-dialog/view-employee-dialog.component';
 import { ViewEmployeeComponent } from './components/actionButtons/view-employee/view-employee.component';
 import { MatRadioModule } from '@angular/material/radio';
-
+import { ApproveLeaveComponent } from './components/approve-leave/approve-leave.component';
+import { LeaveDialogComponent } from './components/approve-leave/leave-dialog/leave-dialog.component';
+import { FormsModule } from '@angular/forms';
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -57,6 +59,8 @@ import { MatRadioModule } from '@angular/material/radio';
     ProjectEmployeesComponent,
     ViewEmployeeDialogComponent,
     ViewEmployeeComponent,
+    ApproveLeaveComponent,
+    LeaveDialogComponent,
   ],
   imports: [
     CommonModule,
@@ -70,6 +74,7 @@ import { MatRadioModule } from '@angular/material/radio';
     MatMomentDateModule,
     MatSelectModule,
     MatRadioModule,
+    FormsModule,
   ],
   providers: [
     { provide: MAT_MOMENT_DATE_ADAPTER_OPTIONS, useValue: { useUtc: true } },
