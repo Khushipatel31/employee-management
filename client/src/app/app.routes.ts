@@ -5,6 +5,7 @@ import { DashboardComponent as AdminDashboard } from './modules/admin/components
 
 import AuthGuard from './guards/auth.guard';
 import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './components/reset-password/reset-password.component';
 export const routes: Routes = [
   {
     path: '',
@@ -18,6 +19,10 @@ export const routes: Routes = [
   {
     path: 'forgotPassword',
     component: ForgotPasswordComponent,
+  },
+  {
+    path: 'password/reset/:token',
+    component: ResetPasswordComponent,
   },
   {
     path: 'admin',

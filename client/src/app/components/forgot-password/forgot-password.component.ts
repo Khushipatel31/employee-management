@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotifyComponent } from '../notify/notify.component';
 
 @Component({
   selector: 'app-forgot-password',
@@ -10,7 +13,12 @@ import { AuthService } from '../../services/auth.service';
 export class ForgotPasswordComponent {
   loginForm!: FormGroup;
   error: string = '';
-  constructor(private formBuilder: FormBuilder, private auth: AuthService) {
+  constructor(
+    private formBuilder: FormBuilder,
+    private auth: AuthService,
+    private router: Router,
+    private _snackBar: MatSnackBar
+  ) {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
     });
@@ -23,8 +31,11 @@ export class ForgotPasswordComponent {
     this.auth.forgotPassword(this.loginForm.value).subscribe(
       (data) => {
         if (data.success) {
-          console.log(data);
-          // this.router.navigate(['dashboard']); // Adjust the route as needed
+          this.router.navigate(['/login']);
+          this._snackBar.openFromComponent(NotifyComponent, {
+            duration: 5 * 1000,
+            data: 'Check your mail!!',
+          });
         }
       },
       (error) => {

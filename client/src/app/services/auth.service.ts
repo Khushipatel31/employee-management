@@ -27,6 +27,10 @@ export class AuthService {
     );
   }
 
+  resetPassword(data: any, token: string) {
+    return this.http.putMethod(`/resetPassword/${token}`, data);
+  }
+
   forgotPassword(data: any) {
     return this.http.postMethod('/forgotPassword', data);
   }

@@ -23,6 +23,8 @@ app.use(cookieParser())
 
 app.post('/api/v1/login', commonController.loginUser)
 app.post('/api/v1/forgotPassword', commonController.forgotPassword)
+app.put('/api/v1/resetPassword/:token', commonController.resetPassword)
+
 app.use('/api/v1/admin', adminRoutes);
 app.use('/api/v1/user', userRoutes);
 

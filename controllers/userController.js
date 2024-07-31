@@ -278,7 +278,6 @@ const getEmployeeLeaves = catchAsyncError(async (req, res, next) => {
 })
 
 
-
 module.exports = {
   assignProject,
   getProjects,

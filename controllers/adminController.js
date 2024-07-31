@@ -145,7 +145,7 @@ const getAllProjects = catchAsyncErrors(async (req, res, next) => {
 
 const getProject = catchAsyncErrors(async (req, res, next) => {
     const { id } = req.params;
-    const employees = await userProjectModel.find({ project: id })
+    const employees = await userProjectModel.find({ project: id, is_approved: 1 })
         .populate({
             path: 'user',
             populate: {

@@ -43,7 +43,7 @@ const forgotPassword = catchAsyncError(async (req, res, next) => {
     const resetToken = user.getresetPasswordToken();
     await user.save({ validateBeforeSave: false });
     const resetPasswordUrl =
-        req.protocol + "://" + "localhost:3000" + "/password/reset/" + resetToken;
+        req.protocol + "://" + "localhost:4200" + "/password/reset/" + resetToken;
     const message = `Your password reset token is : \n\n ${resetPasswordUrl}\n\n If you did not request for forgot password please ignore this mail`;
     await sendEmail({
         email,
@@ -76,7 +76,8 @@ const resetPassword = catchAsyncError(async (req, res, next) => {
     user.password = newPassword;
     user.resetPasswordExpire = undefined;
     user.resetPasswordToken = undefined;
-    await user.save();
+    await user.save({ validateBeforeSave: false });
+
     sendToken(user, 200, res);
 })
 
