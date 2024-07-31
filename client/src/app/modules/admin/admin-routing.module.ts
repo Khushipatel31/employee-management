@@ -6,6 +6,7 @@ import { DesignationComponent } from './components/designation/designation.compo
 import { EmployeeComponent } from './components/employee/employee.component';
 import { ProjectComponent } from './components/project/project.component';
 import { ProjectEmployeesComponent } from './components/project-employees/project-employees.component';
+import { ProjectRequestsComponent } from './components/project-requests/project-requests.component';
 
 const routes: Routes = [
   {
@@ -36,6 +37,10 @@ const routes: Routes = [
       {
         path: 'project/:id',
         component: ProjectEmployeesComponent,
+      },
+      {
+        path: 'projectRequest',
+        component: ProjectRequestsComponent,
       },
     ],
   },

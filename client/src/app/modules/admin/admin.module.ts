@@ -36,6 +36,9 @@ import { MatRadioModule } from '@angular/material/radio';
 import { ApproveLeaveComponent } from './components/approve-leave/approve-leave.component';
 import { LeaveDialogComponent } from './components/approve-leave/leave-dialog/leave-dialog.component';
 import { FormsModule } from '@angular/forms';
+import { ProjectRequestsComponent } from './components/project-requests/project-requests.component';
+import { JoinProjectRequestComponent } from './components/formsDialog/join-project-request/join-project-request.component';
+import { ProjectJoinActionComponent } from './components/actionButtons/project-join-action/project-join-action.component';
 @NgModule({
   declarations: [
     DesignationComponent,
@@ -61,6 +64,9 @@ import { FormsModule } from '@angular/forms';
     ViewEmployeeComponent,
     ApproveLeaveComponent,
     LeaveDialogComponent,
+    ProjectRequestsComponent,
+    JoinProjectRequestComponent,
+    ProjectJoinActionComponent,
   ],
   imports: [
     CommonModule,

@@ -85,7 +85,7 @@ export class AssignProjectFormComponent implements OnInit {
           this.dialogRef.close(true);
           this._snackBar.openFromComponent(NotifyComponent, {
             duration: 5 * 1000,
-            data: 'Project joined Successfully!!',
+            data: 'Project join request made successfully!!',
           });
           this.userService.fetchMyProjects();
         }

@@ -1,19 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { AdminServices } from '../../../../services/admin.service';
 import { ColDef } from 'ag-grid-community';
-import { UserService } from '../../../../services/user.service';
 import { DatePipe } from '@angular/common';
-import { LeaveActionComponent } from '../actionButtons/leave-action/leave-action.component';
-import { AssignProjectFormComponent } from './assign-project-form/assign-project-form.component';
+import { ProjectJoinActionComponent } from '../actionButtons/project-join-action/project-join-action.component';
 
 @Component({
-  selector: 'app-my-project',
-  templateUrl: './my-project.component.html',
-  styleUrl: './my-project.component.css',
+  selector: 'app-project-requests',
+  templateUrl: './project-requests.component.html',
+  styleUrl: './project-requests.component.css',
 })
-export class MyProjectComponent implements OnInit {
-  projects: [] = [];
-  status = 'approved';
+export class ProjectRequestsComponent implements OnInit {
+  status = 'pending';
   pending!: any;
   approved!: any;
   disapproved!: any;
@@ -24,8 +21,9 @@ export class MyProjectComponent implements OnInit {
   colDefs: ColDef[] = [];
   attributes: ColDef[] = [
     { field: 'index', flex: 1 },
+    { field: 'username', flex: 1 },
+    { field: 'email', flex: 1 },
     { field: 'projectName', headerName: 'Project', filter: true, flex: 1 },
-    { field: 'projectStatus', filter: true, flex: 1 },
     {
       field: 'joinDate',
       headerName: 'Joined On',
@@ -37,24 +35,22 @@ export class MyProjectComponent implements OnInit {
     },
     {
       field: 'action',
-      headerName: 'Leave Project',
-      cellRenderer: LeaveActionComponent,
+      headerName: 'Approve/Reject',
+      cellRenderer: ProjectJoinActionComponent,
     },
   ];
   constructor(
-    private userService: UserService,
-    private datePipe: DatePipe,
-    private dialog: MatDialog
+    private adminService: AdminServices,
+    private datePipe: DatePipe
   ) {}
 
   ngOnInit(): void {
-    this.userService.fetchMyProjects();
-    this.status = 'approved';
-    this.userService.myProjectSubject.subscribe((data: any) => {
+    this.adminService.fetchProjectJoinRequests();
+    this.adminService.projectJoinRequestSubject.subscribe((data) => {
       this.pending = data.pending;
       this.disapproved = data.disapproved;
       this.approved = data.approved;
-      this.rowData = data.approved;
+      this.rowData = data.pending;
       this.colDefs = this.attributes.slice();
     });
   }
@@ -63,31 +59,16 @@ export class MyProjectComponent implements OnInit {
     if (this.status === 'pending') {
       this.rowData = this.pending;
       this.colDefs = this.attributes.slice();
-      this.colDefs = this.colDefs.filter((ele) => ele.field != 'action');
     } else if (this.status === 'approved') {
       this.rowData = this.approved;
       this.colDefs = this.attributes.slice();
+      this.colDefs = this.colDefs.filter((ele) => ele.field != 'action');
     } else {
       this.rowData = this.disapproved;
       this.colDefs = this.attributes.slice();
       this.colDefs = this.colDefs.filter((ele) => {
-        return ele.field != 'action' && ele.field != 'joinDate';
+        return ele.field !== 'action' && ele.field !== 'joinDate';
       });
     }
-  }
-
-  assignForm() {
-    this.dialog.open(AssignProjectFormComponent, {
-      width: '600px',
-      height: '600 px',
-      data: {
-        name: '',
-        description: '',
-        duration: '',
-        startDate: '',
-        edit: false,
-        id: '',
-      },
-    });
   }
 }

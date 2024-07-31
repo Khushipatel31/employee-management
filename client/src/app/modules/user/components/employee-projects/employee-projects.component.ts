@@ -18,8 +18,8 @@ export class EmployeeProjectsComponent implements OnInit {
   colDefs: ColDef[] = [
     { field: 'index', flex: 1 },
     { field: 'name', flex: 1, filter: true },
-    { field: 'description', flex: 1, filter: true },
-    { field: 'duration', flex: 1, filter: true },
+    // { field: 'description', flex: 1, filter: true },
+    // { field: 'duration', flex: 1, filter: true },
     {
       field: 'startDate',
       headerName: 'Project start date',

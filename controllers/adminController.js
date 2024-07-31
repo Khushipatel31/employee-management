@@ -227,6 +227,26 @@ const updateProjectRequest = catchAsyncErrors(async (req, res, next) => {
     })
 })
 
+const getProjectJoinRequests = catchAsyncErrors(async (req, res, next) => {
+    const projects = await userProjectModel.find({ is_active: 1 }).populate("project").populate("reportingTo").populate("user").lean();
+    const approved = [], pending = [], disapproved = [];
+    projects.forEach((ele) => {
+        if (ele.is_approved == 0) {
+            pending.push(ele);
+        } else if (ele.is_approved == 1) {
+            approved.push(ele);
+        } else {
+            disapproved.push(ele);
+        }
+    })
+    res.status(200).json({
+        success: true,
+        data: {
+            pending, approved, disapproved
+        }
+    })
+})
+
 module.exports = {
     addDesignation,
     getDesignations,
@@ -242,5 +262,6 @@ module.exports = {
     updateDesignation,
     getCounts,
     getAllLeave,
-    updateProjectRequest
+    updateProjectRequest,
+    getProjectJoinRequests
 };

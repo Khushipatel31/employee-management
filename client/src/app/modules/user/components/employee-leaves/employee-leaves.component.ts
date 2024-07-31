@@ -7,12 +7,12 @@ import { EmployeeLeaveActionComponent } from '../actionButtons/employee-leave-ac
 @Component({
   selector: 'app-employee-leaves',
   templateUrl: './employee-leaves.component.html',
-  styleUrl: './employee-leaves.component.css',
+  styleUrls: ['./employee-leaves.component.css'],
 })
 export class EmployeeLeavesComponent implements OnInit {
-  pending!: any;
-  approved!: any;
-  rejected!: any;
+  pending: any[] = [];
+  approved: any[] = [];
+  rejected: any[] = [];
   status = 'pending';
   rowData: any[] = [];
   pagination = true;
@@ -31,14 +31,18 @@ export class EmployeeLeavesComponent implements OnInit {
       field: 'from',
       filter: true,
       valueFormatter: (p: any) => {
-        return this.datepipe.transform(p.value, 'shortDate') + '';
+        return p.value
+          ? this.datepipe.transform(p.value, 'shortDate') || ''
+          : '';
       },
     },
     {
       field: 'to',
       filter: true,
       valueFormatter: (p: any) => {
-        return this.datepipe.transform(p.value, 'shortDate') + '';
+        return p.value
+          ? this.datepipe.transform(p.value, 'shortDate') || ''
+          : '';
       },
     },
     {
@@ -46,17 +50,20 @@ export class EmployeeLeavesComponent implements OnInit {
       cellRenderer: EmployeeLeaveActionComponent,
     },
   ];
+
   constructor(private userServices: UserService, private datepipe: DatePipe) {}
+
   ngOnInit(): void {
     this.userServices.fetchEmployeeLeaves();
     this.userServices.employeeLeavesSubject.subscribe((data) => {
-      this.pending = data.pending;
-      this.rejected = data.rejected;
-      this.approved = data.approved;
-      this.rowData = data.pending;
+      this.pending = data.pending || [];
+      this.rejected = data.rejected || [];
+      this.approved = data.approved || [];
+      this.rowData = this.pending;
       this.colDefs = this.attributes.slice();
     });
   }
+
   onStatusChange(status: any): void {
     this.status = status.value;
     let columns = this.attributes.slice();

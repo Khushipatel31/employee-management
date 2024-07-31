@@ -15,11 +15,17 @@ export class AdminServices {
   employeeSubject: BehaviorSubject<any> = new BehaviorSubject<any>([]);
   countSubject: BehaviorSubject<any> = new BehaviorSubject<any>(null);
   leaveSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
+  projectJoinRequestSubject: BehaviorSubject<any> = new BehaviorSubject<any>(
+    {}
+  );
 
   constructor(private http: HttpServices) {}
 
   subjectDesignation(newDesignations: any): void {
     this.designationSubject.next(newDesignations);
+  }
+  subjectProjectJoinRequest(data: any): void {
+    this.projectJoinRequestSubject.next(data);
   }
   subjectProjectEmployees(data: any): void {
     this.projectEmployeesSubject.next(data);
@@ -50,6 +56,40 @@ export class AdminServices {
     });
   }
 
+  fetchProjectJoinRequests() {
+    this.http
+      .getMethod('/admin/projectJoinRequests')
+      .pipe(
+        map((data: any) => {
+          data.data.approved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            ele.username = ele.user.fullname;
+            ele.email = ele.user.email;
+            ele.joinDate = ele.joinDate;
+          });
+          data.data.pending.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            ele.username = ele.user.fullname;
+            ele.email = ele.user.email;
+            ele.joinDate = ele.joinDate;
+          });
+          data.data.disapproved.forEach((ele: any, i: number) => {
+            ele.index = i + 1;
+            ele.projectName = ele.project.name;
+            ele.username = ele.user.fullname;
+            ele.email = ele.user.email;
+            ele.joinDate = ele.joinDate;
+          });
+          return data.data;
+        })
+      )
+      .subscribe((data) => {
+        this.subjectProjectJoinRequest(data);
+      });
+  }
+
   fetchLeaves() {
     this.http
       .getMethod('/admin/leave')
@@ -78,6 +118,14 @@ export class AdminServices {
     this.http.putMethod(`/admin/leave/${id}`, data).subscribe((data) => {
       this.fetchLeaves();
     });
+  }
+
+  updateJoinProjectRequest(data: any, id: string) {
+    this.http
+      .putMethod(`/admin/projectJoinRequest/${id}`, data)
+      .subscribe((data) => {
+        this.fetchProjectJoinRequests();
+      });
   }
 
   fetchProjectEmployees(id: string) {
