@@ -9,6 +9,8 @@ const fs = require("fs");
 const path = require("path");
 const { CustomHttpError } = require("../utils/customError");
 const { default: mongoose } = require("mongoose");
+const { sendEmail } = require("../utils/sendMail");
+const sendToken = require("../utils/jwtToken");
 
 const getProjects = catchAsyncError(async (req, res, next) => {
   const projects = await projectModel.find({ is_active: 1 });
@@ -82,9 +84,8 @@ const getEmployeeProjects = catchAsyncError(async (req, res, next) => {
 
 
 const getCounts = catchAsyncError(async (req, res, next) => {
-  const projects = await userProjectModel.find({ user: req.user.id }).populate("project").lean();
+  const projects = await userProjectModel.find({ user: req.user.id, is_approved: 1 }).populate("project").lean();
   let total = projects.length, active = 0, past = 0;
-
   projects.forEach((ele) => {
     if (ele.project.endDate < new Date()) {
       past++;
@@ -276,6 +277,8 @@ const getEmployeeLeaves = catchAsyncError(async (req, res, next) => {
   })
 })
 
+
+
 module.exports = {
   assignProject,
   getProjects,
@@ -288,5 +291,5 @@ module.exports = {
   getAllManagers,
   addLeave,
   getMyLeaves,
-  getEmployeeLeaves
+  getEmployeeLeaves,
 };

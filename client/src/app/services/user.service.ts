@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map } from 'rxjs';
 import { HttpServices } from './http.service';
-
+import { DatePipe } from '@angular/common';
 export interface IDesignation {
   _id: string;
   name: string;
@@ -47,7 +47,7 @@ export class UserService {
   leaveSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
   employeeLeavesSubject: BehaviorSubject<any> = new BehaviorSubject<any>({});
 
-  constructor(private http: HttpServices) {}
+  constructor(private http: HttpServices, private datePipe: DatePipe) {}
 
   subjectUsername(name: any): void {
     this.usernameSubject.next(name);
@@ -183,7 +183,7 @@ export class UserService {
           data.data.approved.forEach((ele: any, i: number) => {
             ele.index = i + 1;
             ele.projectName = ele.project.name;
-            if (ele.project.endDate > new Date()) {
+            if (ele.project.endDate > new Date(Date.now()).toISOString()) {
               ele.projectStatus = 'Active';
             } else {
               ele.projectStatus = 'Completed';
@@ -192,7 +192,7 @@ export class UserService {
           data.data.pending.forEach((ele: any, i: number) => {
             ele.index = i + 1;
             ele.projectName = ele.project.name;
-            if (ele.project.endDate > new Date()) {
+            if (ele.project.endDate > new Date(Date.now()).toISOString()) {
               ele.projectStatus = 'Active';
             } else {
               ele.projectStatus = 'Completed';
@@ -201,7 +201,7 @@ export class UserService {
           data.data.disapproved.forEach((ele: any, i: number) => {
             ele.index = i + 1;
             ele.projectName = ele.project.name;
-            if (ele.project.endDate > new Date()) {
+            if (ele.project.endDate > new Date(Date.now()).toISOString()) {
               ele.projectStatus = 'Active';
             } else {
               ele.projectStatus = 'Completed';

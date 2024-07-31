@@ -27,6 +27,10 @@ export class AuthService {
     );
   }
 
+  forgotPassword(data: any) {
+    return this.http.postMethod('/forgotPassword', data);
+  }
+
   verify(): Observable<boolean> {
     return this.http.getMethod('/' + this.getRole() + '/verify').pipe(
       map((data: any) => {

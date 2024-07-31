@@ -4,6 +4,7 @@ import { LoginComponent } from './components/login/login.component';
 import { DashboardComponent as AdminDashboard } from './modules/admin/components/dashboard/dashboard.component';
 
 import AuthGuard from './guards/auth.guard';
+import { ForgotPasswordComponent } from './components/forgot-password/forgot-password.component';
 export const routes: Routes = [
   {
     path: '',
@@ -14,10 +15,10 @@ export const routes: Routes = [
     path: 'login',
     component: LoginComponent,
   },
-  // {
-  //   path: 'register',
-  //   component: RegisterComponent,
-  // },
+  {
+    path: 'forgotPassword',
+    component: ForgotPasswordComponent,
+  },
   {
     path: 'admin',
     canActivate: [AuthGuard('admin')],

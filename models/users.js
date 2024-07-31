@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
 const jwt = require("jsonwebtoken");
 require("dotenv").config();
-
 const bcrypt = require("bcryptjs");
+const crypto = require("crypto")
+
 const userSchema = new mongoose.Schema(
   {
     fullname: { type: String, trim: true },
@@ -38,7 +39,13 @@ const userSchema = new mongoose.Schema(
     state: String,
     city: String,
     pin: Number,
-    joinDate: Date
+    joinDate: Date,
+    resetPasswordToken: {
+      type: String,
+    },
+    resetPasswordExpire: {
+      type: String,
+    },
   },
   { timestamps: true }
 );
@@ -59,6 +66,14 @@ userSchema.methods.getJWTToken = function () {
 
 userSchema.methods.comparePassword = async function (enteredPassword) {
   return await bcrypt.compare(enteredPassword, this.password);
+};
+
+userSchema.methods.getresetPasswordToken = function () {
+  const token = crypto.randomBytes(20).toString("hex");//new token using crypto 
+  this.resetPasswordToken = crypto.createHash('sha256').update(token).digest("hex");//using sha256 algorithm and updating hash by token
+  this.resetPasswordExpire = Date.now() + Date.now() + 15 * 60 * 1000;//setting expiry after 15 minutes
+  //by using this. the extra properties are added but not saved to database so look at user Controller
+  return token;
 };
 
 const userModel = mongoose.model("users", userSchema);

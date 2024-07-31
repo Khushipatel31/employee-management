@@ -3,6 +3,8 @@ const userModel = require("../models/users");
 const leaveModel = require("../models/leaves");
 const { CustomHttpError } = require("../utils/customError");
 const sendToken = require("../utils/jwtToken");
+const crypto = require("crypto");
+const { sendEmail } = require("../utils/sendMail");
 
 const loginUser = catchAsyncError(async (req, res, next) => {
     const { email, password } = req.body;
@@ -32,5 +34,50 @@ const updateLeave = catchAsyncError(async (req, res, next) => {
         data: leave
     })
 })
+const forgotPassword = catchAsyncError(async (req, res, next) => {
+    const { email } = req.body;
+    const user = await userModel.findOne({ email });
+    if (!user) {
+        return next(new CustomHttpError(404, "No User exists"));
+    }
+    const resetToken = user.getresetPasswordToken();
+    await user.save({ validateBeforeSave: false });
+    const resetPasswordUrl =
+        req.protocol + "://" + "localhost:3000" + "/password/reset/" + resetToken;
+    const message = `Your password reset token is : \n\n ${resetPasswordUrl}\n\n If you did not request for forgot password please ignore this mail`;
+    await sendEmail({
+        email,
+        subject: "Reset you password",
+        message
+    })
+    res.status(200).json({
+        success: true
+    })
+})
 
-module.exports = { loginUser, updateLeave }
+const resetPassword = catchAsyncError(async (req, res, next) => {
+    const { newPassword, confirmPassword } = req.body;
+    const resetPasswordToken = crypto.createHash("sha256").update(req.params.token).digest("hex");
+    const user = await userModel.findOne({
+        resetPasswordToken,
+        resetPasswordExpire: { $gt: Date.now() }
+    })
+    if (!user) {
+        return next(
+            new CustomHttpError(
+                400,
+                "Reset password token is invalid or has been expired"
+            )
+        );
+    }
+    if (newPassword !== confirmPassword) {
+        return next(new CustomHttpError(400, "Password does not match"));
+    }
+    user.password = newPassword;
+    user.resetPasswordExpire = undefined;
+    user.resetPasswordToken = undefined;
+    await user.save();
+    sendToken(user, 200, res);
+})
+
+module.exports = { loginUser, updateLeave, forgotPassword, resetPassword }
