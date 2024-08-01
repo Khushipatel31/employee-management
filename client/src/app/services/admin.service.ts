@@ -98,13 +98,16 @@ export class AdminServices {
           data.data.approved.forEach((ele: any, i: number) => {
             ele.index = i + 1;
             ele.approvedByName = ele.approved_by.fullname;
+            ele.username = ele.user.fullname;
           });
           data.data.pending.forEach((ele: any, i: number) => {
             ele.index = i + 1;
+            ele.username = ele.user.fullname;
           });
           data.data.rejected.forEach((ele: any, i: number) => {
             ele.index = i + 1;
             ele.approvedByName = ele.approved_by.fullname;
+            ele.username = ele.user.fullname;
           });
           return data.data;
         })

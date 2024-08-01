@@ -4,7 +4,6 @@ const userProjectModel = require("../models/user_projects");
 const userModel = require("../models/users");
 const leaveModel = require("../models/leaves");
 const cloudinary = require("cloudinary");
-
 const fs = require("fs");
 const path = require("path");
 const { CustomHttpError } = require("../utils/customError");
@@ -19,7 +18,7 @@ const getProjects = catchAsyncError(async (req, res, next) => {
   projects.forEach((ele) => {
     let flag = 0;
     assignedToMe.forEach((myProject) => {
-      if (myProject.project.toString() == ele._id.toString()) {
+      if (myProject.project.toString() == ele._id.toString() && myProject.is_approved == 1 && myProject.is_active == 1) {
         flag = 1;
       }
     });

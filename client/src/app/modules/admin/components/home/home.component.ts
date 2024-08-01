@@ -28,6 +28,7 @@ export class HomeComponent implements OnInit {
       filter: true,
       flex: 0.5,
     },
+    { field: 'username', filter: true, flex: 1 },
     { field: 'reason', filter: true, flex: 1 },
     { field: 'leaveType', filter: true, flex: 1 },
     {
@@ -47,12 +48,11 @@ export class HomeComponent implements OnInit {
       flex: 1,
     },
     {
-      field: 'markAsComplete',
+      field: 'approve/Reject',
       cellRenderer: ApproveLeaveComponent,
       flex: 1,
     },
   ];
-  @ViewChild('agGrid') agGrid: any;
   constructor(
     private adminService: AdminServices,
     private datepipe: DatePipe
@@ -82,14 +82,14 @@ export class HomeComponent implements OnInit {
       this.rowData = this.pending;
     } else if (this.status === 'approved') {
       this.rowData = this.approved;
-      columns = columns.filter((col) => col.field !== 'markAsComplete');
+      columns = columns.filter((col) => col.field !== 'approve/Reject');
       columns.push({
         field: 'approvedByName',
         headerName: 'By',
       });
     } else {
       this.rowData = this.rejected;
-      columns = columns.filter((col) => col.field !== 'markAsComplete');
+      columns = columns.filter((col) => col.field !== 'approve/Reject');
       columns.push({
         field: 'approvedByName',
         headerName: 'By',

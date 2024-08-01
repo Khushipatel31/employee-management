@@ -63,6 +63,7 @@ export class AssignProjectFormComponent implements OnInit {
 
   onFormSubmit() {
     if (this.projectForm.invalid) {
+      this.error = 'Please fill all details properly';
       return;
     }
     if (!this.data?.edit) {
@@ -91,6 +92,10 @@ export class AssignProjectFormComponent implements OnInit {
         }
       });
     } else {
+      if (!this.projectForm.value.leaveDate) {
+        this.error = 'Fill all details mentioned above';
+        return;
+      }
       const formValue = this.projectForm.value;
       let formValues = {
         ...formValue,
