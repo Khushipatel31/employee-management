@@ -34,13 +34,13 @@
                 <mat-datepicker #joinPicker></mat-datepicker>
             </mat-form-field>
             <mat-form-field class="w-full" *ngIf="data?.edit">
-                <mat-label>Join Date</mat-label>
+                <mat-label>Project Joining Date</mat-label>
                 <input matInput [matDatepicker]="joinPicker" readonly formControlName="joinDate">
                 <mat-datepicker #joinPicker></mat-datepicker>
             </mat-form-field>
 
             <mat-form-field class="w-full">
-                <mat-label>Leave Date</mat-label>
+                <mat-label>Project Leave Date</mat-label>
                 <input matInput [matDatepicker]="leavePicker" formControlName="leaveDate">
                 <mat-datepicker-toggle matIconSuffix [for]="leavePicker"></mat-datepicker-toggle>
                 <mat-datepicker #leavePicker></mat-datepicker>

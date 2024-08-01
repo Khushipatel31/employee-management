@@ -6,7 +6,7 @@
         <form [formGroup]="formData" (ngSubmit)="onFormSubmit()">
             <mat-form-field class="w-full">
                 <mat-label>Name</mat-label>
-                <input type="text" matInput formControlName="fullname" placeholder="fullname" />
+                <input readonly type="text" matInput formControlName="fullname" placeholder="fullname" />
                 @if (formData.get('fullname')?.errors &&
                 !formData.get('fullname')?.hasError('required')) {
                 <mat-error>Please enter a valid fullname address</mat-error>

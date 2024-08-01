@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../../../../services/user.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-step3',
@@ -11,7 +12,8 @@ export class Step3Component {
   formData!: FormGroup;
   constructor(
     private userService: UserService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -37,8 +39,8 @@ export class Step3Component {
         profileCompleted: '2',
       };
       this.userService.updateProfile(updatedProfile).subscribe((data) => {
-        console.log(data);
         this.userService.fetchProfileDetail();
+        this.router.navigate(['/user']);
       });
     });
   }
