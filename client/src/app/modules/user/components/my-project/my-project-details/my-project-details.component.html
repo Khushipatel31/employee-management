@@ -1,1 +1,38 @@
-<p>my-project-details works!</p>
+<div class="flex items-center justify-center">
+    <div class="rounded-lg p-6 w-full relative">
+        <button class="absolute top-0 right-0 mt-2 mr-2 text-gray-500 hover:text-gray-800">
+            ✖
+        </button>
+        <div class="text-3xl text-center font-semibold mb-10 text-[#002D62]">
+            Project Details
+        </div>
+        <div class="flex flex-col gap-5 w-full justify-center px-4">
+            <div *ngIf="data.projectName" class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Project Name:</div>
+                <div class="text-gray-600 text-xl font-semibold">{{data.projectName}}</div>
+            </div>
+            <div *ngIf="data.project?.description" class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Description:</div>
+                <div class="text-gray-600 text-xl">{{data.project.description}}</div>
+            </div>
+            <div *ngIf="data.joinDate" class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Join Date:</div>
+                <div class="text-gray-600 text-xl">{{data.joinDate | date}}</div>
+            </div>
+            <div *ngIf="data.projectStatus" class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Project Status:</div>
+                <div class="text-gray-600 text-xl">{{data.projectStatus}}</div>
+            </div>
+            <div *ngIf="data.reportingTo?.fullname" class="flex items-center gap-1">
+                <div class="font-semibold text-xl text-[#002D62]">Reporting To:</div>
+                <div class="text-gray-600 text-xl">{{data.reportingTo.fullname}}</div>
+            </div>
+            <div *ngIf="data.techStack?.length">
+                <div class="font-semibold text-xl text-[#002D62]">Tech Stack:</div>
+                <ul>
+                    <li *ngFor="let tech of data.techStack" class="text-gray-600 text-xl">{{tech.tech}}</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>

@@ -37,7 +37,6 @@ export class MyProjectComponent implements OnInit {
     },
     {
       field: 'action',
-      headerName: 'Leave Project',
       cellRenderer: LeaveActionComponent,
     },
   ];
@@ -79,7 +78,7 @@ export class MyProjectComponent implements OnInit {
   assignForm() {
     this.dialog.open(AssignProjectFormComponent, {
       width: '600px',
-      height: '600 px',
+      height: '600px',
       data: {
         name: '',
         description: '',

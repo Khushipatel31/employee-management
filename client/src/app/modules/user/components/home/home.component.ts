@@ -27,8 +27,8 @@ export class HomeComponent implements OnInit {
       filter: true,
       flex: 0.5,
     },
-    { field: 'reason', filter: true, flex: 1 },
     { field: 'leaveType', filter: true, flex: 1 },
+    { field: 'reason', filter: true, flex: 1 },
     {
       field: 'from',
       filter: true,

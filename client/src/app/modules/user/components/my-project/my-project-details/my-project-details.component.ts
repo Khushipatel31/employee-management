@@ -10,5 +10,7 @@ export class MyProjectDetailsComponent {
   readonly dialogRef = inject(MatDialogRef<MyProjectDetailsComponent>);
   readonly data = inject<any>(MAT_DIALOG_DATA);
 
-  constructor() {}
+  constructor() {
+    console.log(this.data);
+  }
 }
