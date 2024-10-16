@@ -241,19 +241,45 @@ const getMyLeaves = catchAsyncError(async (req, res, next) => {
 
 const addLeave = catchAsyncError(async (req, res, next) => {
   const { leaveType, from, to, reason } = req.body;
-
-  const allManagers = await userProjectModel.find({ user: req.user.id });
-  const uniqueManagersSet = new Set();
-  allManagers.forEach(ele => {
-    uniqueManagersSet.add(ele.reportingTo.toString());
+  const leaveStart = new Date(from);
+  const leaveEnd = new Date(to);
+  const leaveDays = (leaveEnd - leaveStart) / (1000 * 60 * 60 * 24) + 1;
+  const takenLeaves = await leaveModel.find({
+    user: req.user.id,
+    leaveType: leaveType, // Filter by the same leave type
+    is_approved: 1,
   });
-  const managers = Array.from(uniqueManagersSet);
-  const leave = new leaveModel({ user: req.user.id, leaveType, from, to, reason, managers });
-  leave.approved_by = null;
-  await leave.save();
+  let totalLeaveDays = 0;
+  takenLeaves.forEach(leave => {
+    const start = new Date(leave.from);
+    const end = new Date(leave.to);
+    const daysTaken = (end - start) / (1000 * 60 * 60 * 24) + 1;
+    totalLeaveDays += daysTaken;
+  });
+  console.log(totalLeaveDays)
+  if (leaveType === 'SICK_LEAVE' && (totalLeaveDays + leaveDays) > 5) {
+    return next(new CustomHttpError(400, "You have exceeded the allowed 5 days for sick leave."));
+  }
+
+  if (leaveType === 'CASUAL_LEAVE' && (totalLeaveDays + leaveDays) > 10) {
+    return next(new CustomHttpError(400, "You have exceeded the allowed 10 days for casual leave."));
+  }
+
+  if (leaveType === 'OTHER' && (totalLeaveDays + leaveDays) > 11) {
+    return next(new CustomHttpError(400, "You have exceeded the allowed 11 days for other leave."));
+  }
+  // const allManagers = await userProjectModel.find({ user: req.user.id });
+  // const uniqueManagersSet = new Set();
+  // allManagers.forEach(ele => {
+  //   uniqueManagersSet.add(ele.reportingTo.toString());
+  // });
+  // const managers = Array.from(uniqueManagersSet);
+  // const leave = new leaveModel({ user: req.user.id, leaveType, from, to, reason, managers });
+  // leave.approved_by = null;
+  // await leave.save();
   res.status(200).json({
     success: true,
-    data: leave
+    // data: leave
   })
 })
 

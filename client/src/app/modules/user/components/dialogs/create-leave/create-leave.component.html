@@ -5,14 +5,15 @@
             <mat-form-field class="w-full">
                 <mat-label>Leave Type</mat-label>
                 <mat-select formControlName="leaveType">
-                    <mat-option *ngFor="let leaveType of leaveTypes" [value]="leaveType">
-                        {{ leaveType }}
+                    <mat-option *ngFor="let leaveType of leaveTypes" [value]="leaveType.value">
+                        {{ leaveType.label }}
                     </mat-option>
                 </mat-select>
                 <mat-error *ngIf="leaveForm.get('leaveType')?.hasError('required')">
                     Leave type is <strong>required</strong>
                 </mat-error>
             </mat-form-field>
+
 
             <mat-form-field class="w-full">
                 <mat-label>From</mat-label>
@@ -47,5 +48,8 @@
                 {{ loading ? 'Submitting...' : 'Submit' }}
             </button>
         </form>
+        <div *ngIf="formError" class="text-red-600 mb-4 text-center">
+            {{ formError }}
+        </div>
     </div>
 </div>
