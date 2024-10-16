@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../../../../services/user.service';
 import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { NotifyComponent } from '../../../../../../components/notify/notify.component';
 
 @Component({
   selector: 'app-step3',
@@ -10,10 +12,13 @@ import { Router } from '@angular/router';
 })
 export class Step3Component {
   formData!: FormGroup;
+  newData: any = null;
+
   constructor(
     private userService: UserService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private _snackBar: MatSnackBar
   ) {}
 
   ngOnInit(): void {
@@ -30,18 +35,35 @@ export class Step3Component {
     if (this.formData.invalid) {
       return;
     }
+    const formValue = this.formData.value;
+    let coursesString, profile;
     this.userService.profileSubject.subscribe((data) => {
-      const coursesString = JSON.stringify(data.courses);
-      const updatedProfile = {
-        ...data,
-        ...this.formData.value,
-        courses: coursesString,
-        profileCompleted: '2',
-      };
-      this.userService.updateProfile(updatedProfile).subscribe((data) => {
-        this.userService.fetchProfileDetail();
-        this.router.navigate(['/user']);
-      });
+      coursesString = JSON.stringify(data.courses);
+      profile = JSON.stringify(data.profile);
+      this.newData = data;
+    });
+    // this.userService.profileSubject.subscribe((data) => {
+    //   const updatedProfile = {
+    //     ...data,
+    //     ...this.formData.value,
+    //     courses: coursesString,
+    //     profileCompleted: '2',
+    //   };
+    //   this.userService.updateProfile(updatedProfile);
+    // });
+    const updatedProfile = {
+      ...this.newData,
+      ...formValue,
+      profile,
+      courses: coursesString,
+      profileCompleted: '2',
+    };
+    console.log(updatedProfile);
+    this.userService.updateProfile(updatedProfile);
+    this.router.navigate(['/user/dashboard']);
+    this._snackBar.openFromComponent(NotifyComponent, {
+      duration: 5 * 1000,
+      data: 'Your profile is updated successfully!!',
     });
   }
 }

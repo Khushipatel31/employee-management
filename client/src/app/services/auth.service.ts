@@ -17,6 +17,7 @@ export class AuthService {
   login(data: login): Observable<any> {
     return this.http.postMethod('/login', data).pipe(
       map((data: any) => {
+        console.log(data);
         if (data.success) {
           this.userService.subjectUsername(data.data?.fullname);
           this.setToken(data.token);
@@ -35,12 +36,27 @@ export class AuthService {
     return this.http.postMethod('/forgotPassword', data);
   }
 
+  // verify(): Observable<boolean> {
+  //   return this.http.getMethod('/' + this.getRole() + '/verify');
+  //   // .pipe(
+  //   //   map((data: any) => {
+  //   //     return true;
+  //   //   }),
+  //   //   catchError((err) => {
+  //   //     console.log(err);
+  //   //     return of(false);
+  //   //   })
+  //   // );
+  // }
   verify(): Observable<boolean> {
     return this.http.getMethod('/' + this.getRole() + '/verify').pipe(
       map((data: any) => {
+        console.log('true');
         return true;
       }),
       catchError((err) => {
+        console.log(err);
+        console.log('err');
         return of(false);
       })
     );

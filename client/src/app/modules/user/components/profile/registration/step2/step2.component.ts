@@ -78,6 +78,7 @@ export class Step2Component implements OnInit {
       courses: this.formData.value.courses,
       dob: formattedDate,
     };
+    console.log(JSON.stringify(updatedProfile.profile));
     const profileData = new FormData();
     profileData.append('address', updatedProfile.address);
     profileData.append('city', updatedProfile.city);
@@ -90,13 +91,11 @@ export class Step2Component implements OnInit {
     profileData.append('dob', updatedProfile.dob);
     profileData.append('state', updatedProfile.state);
     profileData.append('profileCompleted', '1');
+    profileData.append('profile', JSON.stringify(updatedProfile.profile));
     if (this.selectedFile) {
       profileData.append('profileImage', this.selectedFile);
     }
-    console.log(profileData.get('courses'));
-    this.userService.updateProfile(profileData).subscribe((data) => {
-      console.log(data);
-      this.userService.fetchProfileDetail();
-    });
+    console.log(updatedProfile.profile);
+    this.userService.updateProfile(profileData);
   }
 }

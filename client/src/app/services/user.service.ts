@@ -105,7 +105,13 @@ export class UserService {
   }
 
   updateProfile(data: any) {
-    return this.http.putMethod('/user/completeProfile', data);
+    console.log(data);
+    this.http.putMethod('/user/completeProfile', data).subscribe((data) => {
+      console.log(data);
+      this.subjectProfile(data.data);
+      this.subjectProfileView(data.data);
+      console.log(data.data);
+    });
   }
 
   fetchProjects() {

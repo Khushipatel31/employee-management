@@ -159,9 +159,17 @@ const leaveProject = catchAsyncError(async (req, res, next) => {
 })
 
 const completeProfile = catchAsyncError(async (req, res, next) => {
-  let { fullname, gender, education, contact, dob, address, state, city, pin, profile, profileCompleted } = req.body;
+  console.log(req.body)
+  let { fullname, gender, education, contact, dob, address, state, city, pin, profileCompleted } = req.body;
   const courses = JSON.parse(req.body.courses);
+  let profile = null;
+  if (req.body?.profile) {
+    profile = JSON.parse(req.body.profile);
+  }
+
+
   profileCompleted = Number(profileCompleted);
+
   if (req.file) {
     const myCloud = await cloudinary.v2.uploader.upload(req.file.path, {
       folder: "employeeProfile",
@@ -173,6 +181,7 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
       url: myCloud.secure_url,
     }
   }
+  console.log(profile)
 
   const updatedEmployee = await userModel.findByIdAndUpdate(
     req.user.id,
@@ -192,7 +201,6 @@ const completeProfile = catchAsyncError(async (req, res, next) => {
     },
     { new: true }
   );
-
   if (req.file) {
     fs.unlink(path.join(__dirname, '../public/uploads/', req.file.filename), (err) => {
       if (err) {
@@ -233,6 +241,7 @@ const getMyLeaves = catchAsyncError(async (req, res, next) => {
 
 const addLeave = catchAsyncError(async (req, res, next) => {
   const { leaveType, from, to, reason } = req.body;
+
   const allManagers = await userProjectModel.find({ user: req.user.id });
   const uniqueManagersSet = new Set();
   allManagers.forEach(ele => {
@@ -250,7 +259,7 @@ const addLeave = catchAsyncError(async (req, res, next) => {
 
 const getEmployeeLeaves = catchAsyncError(async (req, res, next) => {
   const leaves = await leaveModel.find({
-    managers: { $in: [new mongoose.Types.ObjectId(req.user.id)] }
+    managers: { $in: [new mongoose.Types.ObjectId(req.user.id)] }, is_active: 1
   }).populate("approved_by").populate("user");
 
   const pending = [], approved = [], rejected = [];

@@ -28,8 +28,10 @@ export class ForgotPasswordComponent {
       this.error = 'Please correct the errors in the form.';
       return;
     }
+    console.log(this.loginForm.value);
     this.auth.forgotPassword(this.loginForm.value).subscribe(
       (data) => {
+        console.log(data);
         if (data.success) {
           this.router.navigate(['/login']);
           this._snackBar.openFromComponent(NotifyComponent, {
@@ -40,7 +42,7 @@ export class ForgotPasswordComponent {
       },
       (error) => {
         console.log(error);
-        this.error = error.error.message;
+        this.error = error.error.message || 'Something went wrong';
       }
     );
   }

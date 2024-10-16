@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../../services/auth.service';
 import { Router } from '@angular/router';
@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
   templateUrl: './login.component.html',
   // styleUrl: './login.component.css'
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   error: string = '';
 
@@ -17,18 +17,71 @@ export class LoginComponent {
     private auth: AuthService,
     private router: Router
   ) {
+    // this.loginForm = this.formBuilder.group({
+    //   email: ['', [Validators.required, Validators.email]],
+    //   password: ['', Validators.required],
+    // });
+    // if (this.auth.getRole() && this.auth.getToken()) {
+    //   this.auth.verify().subscribe(
+    //     (isAuthenticated) => {
+    //       console.log(isAuthenticated);
+    //       // if (isAuthenticated) {
+    //       //   this.router.navigate([this.auth.getRole()]);
+    //       // } else {
+    //       //   this.router.navigate(['/login']);
+    //       // }
+    //     },
+    //     (err) => {
+    //       console.log(err);
+    //     }
+    //   );
+    // }
+  }
+
+  // ngOnInit(): void {
+  //   this.loginForm = this.formBuilder.group({
+  //     email: ['', [Validators.required, Validators.email]],
+  //     password: ['', Validators.required],
+  //   });
+  //   if (this.auth.getRole() && this.auth.getToken()) {
+  //     this.auth.verify().subscribe(
+  //       (isAuthenticated) => {
+  //         console.log(isAuthenticated);
+  //         // if (isAuthenticated) {
+  //         //   this.router.navigate([this.auth.getRole()]);
+  //         // } else {
+  //         //   this.router.navigate(['/login']);
+  //         // }
+  //       },
+  //       (err) => {
+  //         console.log(err);
+  //       }
+  //     );
+  //   }
+  // }
+  ngOnInit(): void {
     this.loginForm = this.formBuilder.group({
       email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required],
     });
+    console.log(this.auth.getRole());
+
     if (this.auth.getRole() && this.auth.getToken()) {
-      this.auth.verify().subscribe((isAuthenticated) => {
-        if (isAuthenticated) {
-          this.router.navigate([this.auth.getRole()]);
-        } else {
-          this.router.navigate(['']);
+      console.log('bla');
+      this.auth.verify().subscribe(
+        (isAuthenticated) => {
+          if (isAuthenticated) {
+            console.log('here');
+            this.router.navigate([this.auth.getRole()]);
+          } else {
+            this.router.navigate(['/login']);
+          }
+        },
+        (err) => {
+          console.log(err);
+          this.error = 'Failed to verify';
         }
-      });
+      );
     }
   }
 
@@ -40,14 +93,12 @@ export class LoginComponent {
     this.auth.login(this.loginForm.value).subscribe(
       (data) => {
         if (data.success) {
-          console.log(data);
-          console.log(this.auth.getRole());
           this.router.navigate([this.auth.getRole()]);
         }
       },
       (error) => {
         console.log(error);
-        this.error = error.error.message;
+        this.error = error.error.message || 'Something went wrong';
       }
     );
   }

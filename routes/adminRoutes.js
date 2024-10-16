@@ -8,7 +8,7 @@ const {
 } = require("../middleware/auth.js");
 const router = express.Router();
 
-router.get("/verify", isAuthenticatedUser, verify);
+router.get("/verify", isAuthenticatedUser, authorizeRoles("admin"), verify);
 
 router.get(
   "/counts",
